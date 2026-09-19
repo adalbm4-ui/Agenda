@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda Dandy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF7F2;
+    --surface:#FFFFFF;
+    --surface-2:#F1ECE3;
+    --ink:#22262B;
+    --ink-soft:#6B6F76;
+    --accent:#C9A227;
+    --accent-bright:#F7E7A6;
+    --accent-deep:#8A6A12;
+    --accent-soft:#FBF0C8;
+    --accent-border:rgba(201,162,39,0.35);
+    --on-accent:#3B2E0A;
+    --line:#E4DFD5;
+    --done:#7C9473;
+    --danger:#B75454;
+    --shadow: 0 10px 28px rgba(34,38,43,0.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14171C;
+      --surface:#1C2027;
+      --surface-2:#232830;
+      --ink:#EDEAE3;
+      --ink-soft:#9AA0AA;
+      --accent:#E9C65E;
+      --accent-bright:#FFF3C4;
+      --accent-deep:#B8860B;
+      --accent-soft:#3E3010;
+      --accent-border:rgba(233,198,94,0.4);
+      --on-accent:#20180A;
+      --line:#2A2F37;
+      --done:#8FB07E;
+      --danger:#D98080;
+      --shadow: 0 10px 28px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14171C; --surface:#1C2027; --surface-2:#232830; --ink:#EDEAE3;
+    --ink-soft:#9AA0AA; --accent:#E9C65E; --accent-bright:#FFF3C4; --accent-deep:#B8860B;
+    --accent-soft:#3E3010; --accent-border:rgba(233,198,94,0.4); --on-accent:#20180A;
+    --line:#2A2F37; --done:#8FB07E; --danger:#D98080; --shadow: 0 10px 28px rgba(0,0,0,0.45);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  .app{
+    max-width:480px;
+    margin:0 auto;
+    padding:28px 20px 120px;
+  }
+
+  .app-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .app-name{
+    margin:0 0 2px;
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-size:13px;
+    font-weight:600;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent) 50%, var(--accent-deep));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .date-label{
+    margin:0;
+    font-size:14px;
+    color:var(--ink-soft);
+    text-transform:capitalize;
+  }
+  .daily-quote{
+    margin:5px 0 0;
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-size:12px;
+    line-height:1.35;
+    max-width:230px;
+    color:var(--accent-deep);
+    opacity:.9;
+  }
+  .clock{
+    margin:2px 0 0;
+    font-family:'Fraunces', Georgia, serif;
+    font-variant-numeric: tabular-nums;
+    font-size:40px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  .icon-btn{
+    width:44px; height:44px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .icon-btn[data-active="true"]{
+    color:var(--accent);
+    border-color:var(--accent);
+    background:var(--accent-soft);
+  }
+  .icon-btn:focus-visible, .fab:focus-visible, button:focus-visible, input:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  .subtitle{
+    margin:14px 0 24px;
+    font-size:14px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    max-width:34ch;
+  }
+
+  .hero{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:30px;
+    position:relative;
+  }
+  .hero-label{
+    display:flex; align-items:center; gap:8px;
+    margin:0 0 8px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .hero-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+    animation:pulse 2.2s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.45; transform:scale(1.3); }
+  }
+  .hero-time{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:700;
+    font-size:30px;
+    margin:0 0 4px;
+    line-height:1.2;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent) 45%, var(--accent-bright) 65%, var(--accent) 85%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  @keyframes shine{
+    0%, 8%{ left:-60%; }
+    35%, 100%{ left:130%; }
+  }
+  .hero-text{
+    margin:0 0 6px;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .hero-countdown{
+    margin:0;
+    font-size:13px;
+    color:var(--accent);
+    font-weight:500;
+  }
+  .hero-empty{
+    font-size:15px;
+    color:var(--ink-soft);
+    margin:0;
+    line-height:1.5;
+  }
+
+  .period{
+    margin-bottom:28px;
+  }
+  .period-heading{
+    display:flex; align-items:center; gap:8px;
+    margin:0 0 14px;
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink);
+  }
+  .period-heading svg{ color:var(--ink-soft); flex-shrink:0; }
+
+  .spine{
+    position:relative;
+    padding-left:22px;
+    border-left:1.5px solid var(--line);
+    margin-left:6px;
+  }
+  .item{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:10px 0;
+  }
+  .item::before{
+    content:"";
+    position:absolute;
+    left:-28.5px;
+    top:18px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--bg);
+    border:1.5px solid var(--ink-soft);
+  }
+  .item[data-done="true"]::before{
+    background:var(--accent);
+    border-color:var(--accent-deep);
+  }
+  .item[data-fired="true"]{
+    animation:rowpulse 1.8s ease-in-out 3;
+  }
+  @keyframes rowpulse{
+    0%,100%{ background:transparent; }
+    50%{ background:var(--accent-soft); }
+  }
+
+  .check-btn{
+    width:26px; height:26px;
+    border-radius:50%;
+    border:1.5px solid var(--ink-soft);
+    background:transparent;
+    color:var(--surface);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    cursor:pointer;
+    margin-top:1px;
+  }
+  .check-btn[data-done="true"]{
+    background:var(--accent);
+    border-color:var(--accent-deep);
+    color:var(--on-accent);
+  }
+
+  .item-body{ flex:1; min-width:0; }
+  .item-time{
+    font-family:'Fraunces', Georgia, serif;
+    font-variant-numeric: tabular-nums;
+    font-weight:600;
+    font-size:15px;
+    margin-right:8px;
+    color:var(--accent-deep);
+  }
+  .item-text{
+    font-size:15px;
+    word-break:break-word;
+  }
+  .item[data-done="true"] .item-text,
+  .item[data-done="true"] .item-time{
+    color:var(--ink-soft);
+    text-decoration:line-through;
+    text-decoration-color:var(--line);
+  }
+
+  .del-btn{
+    background:transparent;
+    border:none;
+    color:var(--ink-soft);
+    opacity:.5;
+    cursor:pointer;
+    padding:4px;
+    flex-shrink:0;
+  }
+  .del-btn:hover, .del-btn:focus-visible{ opacity:1; color:var(--danger); }
+
+  .persist-badge{
+    display:inline-block;
+    font-size:10px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:1px 7px;
+    margin-right:6px;
+    vertical-align:middle;
+  }
+
+  .empty-state{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:14px;
+    line-height:1.6;
+    margin-top:60px;
+    padding:0 20px;
+  }
+
+  .fab{
+    position:fixed;
+    right:20px; bottom:28px;
+    width:56px; height:56px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--accent-bright), var(--accent) 55%, var(--accent-deep));
+    color:var(--on-accent);
+    border:none;
+    box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    z-index:20;
+  }
+
+  .sheet-scrim{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0.4);
+    display:flex; align-items:flex-end;
+    z-index:30;
+  }
+  .sheet-scrim[hidden]{ display:none; }
+  .sheet{
+    background:var(--surface);
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    border-radius:20px 20px 0 0;
+    padding:22px 20px 28px;
+    animation:slideup .22s ease-out;
+  }
+  @keyframes slideup{
+    from{ transform:translateY(100%); }
+    to{ transform:translateY(0); }
+  }
+  .sheet h2{
+    margin:0 0 18px;
+    font-family:'Fraunces', Georgia, serif;
+    font-size:22px;
+    font-weight:600;
+  }
+  .switch-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:6px;
+  }
+  .switch-label{ font-size:14px; color:var(--ink); }
+  .switch{
+    position:relative;
+    width:42px; height:24px;
+    flex-shrink:0;
+  }
+  .switch input{
+    opacity:0; width:0; height:0;
+    position:absolute;
+  }
+  .switch .track{
+    position:absolute; inset:0;
+    background:var(--line);
+    border-radius:999px;
+    transition:background .15s;
+  }
+  .switch .thumb{
+    position:absolute; top:2px; left:2px;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:var(--surface);
+    box-shadow:0 1px 3px rgba(0,0,0,.25);
+    transition:transform .15s;
+  }
+  .switch input:checked ~ .track{ background:var(--accent); }
+  .switch input:checked ~ .track .thumb{ transform:translateX(18px); }
+  .switch input:focus-visible ~ .track{ outline:2px solid var(--accent); outline-offset:2px; }
+  .switch-hint{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin:0 0 16px;
+  }
+
+  .field-label{
+    display:block;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .sheet input{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink);
+    margin-bottom:16px;
+  }
+  .sheet-actions{
+    display:flex; gap:10px;
+    margin-top:4px;
+  }
+  .btn-primary, .btn-secondary{
+    flex:1;
+    padding:13px;
+    border-radius:10px;
+    border:none;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+  }
+  .btn-primary{ background:var(--accent); color:var(--on-accent); }
+  .btn-primary:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-secondary{ background:var(--surface-2); color:var(--ink); }
+
+  .snackbar{
+    position:fixed;
+    left:20px; right:20px; bottom:28px;
+    max-width:440px;
+    margin:0 auto;
+    background:var(--ink);
+    color:var(--bg);
+    border-radius:12px;
+    padding:12px 16px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px;
+    font-size:14px;
+    z-index:40;
+    box-shadow:var(--shadow);
+  }
+  .snackbar[hidden]{ display:none; }
+  .snackbar button{
+    background:transparent; border:none;
+    color:var(--accent);
+    font-weight:600;
+    cursor:pointer;
+    font-size:14px;
+    flex-shrink:0;
+  }
+
+  .app-footer{
+    text-align:center;
+    margin-top:44px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+  }
+  .app-footer .tagline{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-size:14px;
+    margin:0 0 6px;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent) 50%, var(--accent-deep));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .app-footer .signature{
+    font-size:12px;
+    letter-spacing:0.03em;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  .visually-hidden{
+    position:absolute; width:1px; height:1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;
+  }
+
+  /* ---- header extra ---- */
+  .header-actions{ display:flex; gap:8px; flex-shrink:0; }
+
+  /* ---- navegación de secciones ---- */
+  .tab-nav{
+    display:flex;
+    gap:2px;
+    overflow-x:auto;
+    margin:22px 0 26px;
+    padding-bottom:2px;
+    border-bottom:1px solid var(--line);
+    scrollbar-width:none;
+  }
+  .tab-nav::-webkit-scrollbar{ display:none; }
+  .tab-btn{
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    flex-shrink:0;
+    width:62px;
+    padding:4px 2px 10px;
+    border:none;
+    border-bottom:2px solid transparent;
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+    font-size:10.5px;
+    line-height:1.2;
+    opacity:.75;
+  }
+  .tab-btn svg{ width:18px; height:18px; }
+  .tab-btn[data-active="true"]{
+    color:var(--accent-deep);
+    border-bottom-color:var(--accent);
+    opacity:1;
+  }
+
+  .view[hidden]{ display:none; }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:14px;
+    transition:box-shadow .2s, transform .2s;
+  }
+
+  /* ---- tarjeta destacada de finanzas (resumen) ---- */
+  .card-featured{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(155deg, var(--accent-soft) 0%, var(--surface) 62%);
+    border:1.5px solid var(--accent-border);
+    box-shadow:0 12px 30px rgba(201,162,39,0.16);
+  }
+  .card-featured::after{
+    content:"";
+    position:absolute;
+    top:-40px; right:-40px;
+    width:130px; height:130px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--accent-bright) 0%, transparent 70%);
+    opacity:.55;
+    pointer-events:none;
+  }
+  .card-featured .card-title.plain{
+    color:var(--accent-deep);
+    font-weight:600;
+  }
+  .icon-chip-gold{
+    width:30px; height:30px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(140deg, var(--accent), var(--accent-deep));
+    color:#fff;
+    box-shadow:0 3px 10px rgba(201,162,39,0.35);
+  }
+  .icon-chip-gold svg{ width:16px; height:16px; }
+  @media (hover:hover){
+    .card:hover{ box-shadow:0 8px 22px rgba(34,38,43,0.10); }
+    .card-featured:hover{ box-shadow:0 14px 34px rgba(201,162,39,0.22); }
+  }
+  .fin-featured-figure{
+    font-size:34px;
+    margin:4px 0 2px;
+  }
+  .fin-trend-row{
+    display:flex; gap:16px; margin-top:10px;
+  }
+  .fin-trend-item{ display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink-soft); }
+  .fin-trend-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .fin-trend-dot.pos{ background:var(--done); }
+  .fin-trend-dot.neg{ background:var(--danger); }
+  .card-title{
+    display:flex; align-items:center; gap:8px;
+    margin:0 0 12px;
+    font-size:14px;
+    font-weight:500;
+    color:var(--ink);
+  }
+  .card-title svg{ color:var(--ink-soft); flex-shrink:0; }
+  .card-link{
+    margin-top:2px;
+    background:transparent; border:none;
+    color:var(--accent-deep);
+    font-size:13px; font-weight:500;
+    cursor:pointer; padding:0;
+  }
+
+  .section-heading{
+    margin:0 0 14px;
+    font-family:'Fraunces', Georgia, serif;
+    font-size:19px;
+    font-weight:600;
+  }
+
+  .progress-row{ display:flex; align-items:center; gap:10px; margin-top:2px; }
+  .progress-track{
+    flex:1; height:7px; border-radius:999px;
+    background:var(--surface-2); overflow:hidden;
+  }
+  .progress-fill{ height:100%; background:var(--accent); border-radius:999px; transition:width .25s; }
+  .progress-num{ font-size:12px; color:var(--ink-soft); flex-shrink:0; }
+
+  .mini-habit-row{ display:flex; align-items:center; justify-content:space-between; padding:7px 0; font-size:14px; }
+  .mini-habit-row .name{ display:flex; align-items:center; gap:8px; }
+  .mini-dot{ width:9px; height:9px; border-radius:50%; border:1.5px solid var(--ink-soft); flex-shrink:0; }
+  .mini-dot[data-done="true"]{ background:var(--done); border-color:var(--done); }
+
+  /* ---- pills de prioridad / segmentos ---- */
+  .pill-row{ display:flex; gap:8px; margin-bottom:16px; }
+  .pill{
+    flex:1; padding:10px 6px; border-radius:10px;
+    border:1.5px solid var(--line); background:var(--surface-2);
+    color:var(--ink-soft); font-size:13px; font-weight:500;
+    cursor:pointer; text-align:center;
+  }
+  .pill[data-active="true"]{ border-color:var(--accent); color:var(--on-accent); background:var(--accent); }
+  .segment{
+    display:flex; gap:4px; padding:4px;
+    background:var(--surface-2); border-radius:12px; margin-bottom:20px;
+  }
+  .segment button{
+    flex:1; padding:9px 4px; border-radius:9px; border:none;
+    background:transparent; color:var(--ink-soft); font-size:13.5px; font-weight:500;
+    font-family:'Work Sans', sans-serif; cursor:pointer;
+  }
+  .segment button[data-active="true"]{ background:var(--surface); color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.08); }
+
+  /* ---- tareas ---- */
+  .task-row{ display:flex; align-items:flex-start; gap:11px; padding:11px 0; border-bottom:1px solid var(--line); }
+  .task-row:last-child{ border-bottom:none; }
+  .prio-dot{ width:9px; height:9px; border-radius:50%; margin-top:7px; flex-shrink:0; }
+  .prio-dot[data-p="alta"]{ background:var(--danger); }
+  .prio-dot[data-p="media"]{ background:var(--accent); }
+  .prio-dot[data-p="baja"]{ background:var(--done); }
+  .task-body{ flex:1; min-width:0; font-size:15px; word-break:break-word; }
+  .task-row[data-done="true"] .task-body{ color:var(--ink-soft); text-decoration:line-through; }
+
+  /* ---- notas ---- */
+  .note-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin-bottom:10px; cursor:pointer;
+  }
+  .note-preview{ font-size:14.5px; line-height:1.5; white-space:pre-wrap; overflow:hidden;
+    display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; }
+  .note-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:8px; display:flex; justify-content:space-between; }
+  .note-meta button{ background:none; border:none; color:var(--ink-soft); cursor:pointer; padding:0; }
+  .note-meta button:hover{ color:var(--danger); }
+
+  /* ---- temporizadores ---- */
+  .timer-wrap{ text-align:center; padding:14px 0 6px; }
+  .timer-phase{ font-size:14px; color:var(--ink-soft); margin:0 0 6px; }
+  .timer-round{ font-size:13px; color:var(--accent-deep); margin:0 0 8px; font-weight:500; }
+  .timer-display{
+    font-family:'Fraunces', Georgia, serif;
+    font-variant-numeric: tabular-nums;
+    font-size:64px; font-weight:600;
+    margin:6px 0 20px;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent) 45%, var(--accent-bright) 65%, var(--accent) 85%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .timer-controls{ display:flex; gap:10px; justify-content:center; margin-bottom:24px; }
+  .timer-btn{
+    padding:13px 26px; border-radius:12px; border:none; font-size:15px; font-weight:500; cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .timer-btn.primary{ background:var(--accent); color:var(--on-accent); }
+  .timer-btn.secondary{ background:var(--surface-2); color:var(--ink); }
+  .timer-settings{ display:flex; gap:10px; }
+  .timer-settings label{ flex:1; text-align:center; font-size:12px; color:var(--ink-soft); }
+  .timer-settings input{
+    width:100%; margin-top:6px; text-align:center; font-size:15px;
+    padding:9px 4px; border-radius:9px; border:1.5px solid var(--line);
+    background:var(--surface-2); color:var(--ink); font-family:'Work Sans', sans-serif;
+  }
+  .timer-note{ text-align:center; font-size:13px; color:var(--ink-soft); margin-top:16px; }
+
+  /* ---- hábitos ---- */
+  .habit-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:10px; }
+  .habit-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .habit-name{ font-size:15px; }
+  .habit-streak{ font-size:12.5px; color:var(--accent-deep); display:flex; align-items:center; gap:4px; font-weight:500; }
+  .habit-week{ display:flex; justify-content:space-between; gap:5px; }
+  .habit-day{ flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .habit-day-label{ font-size:10px; color:var(--ink-soft); }
+  .habit-check{
+    width:28px; height:28px; border-radius:8px; border:1.5px solid var(--line);
+    background:var(--surface-2); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    color:var(--surface);
+  }
+  .habit-check[data-done="true"]{ background:var(--done); border-color:var(--done); color:#fff; }
+  .habit-check[data-today="true"]{ border-color:var(--accent); }
+  .habit-check:disabled{ cursor:default; opacity:.55; }
+  .habit-del{ background:none; border:none; color:var(--ink-soft); opacity:.5; cursor:pointer; }
+  .habit-del:hover{ opacity:1; color:var(--danger); }
+
+  /* ---- calendario ---- */
+  .cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .cal-month{ font-family:'Fraunces', Georgia, serif; font-size:18px; font-weight:600; text-transform:capitalize; }
+  .cal-nav-btn{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--surface);
+    color:var(--ink-soft); display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .cal-dow{ text-align:center; font-size:10.5px; color:var(--ink-soft); padding-bottom:6px; }
+  .cal-day{
+    position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+    border-radius:10px; font-size:13.5px; cursor:pointer; border:1.5px solid transparent; color:var(--ink);
+  }
+  .cal-day[data-muted="true"]{ color:var(--ink-soft); opacity:.4; }
+  .cal-day[data-today="true"]{ border-color:var(--accent); font-weight:600; }
+  .cal-day[data-selected="true"]{ background:var(--accent); color:var(--on-accent); font-weight:600; }
+  .cal-events{ margin-top:18px; }
+  .cal-events-label{ font-size:13px; color:var(--ink-soft); margin:0 0 10px; text-transform:capitalize; }
+  .cal-event-row{ display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line); font-size:14.5px; }
+  .cal-event-row:last-child{ border-bottom:none; }
+  .cal-empty{ font-size:13.5px; color:var(--ink-soft); }
+
+  /* ---- calculadora ---- */
+  .calc-display{
+    font-family:'Fraunces', Georgia, serif; font-variant-numeric: tabular-nums;
+    font-size:38px; text-align:right; padding:18px 6px; margin-bottom:14px;
+    word-break:break-all; min-height:1.3em;
+  }
+  .calc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  .calc-btn{
+    padding:16px 0; border-radius:12px; border:none; font-size:18px; cursor:pointer;
+    background:var(--surface-2); color:var(--ink); font-family:'Work Sans', sans-serif;
+  }
+  .calc-btn[data-op="true"]{ background:var(--accent-soft); color:var(--accent-deep); font-weight:600; }
+  .calc-btn[data-eq="true"]{ background:var(--accent); color:var(--on-accent); font-weight:600; }
+  .calc-btn[data-wide="true"]{ grid-column:span 2; }
+
+  .add-inline{
+    width:100%; padding:12px 14px; border-radius:10px; border:1.5px dashed var(--line);
+    background:transparent; color:var(--ink-soft); font-size:14px; cursor:pointer; margin-bottom:4px;
+    font-family:'Work Sans', sans-serif;
+  }
+  .add-inline:hover{ border-color:var(--accent); color:var(--accent-deep); }
+
+  .sheet textarea{
+    width:100%; font-family:'Work Sans', sans-serif; font-size:15px; padding:12px 14px;
+    border-radius:10px; border:1.5px solid var(--line); background:var(--surface-2); color:var(--ink);
+    margin-bottom:16px; min-height:110px; resize:vertical;
+  }
+
+  /* ---- pulido visual: brillos y acentos dorados ---- */
+  .gold-text{
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent) 45%, var(--accent-bright) 65%, var(--accent) 85%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .section-heading{
+    position:relative;
+    display:inline-block;
+    overflow:hidden;
+  }
+  .section-heading::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:-6px;
+    width:38px; height:3px;
+    border-radius:999px;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent-bright));
+  }
+  .icon-chip{
+    width:20px; height:20px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft);
+  }
+  .icon-chip svg{ width:17px; height:17px; }
+  .card-title{ font-size:13.5px; color:var(--ink-soft); }
+  .card-title.plain{ font-size:14px; color:var(--ink); }
+
+  .ring-wrap{ position:relative; width:74px; height:74px; flex-shrink:0; }
+  .ring-wrap svg{ transform:rotate(-90deg); }
+  .ring-num{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', Georgia, serif; font-weight:600; font-size:16px; color:var(--accent-deep);
+  }
+  .resumen-row{ display:flex; align-items:center; gap:16px; }
+  .resumen-row .grow{ flex:1; min-width:0; }
+  .big-figure{
+    font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:26px; margin:2px 0 0;
+  }
+
+  /* ---- finanzas ---- */
+  .fin-hero{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(155deg, var(--accent-soft) 0%, var(--surface) 68%);
+    border:1.5px solid var(--accent-border);
+    border-radius:18px;
+    padding:20px 20px 18px;
+    margin-bottom:14px;
+    box-shadow:0 12px 30px rgba(201,162,39,0.16);
+    text-align:center;
+  }
+  .fin-hero::after{
+    content:"";
+    position:absolute;
+    top:-50px; right:-30px;
+    width:150px; height:150px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--accent-bright) 0%, transparent 70%);
+    opacity:.5;
+    pointer-events:none;
+  }
+  .fin-hero-label{
+    margin:0; font-size:12.5px; color:var(--accent-deep); font-weight:600;
+    text-transform:uppercase; letter-spacing:.05em;
+  }
+  .fin-hero .fin-stat-num{
+    font-size:38px;
+    margin:6px 0 0;
+    display:block;
+  }
+  .fin-summary{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+  .fin-stat{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:12px 10px; text-align:center;
+  }
+  .fin-stat-label{ font-size:11px; color:var(--ink-soft); margin:0 0 4px; display:flex; align-items:center; justify-content:center; gap:5px; }
+  .fin-stat-num{ font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:16.5px; margin:0; }
+  .fin-stat-num.pos{ color:var(--done); }
+  .fin-stat-num.neg{ color:var(--danger); }
+  .fin-dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .fin-dot.pos{ background:var(--done); }
+  .fin-dot.neg{ background:var(--danger); }
+
+  .fin-chart{
+    display:flex; align-items:flex-end; gap:2px; height:64px;
+    margin-bottom:20px; padding:0 2px;
+  }
+  .fin-bar{ flex:1; min-width:2px; border-radius:3px 3px 0 0; background:var(--line); position:relative; cursor:pointer; }
+  .fin-bar[data-sel="true"]{ outline:2px solid var(--accent); outline-offset:1px; }
+  .fin-bar.pos{ background:linear-gradient(180deg, var(--accent-bright), var(--accent)); }
+  .fin-bar.neg{ background:var(--danger); opacity:.75; }
+
+  .fin-date-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .fin-date-row input[type="date"]{
+    font-family:'Work Sans', sans-serif; font-size:14px; padding:9px 12px;
+    border-radius:10px; border:1.5px solid var(--line); background:var(--surface-2); color:var(--ink);
+  }
+  .fin-day-total{ font-size:13px; color:var(--ink-soft); margin-bottom:8px; }
+  .fin-entry-row{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); }
+  .fin-entry-row:last-child{ border-bottom:none; }
+  .fin-type-icon{
+    width:32px; height:32px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:15px;
+  }
+  .fin-type-icon.venta{ background:rgba(124,148,115,0.16); color:var(--done); }
+  .fin-type-icon.gasto{ background:rgba(183,84,84,0.14); color:var(--danger); }
+  .fin-entry-body{ flex:1; min-width:0; }
+  .fin-entry-note{ font-size:13.5px; color:var(--ink-soft); }
+  .fin-entry-amount{ font-weight:700; font-size:15.5px; font-family:'Fraunces', Georgia, serif; }
+  .fin-entry-amount.venta{ color:var(--done); }
+  .fin-entry-amount.gasto{ color:var(--danger); }
+
+  .cal-day .day-dots{
+    position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
+    display:flex; gap:3px;
+  }
+  .cal-day .day-dots span{ width:4px; height:4px; border-radius:50%; display:block; }
+  .cal-day .day-dots .d-event{ background:var(--accent-deep); }
+  .cal-day .day-dots .d-fin-pos{ background:var(--done); }
+  .cal-day .day-dots .d-fin-neg{ background:var(--danger); }
+  .cal-day[data-selected="true"] .day-dots span{ background:var(--on-accent) !important; }
+
+  /* ---- respaldo ---- */
+  .backup-text{ font-size:13.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 18px; }
+  .backup-row{ display:flex; gap:10px; margin-bottom:12px; }
+</style>
+</head>
+<body>
+
+<div id="appRoot">
+<div class="app">
+  <header class="app-header">
+    <div>
+      <p class="app-name">Agenda Dandy</p>
+      <p class="daily-quote" id="dailyQuote"></p>
+      <p class="date-label" id="dateLabel"></p>
+      <p class="clock" id="clockLabel"></p>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="backupBtn" aria-label="Respaldo" title="Respaldo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      </button>
+      <button class="icon-btn" id="calcBtn" aria-label="Calculadora" title="Calculadora">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01"/></svg>
+      </button>
+      <button class="icon-btn" id="notifBtn" aria-label="Activar avisos" title="Activar avisos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn" data-view="resumen" data-active="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Resumen</span>
+    </button>
+    <button class="tab-btn" data-view="agenda">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+      <span>Agenda</span>
+    </button>
+    <button class="tab-btn" data-view="tasks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 8 2 2 4-4"/><path d="M4 16l2 2 4-4"/><path d="M12 8h8M12 16h8"/></svg>
+      <span>Tareas</span>
+    </button>
+    <button class="tab-btn" data-view="notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h13l3 3v13H4z"/><path d="M8 9h9M8 13h9M8 17h5"/></svg>
+      <span>Notas</span>
+    </button>
+    <button class="tab-btn" data-view="timers">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6M12 2v3"/></svg>
+      <span>Enfoque</span>
+    </button>
+    <button class="tab-btn" data-view="habits">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-1 .3-2 1-3 .3 1 1 1.6 1.6 1.6C9 8 9 5 12 3Z"/></svg>
+      <span>Hábitos</span>
+    </button>
+    <button class="tab-btn" data-view="calendar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      <span>Calendario</span>
+    </button>
+    <button class="tab-btn" data-view="finanzas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2.2 2.7 5 3 5 1.1 5 3-2.2 3-5 3-5-1.1-5-3"/></svg>
+      <span>Finanzas</span>
+    </button>
+  </nav>
+
+  <section class="view" id="view-resumen">
+    <h1 class="section-heading">Tu día</h1>
+
+    <div class="card card-featured">
+      <p class="card-title plain">
+        <span class="icon-chip-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2.2 2.7 5 3 5 1.1 5 3-2.2 3-5 3-5-1.1-5-3"/></svg></span>
+        Finanzas de hoy
+      </p>
+      <div class="resumen-row">
+        <div class="grow">
+          <p class="big-figure gold-text fin-featured-figure" id="resumenFinBalance">$0</p>
+          <p style="margin:2px 0 0; font-size:12.5px; color:var(--ink-soft);" id="resumenFinDetail">Sin movimientos hoy</p>
+        </div>
+      </div>
+      <button class="card-link" data-goto="finanzas">Ver finanzas →</button>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+        Siguiente en tu agenda
+      </p>
+      <div id="resumenNext"></div>
+      <button class="card-link" data-goto="agenda">Ver agenda →</button>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 8 2 2 4-4"/><path d="M4 16l2 2 4-4"/><path d="M12 8h8M12 16h8"/></svg></span>
+        Tareas de hoy
+      </p>
+      <div class="resumen-row">
+        <div class="ring-wrap">
+          <svg width="74" height="74" viewBox="0 0 74 74">
+            <circle cx="37" cy="37" r="31" fill="none" stroke="var(--surface-2)" stroke-width="7"/>
+            <circle id="resumenTaskRing" cx="37" cy="37" r="31" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="194.8"/>
+          </svg>
+          <span class="ring-num" id="resumenTaskNum">0/0</span>
+        </div>
+        <div class="grow">
+          <p style="margin:0; font-size:13.5px; color:var(--ink-soft);" id="resumenTaskHint">Sin tareas pendientes.</p>
+        </div>
+      </div>
+      <button class="card-link" data-goto="tasks">Ver tareas →</button>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-1 .3-2 1-3 .3 1 1 1.6 1.6 1.6C9 8 9 5 12 3Z"/></svg></span>
+        Hábitos de hoy
+      </p>
+      <div id="resumenHabits"></div>
+      <button class="card-link" data-goto="habits">Ver hábitos →</button>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/></svg></span>
+        Enfoque de hoy
+      </p>
+      <p id="resumenPomo" style="margin:0; font-size:14.5px; color:var(--ink-soft);"></p>
+      <button class="card-link" data-goto="timers">Ir a enfoque →</button>
+    </div>
+  </section>
+
+  <section class="view" id="view-agenda" hidden>
+    <p class="subtitle">Los que se repiten se reinician cada día. Los que marques como fijos se quedan tal como los dejaste.</p>
+    <section class="hero" id="heroCard" aria-live="polite"></section>
+    <main id="listContainer"></main>
+    <p class="empty-state" id="emptyState" hidden>Tu día está en blanco.<br>Toca “+” para agregar el primer recordatorio.</p>
+  </section>
+
+  <section class="view" id="view-tasks" hidden>
+    <h1 class="section-heading">Tareas</h1>
+    <div class="progress-row" style="margin-bottom:16px;">
+      <div class="progress-track"><div class="progress-fill" id="taskFill" style="width:0%"></div></div>
+      <span class="progress-num" id="taskNum">0/0</span>
+    </div>
+    <div id="taskList"></div>
+    <p class="empty-state" id="taskEmpty" hidden>No tienes tareas pendientes.<br>Toca “+” para agregar la primera.</p>
+  </section>
+
+  <section class="view" id="view-notes" hidden>
+    <h1 class="section-heading">Notas</h1>
+    <div id="notesList"></div>
+    <p class="empty-state" id="notesEmpty" hidden>Todavía no hay notas.<br>Toca “+” para escribir la primera.</p>
+  </section>
+
+  <section class="view" id="view-timers" hidden>
+    <h1 class="section-heading">Enfoque</h1>
+    <div class="segment" id="timerSegment">
+      <button data-mode="pomo" data-active="true">Pomodoro</button>
+      <button data-mode="exercise">Ejercicio</button>
+    </div>
+
+    <div id="pomoPanel">
+      <div class="timer-wrap">
+        <p class="timer-phase" id="pomoPhaseLabel">Enfoque</p>
+        <p class="timer-display" id="pomoDisplay">25:00</p>
+        <div class="timer-controls">
+          <button class="timer-btn primary" id="pomoStartBtn">Iniciar</button>
+          <button class="timer-btn secondary" id="pomoResetBtn">Reiniciar</button>
+        </div>
+      </div>
+      <div class="timer-settings">
+        <label>Enfoque (min)<input type="number" id="pomoFocusInput" min="1" max="120"></label>
+        <label>Descanso (min)<input type="number" id="pomoBreakInput" min="1" max="60"></label>
+      </div>
+      <p class="timer-note" id="pomoSessionsNote"></p>
+    </div>
+
+    <div id="exercisePanel" hidden>
+      <div class="timer-wrap">
+        <p class="timer-phase" id="exPhaseLabel">Listo para empezar</p>
+        <p class="timer-round" id="exRoundLabel"></p>
+        <p class="timer-display" id="exDisplay">00:30</p>
+        <div class="timer-controls">
+          <button class="timer-btn primary" id="exStartBtn">Iniciar</button>
+          <button class="timer-btn secondary" id="exResetBtn">Reiniciar</button>
+        </div>
+      </div>
+      <div class="timer-settings">
+        <label>Trabajo (seg)<input type="number" id="exWorkInput" min="5" max="600" step="5"></label>
+        <label>Descanso (seg)<input type="number" id="exRestInput" min="0" max="300" step="5"></label>
+        <label>Rondas<input type="number" id="exRoundsInput" min="1" max="30"></label>
+      </div>
+      <p class="timer-note">Ideal para abdominales, plancha, saltos o cualquier rutina por intervalos.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-habits" hidden>
+    <h1 class="section-heading">Hábitos</h1>
+    <div id="habitsList"></div>
+    <p class="empty-state" id="habitsEmpty" hidden>Aún no sigues ningún hábito.<br>Toca “+” para crear el primero.</p>
+  </section>
+
+  <section class="view" id="view-calendar" hidden>
+    <h1 class="section-heading">Calendario</h1>
+    <div class="cal-head">
+      <button class="cal-nav-btn" id="calPrevBtn" aria-label="Mes anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <p class="cal-month" id="calMonthLabel"></p>
+      <button class="cal-nav-btn" id="calNextBtn" aria-label="Mes siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-events">
+      <p class="cal-events-label" id="calEventsLabel"></p>
+      <div id="calEventsList"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-finanzas" hidden>
+    <h1 class="section-heading">Finanzas</h1>
+    <div class="cal-head">
+      <button class="cal-nav-btn" id="finPrevBtn" aria-label="Mes anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <p class="cal-month" id="finMonthLabel"></p>
+      <button class="cal-nav-btn" id="finNextBtn" aria-label="Mes siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="fin-hero">
+      <p class="fin-hero-label">Balance del mes</p>
+      <p class="fin-stat-num" id="finMonthBalance">$0</p>
+    </div>
+    <div class="fin-summary">
+      <div class="fin-stat">
+        <p class="fin-stat-label"><span class="fin-dot pos"></span>Ventas</p>
+        <p class="fin-stat-num pos" id="finMonthIn">$0</p>
+      </div>
+      <div class="fin-stat">
+        <p class="fin-stat-label"><span class="fin-dot neg"></span>Gastos</p>
+        <p class="fin-stat-num neg" id="finMonthOut">$0</p>
+      </div>
+    </div>
+
+    <div class="fin-chart" id="finChart"></div>
+
+    <div class="fin-date-row">
+      <span style="font-size:13px; color:var(--ink-soft); text-transform:capitalize;" id="finDateLabel"></span>
+      <input type="date" id="finDateInput">
+    </div>
+    <p class="fin-day-total" id="finDayTotal"></p>
+    <div id="finEntriesList"></div>
+    <p class="empty-state" id="finEmpty" hidden>Sin ventas ni gastos este día.<br>Toca “+” para registrar el primero.</p>
+  </section>
+
+  <footer class="app-footer">
+    <p class="tagline">porque el tiempo vale su peso en oro</p>
+    <p class="signature">by @DANDY2777</p>
+  </footer>
+</div>
+
+<button class="fab" id="fabBtn" aria-label="Agregar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+</button>
+
+<div class="sheet-scrim" id="scrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <h2 id="sheetTitle">Nuevo recordatorio</h2>
+
+    <div id="fieldsReminder">
+      <label class="field-label" for="timeInput">Hora</label>
+      <input type="time" id="timeInput">
+      <label class="field-label" for="textInput">¿Qué necesitas recordar?</label>
+      <input type="text" id="textInput" maxlength="60" placeholder="Ej. Tomar la medicina">
+      <div class="switch-row">
+        <span class="switch-label">Se repite cada día</span>
+        <label class="switch">
+          <input type="checkbox" id="recurringInput" checked>
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </div>
+      <p class="switch-hint">Si lo apagas, queda fijo: no se reinicia solo cada día.</p>
+    </div>
+
+    <div id="fieldsTask" hidden>
+      <label class="field-label" for="taskTextInput">¿Qué tienes que hacer?</label>
+      <input type="text" id="taskTextInput" maxlength="80" placeholder="Ej. Enviar cotización">
+      <label class="field-label">Prioridad</label>
+      <div class="pill-row" id="taskPriorityRow">
+        <button type="button" class="pill" data-p="alta">Alta</button>
+        <button type="button" class="pill" data-p="media" data-active="true">Media</button>
+        <button type="button" class="pill" data-p="baja">Baja</button>
+      </div>
+    </div>
+
+    <div id="fieldsNote" hidden>
+      <label class="field-label" for="noteTextInput">Nota</label>
+      <textarea id="noteTextInput" maxlength="1000" placeholder="Escribe aquí..."></textarea>
+    </div>
+
+    <div id="fieldsHabit" hidden>
+      <label class="field-label" for="habitTextInput">¿Qué hábito quieres seguir?</label>
+      <input type="text" id="habitTextInput" maxlength="50" placeholder="Ej. Tomar 2L de agua">
+    </div>
+
+    <div id="fieldsEvent" hidden>
+      <label class="field-label" for="eventDateInput">Fecha</label>
+      <input type="date" id="eventDateInput">
+      <label class="field-label" for="eventTextInput">Evento</label>
+      <input type="text" id="eventTextInput" maxlength="70" placeholder="Ej. Pago de proveedor">
+    </div>
+
+    <div id="fieldsFinance" hidden>
+      <label class="field-label">Tipo</label>
+      <div class="pill-row" id="finTypeRow">
+        <button type="button" class="pill" data-t="venta" data-active="true">Venta</button>
+        <button type="button" class="pill" data-t="gasto">Gasto</button>
+      </div>
+      <label class="field-label" for="finDateFormInput">Fecha</label>
+      <input type="date" id="finDateFormInput">
+      <label class="field-label" for="finAmountInput">Monto</label>
+      <input type="number" id="finAmountInput" min="0" step="0.01" placeholder="0.00">
+      <label class="field-label" for="finNoteInput">Concepto (opcional)</label>
+      <input type="text" id="finNoteInput" maxlength="60" placeholder="Ej. Venta de fragancia">
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn-secondary" id="cancelBtn">Cancelar</button>
+      <button class="btn-primary" id="saveBtn" disabled>Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-scrim" id="calcScrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="calcTitle">
+    <h2 id="calcTitle">Calculadora</h2>
+    <p class="calc-display" id="calcDisplay">0</p>
+    <div class="calc-grid" id="calcGrid">
+      <button class="calc-btn" data-op="true" data-k="C" data-wide="true">C</button>
+      <button class="calc-btn" data-op="true" data-k="⌫">⌫</button>
+      <button class="calc-btn" data-op="true" data-k="/">÷</button>
+      <button class="calc-btn" data-k="7">7</button>
+      <button class="calc-btn" data-k="8">8</button>
+      <button class="calc-btn" data-k="9">9</button>
+      <button class="calc-btn" data-op="true" data-k="*">×</button>
+      <button class="calc-btn" data-k="4">4</button>
+      <button class="calc-btn" data-k="5">5</button>
+      <button class="calc-btn" data-k="6">6</button>
+      <button class="calc-btn" data-op="true" data-k="-">−</button>
+      <button class="calc-btn" data-k="1">1</button>
+      <button class="calc-btn" data-k="2">2</button>
+      <button class="calc-btn" data-k="3">3</button>
+      <button class="calc-btn" data-op="true" data-k="+">+</button>
+      <button class="calc-btn" data-k="0" data-wide="true">0</button>
+      <button class="calc-btn" data-k=".">.</button>
+      <button class="calc-btn" data-eq="true" data-k="=">=</button>
+    </div>
+    <div class="sheet-actions" style="margin-top:16px;">
+      <button class="btn-secondary" id="calcCloseBtn">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-scrim" id="backupScrim" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="backupTitle">
+    <h2 id="backupTitle">Respaldo de datos</h2>
+    <p class="backup-text">Toda tu información vive solo en este navegador. Descarga una copia de seguridad de vez en cuando para no perderla si cambias de dispositivo o borras tus datos.</p>
+    <div class="backup-row">
+      <button class="btn-primary" id="backupExportBtn" style="flex:1;">Descargar copia</button>
+    </div>
+    <div class="backup-row">
+      <button class="btn-secondary" id="backupImportBtn" style="flex:1;">Restaurar copia</button>
+      <input type="file" id="backupFileInput" accept="application/json" hidden>
+    </div>
+    <p class="backup-text" id="backupStatus"></p>
+    <div class="sheet-actions">
+      <button class="btn-secondary" id="backupCloseBtn" style="flex:1;">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="snackbar" id="snackbar" hidden>
+  <span id="snackbarText"></span>
+  <button id="undoBtn">Deshacer</button>
+</div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'dia-agenda-v1';
+  var state = { lastDate: '', reminders: [] };
+  var lastDeleted = null;
+  var undoTimer = null;
+
+  var ICONS = {
+    morning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v3M4.2 11H2m20 0h-2.2M5.6 5.6l1.6 1.6m9.6-1.6-1.6 1.6"/><path d="M4 17a8 8 0 0 1 16 0"/><path d="M2 21h20"/></svg>',
+    afternoon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M2.5 12h2M19.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"/></svg>',
+    night: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5Z"/></svg>',
+    check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+    trash: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>'
+  };
+  var PERSIST_BADGE = '<span class="persist-badge" title="No se repite: queda como lo dejes">fijo</span>';
+
+  // ---- frase motivacional del día ----
+  var QUOTES = [
+    'El tiempo no se compra, pero bien invertido rinde como el oro.',
+    'Cada minuto que cuidas hoy es una moneda que no perderás mañana.',
+    'El lujo real es tener tiempo para disfrutar lo que ganas.',
+    'Quien administra su tiempo, administra su fortuna.',
+    'El oro se pule, el tiempo se cuida: ambos brillan con atención.',
+    'Un día bien planeado vale más que un mes desperdiciado.',
+    'El tiempo perdido no se recupera; el dinero perdido, a veces sí.',
+    'La disciplina de hoy es la abundancia de mañana.',
+    'No cuentes las horas, haz que las horas cuenten.',
+    'El tiempo es el único lujo que no se puede comprar dos veces.',
+    'Ahorra minutos como ahorras monedas: pequeños, pero constantes.',
+    'El éxito se construye con horas bien invertidas, no con prisas.',
+    'Cada tarea cumplida es un peso menos y un paso más.',
+    'El tiempo vale su peso en oro cuando sabes en qué usarlo.',
+    'La riqueza empieza por ordenar el día antes que la cuenta.',
+    'Quien cuida sus minutos, no tiene que lamentar sus años.',
+    'Organiza tu agenda como organizarías tu caja fuerte.',
+    'El tiempo bien usado paga los mejores intereses.',
+    'No hay fortuna que compense un día mal aprovechado.',
+    'Detrás de cada meta cumplida hay minutos que decidiste no perder.',
+    'El tiempo es la moneda que todos gastamos, pocos invierten.',
+    'Hoy es el único momento en el que puedes ser productivo.',
+    'La puntualidad es una forma silenciosa de riqueza.',
+    'Cuida tus horarios como cuidas tu dinero: con intención.',
+    'El progreso se acumula igual que el interés compuesto: despacio y seguro.',
+    'Un plan claro convierte el tiempo en oportunidad.',
+    'La constancia diaria vale más que el esfuerzo de un solo día.',
+    'El tiempo que inviertes en ti nunca se deprecia.',
+    'Cada recordatorio cumplido es un ladrillo más en tu fortuna.',
+    'El verdadero lujo es despertar con el día ya bajo control.'
+  ];
+  function renderDailyQuote(){
+    var now = new Date();
+    var startOfYear = new Date(now.getFullYear(), 0, 0);
+    var dayOfYear = Math.floor((now - startOfYear) / 86400000);
+    var quote = QUOTES[dayOfYear % QUOTES.length];
+    var el = document.getElementById('dailyQuote');
+    if(el) el.textContent = '“' + quote + '”';
+  }
+
+  function todayStr(d){
+    d = d || new Date();
+    return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){ state = JSON.parse(raw); }
+    }catch(e){ console.error('No se pudo leer el almacenamiento', e); }
+    if(!state.reminders) state.reminders = [];
+    checkDailyReset();
+  }
+
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch(e){ console.error('No se pudo guardar', e); }
+  }
+
+  function checkDailyReset(){
+    var t = todayStr();
+    if(state.lastDate !== t){
+      state.reminders.forEach(function(r){
+        if(r.recurring !== false){
+          r.done = false;
+          r.firedDate = null;
+        }
+      });
+      state.lastDate = t;
+      save();
+    }
+  }
+
+  function periodOf(hour){
+    if(hour >= 5 && hour < 12) return 'morning';
+    if(hour >= 12 && hour < 19) return 'afternoon';
+    return 'night';
+  }
+  var periodLabels = { morning:'Mañana', afternoon:'Tarde', night:'Noche' };
+  var periodOrder = ['morning','afternoon','night'];
+
+  function sortKey(time){
+    var parts = time.split(':').map(Number);
+    var h = parts[0], m = parts[1];
+    if(h < 5) h += 24; // noche: 00-04 va después de 19-23
+    return h*60+m;
+  }
+
+  function renderClock(){
+    var now = new Date();
+    document.getElementById('dateLabel').textContent =
+      now.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+    document.getElementById('clockLabel').textContent =
+      now.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+  }
+
+  function minutesNow(){
+    var now = new Date();
+    return now.getHours()*60 + now.getMinutes();
+  }
+
+  function computeNext(){
+    var cur = minutesNow();
+    var best = null, bestDiff = Infinity;
+    state.reminders.forEach(function(r){
+      if(r.done) return;
+      var parts = r.time.split(':').map(Number);
+      var rm = parts[0]*60+parts[1];
+      var diff = (rm - cur + 1440) % 1440;
+      if(diff < bestDiff){ bestDiff = diff; best = r; }
+    });
+    return best ? { reminder:best, diff:bestDiff } : null;
+  }
+
+  function formatCountdown(diff){
+    if(diff <= 0) return 'es ahora';
+    var h = Math.floor(diff/60), m = diff%60;
+    if(h === 0) return 'en ' + m + ' min';
+    if(m === 0) return 'en ' + h + ' h';
+    return 'en ' + h + ' h ' + m + ' min';
+  }
+
+  function renderHero(){
+    var hero = document.getElementById('heroCard');
+    var next = computeNext();
+    if(!next){
+      if(state.reminders.length === 0){
+        hero.innerHTML = '<p class="hero-empty">Agrega tu primer recordatorio del día con el botón “+”.</p>';
+      } else {
+        hero.innerHTML = '<p class="hero-empty">Ya completaste tu agenda de hoy.</p>';
+      }
+      return;
+    }
+    hero.innerHTML =
+      '<p class="hero-label"><span class="hero-dot"></span>Siguiente</p>' +
+      '<p class="hero-time">' + next.reminder.time + '</p>' +
+      '<p class="hero-text">' + escapeHtml(next.reminder.text) + '</p>' +
+      '<p class="hero-countdown">' + formatCountdown(next.diff) + '</p>';
+  }
+
+  function escapeHtml(s){
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function renderList(){
+    var container = document.getElementById('listContainer');
+    var empty = document.getElementById('emptyState');
+    container.innerHTML = '';
+
+    if(state.reminders.length === 0){
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+
+    var groups = { morning:[], afternoon:[], night:[] };
+    state.reminders.forEach(function(r){
+      var hour = parseInt(r.time.split(':')[0], 10);
+      groups[periodOf(hour)].push(r);
+    });
+
+    periodOrder.forEach(function(key){
+      var items = groups[key];
+      if(items.length === 0) return;
+      items.sort(function(a,b){ return sortKey(a.time) - sortKey(b.time); });
+
+      var section = document.createElement('section');
+      section.className = 'period';
+      var heading = document.createElement('p');
+      heading.className = 'period-heading';
+      heading.innerHTML = ICONS[key] + '<span>' + periodLabels[key] + '</span>';
+      section.appendChild(heading);
+
+      var spine = document.createElement('div');
+      spine.className = 'spine';
+
+      items.forEach(function(r){
+        var row = document.createElement('div');
+        row.className = 'item';
+        row.setAttribute('data-id', r.id);
+        row.setAttribute('data-done', r.done ? 'true' : 'false');
+        row.setAttribute('data-fired', r.justFired ? 'true' : 'false');
+        row.innerHTML =
+          '<button class="check-btn" data-done="' + (r.done?'true':'false') + '" data-action="toggle" aria-label="Marcar como hecho">' +
+            (r.done ? ICONS.check : '') +
+          '</button>' +
+          '<div class="item-body">' +
+            '<span class="item-time">' + r.time + '</span>' +
+            (r.recurring === false ? PERSIST_BADGE : '') +
+            '<span class="item-text">' + escapeHtml(r.text) + '</span>' +
+          '</div>' +
+          '<button class="del-btn" data-action="delete" aria-label="Eliminar recordatorio">' + ICONS.trash + '</button>';
+        spine.appendChild(row);
+        r.justFired = false;
+      });
+
+      section.appendChild(spine);
+      container.appendChild(section);
+    });
+  }
+
+  function renderAll(){
+    renderHero();
+    renderList();
+  }
+
+  // ---- interacciones de lista ----
+  document.getElementById('listContainer').addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-action]');
+    if(!btn) return;
+    var row = btn.closest('.item');
+    var id = row.getAttribute('data-id');
+    var reminder = state.reminders.find(function(r){ return r.id === id; });
+    if(!reminder) return;
+
+    if(btn.dataset.action === 'toggle'){
+      reminder.done = !reminder.done;
+      save();
+      renderAll();
+    } else if(btn.dataset.action === 'delete'){
+      var idx = state.reminders.indexOf(reminder);
+      lastDeleted = { item: reminder, index: idx };
+      state.reminders.splice(idx, 1);
+      save();
+      renderAll();
+      showSnackbar('Recordatorio eliminado');
+    }
+  });
+
+  function showSnackbar(msg){
+    var bar = document.getElementById('snackbar');
+    document.getElementById('snackbarText').textContent = msg;
+    bar.hidden = false;
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(function(){ bar.hidden = true; lastDeleted = null; }, 5000);
+  }
+  document.getElementById('undoBtn').addEventListener('click', function(){
+    if(lastDeleted){
+      state.reminders.splice(lastDeleted.index, 0, lastDeleted.item);
+      save();
+      renderAll();
+    }
+    document.getElementById('snackbar').hidden = true;
+    lastDeleted = null;
+  });
+
+  // ---- hoja para agregar (multi-modo) ----
+  var scrim = document.getElementById('scrim');
+  var timeInput = document.getElementById('timeInput');
+  var textInput = document.getElementById('textInput');
+  var saveBtn = document.getElementById('saveBtn');
+  var sheetTitle = document.getElementById('sheetTitle');
+  var sheetMode = 'reminder';
+  var editingNoteId = null;
+  var taskPriorityChoice = 'media';
+
+  var fieldGroups = {
+    reminder: document.getElementById('fieldsReminder'),
+    task: document.getElementById('fieldsTask'),
+    note: document.getElementById('fieldsNote'),
+    habit: document.getElementById('fieldsHabit'),
+    event: document.getElementById('fieldsEvent'),
+    finance: document.getElementById('fieldsFinance')
+  };
+  var sheetTitles = {
+    reminder: 'Nuevo recordatorio',
+    task: 'Nueva tarea',
+    note: 'Nueva nota',
+    habit: 'Nuevo hábito',
+    event: 'Nuevo evento',
+    finance: 'Nuevo movimiento'
+  };
+  var finTypeChoice = 'venta';
+
+  function openSheet(mode){
+    sheetMode = mode || 'reminder';
+    sheetTitle.textContent = sheetTitles[sheetMode];
+    Object.keys(fieldGroups).forEach(function(k){ fieldGroups[k].hidden = (k !== sheetMode); });
+
+    if(sheetMode === 'reminder'){
+      var now = new Date();
+      now.setMinutes(now.getMinutes() + 5 - (now.getMinutes()%5));
+      timeInput.value = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()%60).padStart(2,'0');
+      textInput.value = '';
+      document.getElementById('recurringInput').checked = true;
+    } else if(sheetMode === 'task'){
+      document.getElementById('taskTextInput').value = '';
+      taskPriorityChoice = 'media';
+      document.querySelectorAll('#taskPriorityRow .pill').forEach(function(p){
+        p.setAttribute('data-active', p.dataset.p === 'media' ? 'true' : 'false');
+      });
+    } else if(sheetMode === 'note'){
+      editingNoteId = null;
+      document.getElementById('noteTextInput').value = '';
+    } else if(sheetMode === 'habit'){
+      document.getElementById('habitTextInput').value = '';
+    } else if(sheetMode === 'event'){
+      document.getElementById('eventDateInput').value = calSelectedDate;
+      document.getElementById('eventTextInput').value = '';
+    } else if(sheetMode === 'finance'){
+      finTypeChoice = 'venta';
+      document.querySelectorAll('#finTypeRow .pill').forEach(function(p){
+        p.setAttribute('data-active', p.dataset.t === 'venta' ? 'true' : 'false');
+      });
+      document.getElementById('finDateFormInput').value = calSelectedDate;
+      document.getElementById('finAmountInput').value = '';
+      document.getElementById('finNoteInput').value = '';
+    }
+
+    validateForm();
+    scrim.hidden = false;
+    setTimeout(function(){
+      var group = fieldGroups[sheetMode];
+      var focusable = group.querySelector('input, textarea');
+      if(focusable) focusable.focus();
+    }, 50);
+  }
+  function openNoteForEdit(note){
+    sheetMode = 'note';
+    editingNoteId = note.id;
+    sheetTitle.textContent = 'Editar nota';
+    Object.keys(fieldGroups).forEach(function(k){ fieldGroups[k].hidden = (k !== 'note'); });
+    document.getElementById('noteTextInput').value = note.text;
+    validateForm();
+    scrim.hidden = false;
+    setTimeout(function(){ document.getElementById('noteTextInput').focus(); }, 50);
+  }
+  function closeSheet(){ scrim.hidden = true; }
+
+  function validateForm(){
+    if(sheetMode === 'reminder'){
+      saveBtn.disabled = !(timeInput.value && textInput.value.trim());
+    } else if(sheetMode === 'task'){
+      saveBtn.disabled = !document.getElementById('taskTextInput').value.trim();
+    } else if(sheetMode === 'note'){
+      saveBtn.disabled = !document.getElementById('noteTextInput').value.trim();
+    } else if(sheetMode === 'habit'){
+      saveBtn.disabled = !document.getElementById('habitTextInput').value.trim();
+    } else if(sheetMode === 'event'){
+      var d = document.getElementById('eventDateInput').value;
+      var t = document.getElementById('eventTextInput').value.trim();
+      saveBtn.disabled = !(d && t);
+    } else if(sheetMode === 'finance'){
+      var fd = document.getElementById('finDateFormInput').value;
+      var fa = parseFloat(document.getElementById('finAmountInput').value);
+      saveBtn.disabled = !(fd && fa > 0);
+    }
+  }
+  timeInput.addEventListener('input', validateForm);
+  textInput.addEventListener('input', validateForm);
+  document.getElementById('taskTextInput').addEventListener('input', validateForm);
+  document.getElementById('noteTextInput').addEventListener('input', validateForm);
+  document.getElementById('habitTextInput').addEventListener('input', validateForm);
+  document.getElementById('eventDateInput').addEventListener('input', validateForm);
+  document.getElementById('eventTextInput').addEventListener('input', validateForm);
+  document.getElementById('finDateFormInput').addEventListener('input', validateForm);
+  document.getElementById('finAmountInput').addEventListener('input', validateForm);
+
+  document.getElementById('finTypeRow').addEventListener('click', function(e){
+    var pill = e.target.closest('.pill');
+    if(!pill) return;
+    finTypeChoice = pill.dataset.t;
+    document.querySelectorAll('#finTypeRow .pill').forEach(function(p){
+      p.setAttribute('data-active', p === pill ? 'true' : 'false');
+    });
+  });
+
+  document.getElementById('taskPriorityRow').addEventListener('click', function(e){
+    var pill = e.target.closest('.pill');
+    if(!pill) return;
+    taskPriorityChoice = pill.dataset.p;
+    document.querySelectorAll('#taskPriorityRow .pill').forEach(function(p){
+      p.setAttribute('data-active', p === pill ? 'true' : 'false');
+    });
+  });
+
+  document.getElementById('cancelBtn').addEventListener('click', closeSheet);
+  scrim.addEventListener('click', function(e){ if(e.target === scrim) closeSheet(); });
+
+  saveBtn.addEventListener('click', function(){
+    if(saveBtn.disabled) return;
+
+    if(sheetMode === 'reminder'){
+      state.reminders.push({
+        id: 'r' + Date.now() + Math.random().toString(16).slice(2),
+        time: timeInput.value,
+        text: textInput.value.trim(),
+        done: false,
+        firedDate: null,
+        recurring: document.getElementById('recurringInput').checked
+      });
+      save();
+      renderAll();
+
+    } else if(sheetMode === 'task'){
+      taskState.tasks.push({
+        id: 't' + Date.now() + Math.random().toString(16).slice(2),
+        text: document.getElementById('taskTextInput').value.trim(),
+        priority: taskPriorityChoice,
+        done: false
+      });
+      saveTasks();
+      renderTasks();
+      renderResumen();
+
+    } else if(sheetMode === 'note'){
+      var val = document.getElementById('noteTextInput').value.trim();
+      if(editingNoteId){
+        var n = noteState.notes.find(function(x){ return x.id === editingNoteId; });
+        if(n){ n.text = val; n.updatedAt = Date.now(); }
+      } else {
+        noteState.notes.unshift({
+          id: 'n' + Date.now() + Math.random().toString(16).slice(2),
+          text: val,
+          updatedAt: Date.now()
+        });
+      }
+      saveNotes();
+      renderNotes();
+
+    } else if(sheetMode === 'habit'){
+      habitState.habits.push({
+        id: 'h' + Date.now() + Math.random().toString(16).slice(2),
+        name: document.getElementById('habitTextInput').value.trim(),
+        doneDates: []
+      });
+      saveHabits();
+      renderHabits();
+      renderResumen();
+
+    } else if(sheetMode === 'event'){
+      calState.events.push({
+        id: 'e' + Date.now() + Math.random().toString(16).slice(2),
+        date: document.getElementById('eventDateInput').value,
+        text: document.getElementById('eventTextInput').value.trim()
+      });
+      saveCal();
+      renderCalendar();
+
+    } else if(sheetMode === 'finance'){
+      finState.entries.push({
+        id: 'f' + Date.now() + Math.random().toString(16).slice(2),
+        date: document.getElementById('finDateFormInput').value,
+        type: finTypeChoice,
+        amount: parseFloat(document.getElementById('finAmountInput').value) || 0,
+        note: document.getElementById('finNoteInput').value.trim()
+      });
+      calSelectedDate = document.getElementById('finDateFormInput').value;
+      saveFin();
+      renderFinanzas();
+      renderResumen();
+    }
+
+    closeSheet();
+  });
+
+  // ---- notificaciones ----
+  var notifBtn = document.getElementById('notifBtn');
+  var notifSupported = ('Notification' in window);
+  function refreshNotifBtn(){
+    if(!notifSupported){
+      notifBtn.style.display = 'none';
+      return;
+    }
+    var granted = Notification.permission === 'granted';
+    notifBtn.setAttribute('data-active', granted ? 'true' : 'false');
+    notifBtn.title = granted ? 'Avisos activados' : 'Activar avisos';
+  }
+  notifBtn.addEventListener('click', function(){
+    if(!notifSupported) return;
+    if(Notification.permission === 'default'){
+      Notification.requestPermission().then(refreshNotifBtn);
+    }
+  });
+
+  // ---- beep ----
+  function playBeep(){
+    try{
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.value = 880;
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
+      o.connect(g); g.connect(ctx.destination);
+      o.start();
+      o.stop(ctx.currentTime + 0.4);
+    }catch(e){ /* audio no disponible */ }
+  }
+
+  // ---- revisión periódica ----
+  function checkDue(){
+    checkDailyReset();
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2,'0');
+    var mm = String(now.getMinutes()).padStart(2,'0');
+    var cur = hh + ':' + mm;
+    var today = todayStr();
+    var fired = false;
+    state.reminders.forEach(function(r){
+      if(!r.done && r.time === cur && r.firedDate !== today){
+        r.firedDate = today;
+        r.justFired = true;
+        fired = true;
+        if(notifSupported && Notification.permission === 'granted' && document.hidden){
+          try{ new Notification('Recordatorio', { body: r.text }); }catch(e){}
+        }
+      }
+    });
+    if(fired){
+      playBeep();
+      save();
+      renderAll();
+    }
+  }
+
+  // ================= NAVEGACIÓN DE PESTAÑAS =================
+  var currentView = 'resumen';
+  var fabModeByView = { agenda:'reminder', tasks:'task', notes:'note', habits:'habit', calendar:'event', finanzas:'finance' };
+
+  function goToView(view){
+    currentView = view;
+    document.querySelectorAll('.view').forEach(function(v){ v.hidden = (v.id !== 'view-' + view); });
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.setAttribute('data-active', b.dataset.view === view ? 'true' : 'false'); });
+    var fab = document.getElementById('fabBtn');
+    if(fabModeByView[view]){ fab.style.display = ''; }
+    else { fab.style.display = 'none'; }
+    if(view === 'resumen') renderResumen();
+    if(view === 'agenda') renderAll();
+    if(view === 'tasks') renderTasks();
+    if(view === 'notes') renderNotes();
+    if(view === 'habits') renderHabits();
+    if(view === 'calendar') renderCalendar();
+    if(view === 'finanzas') renderFinanzas();
+  }
+  document.getElementById('tabNav').addEventListener('click', function(e){
+    var btn = e.target.closest('.tab-btn');
+    if(btn) goToView(btn.dataset.view);
+  });
+  document.querySelectorAll('[data-goto]').forEach(function(el){
+    el.addEventListener('click', function(){ goToView(el.dataset.goto); });
+  });
+  document.getElementById('fabBtn').addEventListener('click', function(){
+    var mode = fabModeByView[currentView];
+    if(mode) openSheet(mode);
+  });
+
+  // ================= TAREAS =================
+  var TASK_KEY = 'dandy-tasks-v1';
+  var taskState = { tasks: [] };
+  function loadTasks(){
+    try{ var raw = localStorage.getItem(TASK_KEY); if(raw) taskState = JSON.parse(raw); }catch(e){}
+    if(!taskState.tasks) taskState.tasks = [];
+  }
+  function saveTasks(){
+    try{ localStorage.setItem(TASK_KEY, JSON.stringify(taskState)); }catch(e){}
+  }
+  var prioOrder = { alta:0, media:1, baja:2 };
+  function renderTasks(){
+    var list = document.getElementById('taskList');
+    var empty = document.getElementById('taskEmpty');
+    var sorted = taskState.tasks.slice().sort(function(a,b){
+      if(a.done !== b.done) return a.done ? 1 : -1;
+      return prioOrder[a.priority] - prioOrder[b.priority];
+    });
+    list.innerHTML = '';
+    if(sorted.length === 0){ empty.hidden = false; } else { empty.hidden = true; }
+    sorted.forEach(function(t){
+      var row = document.createElement('div');
+      row.className = 'task-row';
+      row.setAttribute('data-done', t.done ? 'true' : 'false');
+      row.innerHTML =
+        '<button class="check-btn" data-done="' + (t.done?'true':'false') + '" data-action="toggle" aria-label="Marcar como hecha">' + (t.done ? ICONS.check : '') + '</button>' +
+        '<span class="prio-dot" data-p="' + t.priority + '"></span>' +
+        '<span class="task-body">' + escapeHtml(t.text) + '</span>' +
+        '<button class="del-btn" data-action="delete" aria-label="Eliminar tarea">' + ICONS.trash + '</button>';
+      row.addEventListener('click', function(e){
+        var btn = e.target.closest('button[data-action]');
+        if(!btn) return;
+        if(btn.dataset.action === 'toggle'){ t.done = !t.done; saveTasks(); renderTasks(); renderResumen(); }
+        else if(btn.dataset.action === 'delete'){
+          taskState.tasks = taskState.tasks.filter(function(x){ return x.id !== t.id; });
+          saveTasks(); renderTasks(); renderResumen();
+        }
+      });
+      list.appendChild(row);
+    });
+    var doneCount = taskState.tasks.filter(function(t){ return t.done; }).length;
+    var total = taskState.tasks.length;
+    var fill = document.getElementById('taskFill');
+    fill.style.width = (total ? Math.round(doneCount/total*100) : 0) + '%';
+    document.getElementById('taskNum').textContent = doneCount + '/' + total;
+  }
+
+  // ================= NOTAS =================
+  var NOTE_KEY = 'dandy-notes-v1';
+  var noteState = { notes: [] };
+  function loadNotes(){
+    try{ var raw = localStorage.getItem(NOTE_KEY); if(raw) noteState = JSON.parse(raw); }catch(e){}
+    if(!noteState.notes) noteState.notes = [];
+  }
+  function saveNotes(){
+    try{ localStorage.setItem(NOTE_KEY, JSON.stringify(noteState)); }catch(e){}
+  }
+  function renderNotes(){
+    var list = document.getElementById('notesList');
+    var empty = document.getElementById('notesEmpty');
+    list.innerHTML = '';
+    if(noteState.notes.length === 0){ empty.hidden = false; } else { empty.hidden = true; }
+    noteState.notes.forEach(function(n){
+      var card = document.createElement('div');
+      card.className = 'note-card';
+      var d = new Date(n.updatedAt);
+      var dateStr = d.toLocaleDateString('es-ES', { day:'numeric', month:'short' });
+      card.innerHTML =
+        '<div class="note-preview">' + escapeHtml(n.text) + '</div>' +
+        '<div class="note-meta"><span>' + dateStr + '</span><button data-action="delete">' + ICONS.trash + '</button></div>';
+      card.addEventListener('click', function(e){
+        if(e.target.closest('[data-action="delete"]')){
+          noteState.notes = noteState.notes.filter(function(x){ return x.id !== n.id; });
+          saveNotes(); renderNotes();
+          return;
+        }
+        openNoteForEdit(n);
+      });
+      list.appendChild(card);
+    });
+  }
+
+  // ================= HÁBITOS =================
+  var HABIT_KEY = 'dandy-habits-v1';
+  var habitState = { habits: [] };
+  function loadHabits(){
+    try{ var raw = localStorage.getItem(HABIT_KEY); if(raw) habitState = JSON.parse(raw); }catch(e){}
+    if(!habitState.habits) habitState.habits = [];
+  }
+  function saveHabits(){
+    try{ localStorage.setItem(HABIT_KEY, JSON.stringify(habitState)); }catch(e){}
+  }
+  function isoDay(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function last7Days(){
+    var days = [];
+    for(var i=6;i>=0;i--){
+      var d = new Date();
+      d.setDate(d.getDate()-i);
+      days.push(d);
+    }
+    return days;
+  }
+  function calcStreak(habit){
+    var streak = 0;
+    var d = new Date();
+    if(habit.doneDates.indexOf(isoDay(d)) === -1) d.setDate(d.getDate()-1);
+    while(habit.doneDates.indexOf(isoDay(d)) !== -1){
+      streak++;
+      d.setDate(d.getDate()-1);
+    }
+    return streak;
+  }
+  var dowLetters = ['D','L','M','M','J','V','S'];
+  function renderHabits(){
+    var list = document.getElementById('habitsList');
+    var empty = document.getElementById('habitsEmpty');
+    list.innerHTML = '';
+    if(habitState.habits.length === 0){ empty.hidden = false; } else { empty.hidden = true; }
+    var today = isoDay(new Date());
+    var days = last7Days();
+    habitState.habits.forEach(function(h){
+      var card = document.createElement('div');
+      card.className = 'habit-card';
+      var weekHtml = days.map(function(d){
+        var key = isoDay(d);
+        var done = h.doneDates.indexOf(key) !== -1;
+        var isToday = key === today;
+        return '<div class="habit-day"><span class="habit-day-label">' + dowLetters[d.getDay()] + '</span>' +
+          '<button class="habit-check" data-date="' + key + '" data-done="' + done + '" data-today="' + isToday + '"' + (isToday ? '' : ' disabled') + '>' +
+          (done ? ICONS.check : '') + '</button></div>';
+      }).join('');
+      card.innerHTML =
+        '<div class="habit-top"><span class="habit-name">' + escapeHtml(h.name) + '</span>' +
+        '<span class="habit-streak">🔥 ' + calcStreak(h) + '</span></div>' +
+        '<div class="habit-week">' + weekHtml + '</div>';
+      var delBtn = document.createElement('button');
+      delBtn.className = 'habit-del';
+      delBtn.style.marginTop = '10px';
+      delBtn.style.fontSize = '12px';
+      delBtn.textContent = 'Eliminar hábito';
+      delBtn.addEventListener('click', function(){
+        habitState.habits = habitState.habits.filter(function(x){ return x.id !== h.id; });
+        saveHabits(); renderHabits(); renderResumen();
+      });
+      card.appendChild(delBtn);
+      card.querySelectorAll('.habit-check[data-today="true"]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var key = btn.dataset.date;
+          var idx = h.doneDates.indexOf(key);
+          if(idx === -1) h.doneDates.push(key); else h.doneDates.splice(idx,1);
+          saveHabits(); renderHabits(); renderResumen();
+        });
+      });
+      list.appendChild(card);
+    });
+  }
+
+  // ================= CALENDARIO =================
+  var CAL_KEY = 'dandy-calendar-v1';
+  var calState = { events: [] };
+  var calViewDate = new Date();
+  var calSelectedDate = isoDay(new Date());
+  function loadCal(){
+    try{ var raw = localStorage.getItem(CAL_KEY); if(raw) calState = JSON.parse(raw); }catch(e){}
+    if(!calState.events) calState.events = [];
+  }
+  function saveCal(){
+    try{ localStorage.setItem(CAL_KEY, JSON.stringify(calState)); }catch(e){}
+  }
+  function renderCalendar(){
+    var grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    ['D','L','M','M','J','V','S'].forEach(function(l){
+      var el = document.createElement('div'); el.className='cal-dow'; el.textContent=l; grid.appendChild(el);
+    });
+    var year = calViewDate.getFullYear(), month = calViewDate.getMonth();
+    document.getElementById('calMonthLabel').textContent =
+      calViewDate.toLocaleDateString('es-ES', { month:'long', year:'numeric' });
+    var firstDow = new Date(year, month, 1).getDay();
+    var daysInMonth = new Date(year, month+1, 0).getDate();
+    var daysInPrevMonth = new Date(year, month, 0).getDate();
+    var todayKey = isoDay(new Date());
+    var cells = [];
+    for(var i=firstDow-1;i>=0;i--){ cells.push({ day: daysInPrevMonth-i, muted:true, y:year, m:month-1 }); }
+    for(var d=1; d<=daysInMonth; d++){ cells.push({ day:d, muted:false, y:year, m:month }); }
+    while(cells.length % 7 !== 0){ cells.push({ day: cells.length - firstDow - daysInMonth + 1, muted:true, y:year, m:month+1 }); }
+
+    cells.forEach(function(c){
+      var realDate = new Date(c.y, c.m, c.day);
+      var key = isoDay(realDate);
+      var hasEvents = calState.events.some(function(ev){ return ev.date === key; });
+      var dayFin = finState.entries.filter(function(f){ return f.date === key; });
+      var dotsHtml = '';
+      if(hasEvents || dayFin.length){
+        var finNet = dayFin.reduce(function(s,f){ return s + (f.type==='venta'?f.amount:-f.amount); }, 0);
+        dotsHtml = '<span class="day-dots">' +
+          (hasEvents ? '<span class="d-event"></span>' : '') +
+          (dayFin.length ? '<span class="' + (finNet>=0?'d-fin-pos':'d-fin-neg') + '"></span>' : '') +
+        '</span>';
+      }
+      var el = document.createElement('div');
+      el.className = 'cal-day';
+      el.setAttribute('data-muted', c.muted ? 'true' : 'false');
+      el.setAttribute('data-today', key === todayKey ? 'true' : 'false');
+      el.setAttribute('data-selected', key === calSelectedDate ? 'true' : 'false');
+      el.innerHTML = c.day + dotsHtml;
+      el.addEventListener('click', function(){
+        calSelectedDate = key;
+        if(c.muted){ calViewDate = new Date(c.y, c.m, 1); }
+        renderCalendar();
+        renderFinanzas();
+      });
+      grid.appendChild(el);
+    });
+
+    var evLabel = document.getElementById('calEventsLabel');
+    var selDate = new Date(calSelectedDate + 'T00:00:00');
+    evLabel.textContent = selDate.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+    var evList = document.getElementById('calEventsList');
+    var todaysEvents = calState.events.filter(function(ev){ return ev.date === calSelectedDate; });
+    evList.innerHTML = '';
+    if(todaysEvents.length === 0){
+      evList.innerHTML = '<p class="cal-empty">Sin eventos este día.</p>';
+    } else {
+      todaysEvents.forEach(function(ev){
+        var row = document.createElement('div');
+        row.className = 'cal-event-row';
+        row.innerHTML = '<span>' + escapeHtml(ev.text) + '</span><button data-action="delete">' + ICONS.trash + '</button>';
+        row.querySelector('button').addEventListener('click', function(){
+          calState.events = calState.events.filter(function(x){ return x.id !== ev.id; });
+          saveCal(); renderCalendar();
+        });
+        evList.appendChild(row);
+      });
+    }
+  }
+  document.getElementById('calPrevBtn').addEventListener('click', function(){
+    calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth()-1, 1);
+    renderCalendar();
+  });
+  document.getElementById('calNextBtn').addEventListener('click', function(){
+    calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth()+1, 1);
+    renderCalendar();
+  });
+
+  // ================= FINANZAS =================
+  var FIN_KEY = 'dandy-finance-v1';
+  var finState = { entries: [] };
+  function loadFin(){
+    try{ var raw = localStorage.getItem(FIN_KEY); if(raw) finState = JSON.parse(raw); }catch(e){}
+    if(!finState.entries) finState.entries = [];
+  }
+  function saveFin(){
+    try{ localStorage.setItem(FIN_KEY, JSON.stringify(finState)); }catch(e){}
+  }
+  function fmtMoney(n){
+    n = n || 0;
+    var sign = n < 0 ? '-' : '';
+    var abs = Math.abs(n);
+    var hasCents = Math.round(abs*100) % 100 !== 0;
+    return sign + '$' + abs.toLocaleString('es-MX', { minimumFractionDigits: hasCents?2:0, maximumFractionDigits:2 });
+  }
+  function renderFinanzas(){
+    document.getElementById('finMonthLabel').textContent = calViewDate.toLocaleDateString('es-ES', { month:'long', year:'numeric' });
+    var year = calViewDate.getFullYear(), month = calViewDate.getMonth();
+
+    var monthEntries = finState.entries.filter(function(f){
+      var d = new Date(f.date + 'T00:00:00');
+      return d.getFullYear()===year && d.getMonth()===month;
+    });
+    var monthIn = monthEntries.filter(function(f){ return f.type==='venta'; }).reduce(function(s,f){ return s+f.amount; },0);
+    var monthOut = monthEntries.filter(function(f){ return f.type==='gasto'; }).reduce(function(s,f){ return s+f.amount; },0);
+    document.getElementById('finMonthIn').textContent = fmtMoney(monthIn);
+    document.getElementById('finMonthOut').textContent = fmtMoney(monthOut);
+    var balEl = document.getElementById('finMonthBalance');
+    balEl.textContent = fmtMoney(monthIn-monthOut);
+    balEl.className = 'fin-stat-num ' + (monthIn-monthOut >= 0 ? 'pos' : 'neg');
+
+    var daysInMonth = new Date(year, month+1, 0).getDate();
+    var dayNets = [], maxAbs = 0;
+    for(var d=1; d<=daysInMonth; d++){
+      var key = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      var net = monthEntries.filter(function(f){ return f.date===key; })
+        .reduce(function(s,f){ return s + (f.type==='venta'?f.amount:-f.amount); }, 0);
+      dayNets.push({ key:key, day:d, net:net });
+      if(Math.abs(net) > maxAbs) maxAbs = Math.abs(net);
+    }
+    var chart = document.getElementById('finChart');
+    chart.innerHTML = '';
+    dayNets.forEach(function(dn){
+      var bar = document.createElement('div');
+      var h = maxAbs ? Math.max(3, Math.round(Math.abs(dn.net)/maxAbs*64)) : 3;
+      bar.className = 'fin-bar' + (dn.net > 0 ? ' pos' : (dn.net < 0 ? ' neg' : ''));
+      bar.style.height = h + 'px';
+      bar.setAttribute('data-sel', dn.key === calSelectedDate ? 'true' : 'false');
+      bar.title = dn.day + ' · ' + fmtMoney(dn.net);
+      bar.addEventListener('click', function(){
+        calSelectedDate = dn.key;
+        renderFinanzas();
+        renderCalendar();
+      });
+      chart.appendChild(bar);
+    });
+
+    document.getElementById('finDateInput').value = calSelectedDate;
+    var selDate = new Date(calSelectedDate + 'T00:00:00');
+    document.getElementById('finDateLabel').textContent = selDate.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+
+    var dayEntries = finState.entries.filter(function(f){ return f.date === calSelectedDate; });
+    var dayIn = dayEntries.filter(function(f){ return f.type==='venta'; }).reduce(function(s,f){ return s+f.amount; },0);
+    var dayOut = dayEntries.filter(function(f){ return f.type==='gasto'; }).reduce(function(s,f){ return s+f.amount; },0);
+    document.getElementById('finDayTotal').textContent =
+      'Ventas ' + fmtMoney(dayIn) + '  ·  Gastos ' + fmtMoney(dayOut) + '  ·  Balance ' + fmtMoney(dayIn-dayOut);
+
+    var list = document.getElementById('finEntriesList');
+    var empty = document.getElementById('finEmpty');
+    list.innerHTML = '';
+    empty.hidden = dayEntries.length !== 0;
+    dayEntries.forEach(function(f){
+      var row = document.createElement('div');
+      row.className = 'fin-entry-row';
+      row.innerHTML =
+        '<span class="fin-type-icon ' + f.type + '">' + (f.type==='venta' ? '+' : '−') + '</span>' +
+        '<div class="fin-entry-body">' +
+          (f.note ? '<div>' + escapeHtml(f.note) + '</div>' : '<div class="fin-entry-note">' + (f.type==='venta'?'Venta':'Gasto') + '</div>') +
+        '</div>' +
+        '<span class="fin-entry-amount ' + f.type + '">' + (f.type==='venta'?'+':'−') + fmtMoney(f.amount) + '</span>' +
+        '<button class="del-btn" data-action="delete" aria-label="Eliminar movimiento">' + ICONS.trash + '</button>';
+      row.querySelector('[data-action="delete"]').addEventListener('click', function(){
+        finState.entries = finState.entries.filter(function(x){ return x.id !== f.id; });
+        saveFin(); renderFinanzas(); renderResumen(); renderCalendar();
+      });
+      list.appendChild(row);
+    });
+  }
+  document.getElementById('finPrevBtn').addEventListener('click', function(){
+    calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth()-1, 1);
+    renderFinanzas(); renderCalendar();
+  });
+  document.getElementById('finNextBtn').addEventListener('click', function(){
+    calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth()+1, 1);
+    renderFinanzas(); renderCalendar();
+  });
+  document.getElementById('finDateInput').addEventListener('change', function(e){
+    if(!e.target.value) return;
+    calSelectedDate = e.target.value;
+    var d = new Date(calSelectedDate + 'T00:00:00');
+    calViewDate = new Date(d.getFullYear(), d.getMonth(), 1);
+    renderFinanzas(); renderCalendar();
+  });
+
+  // ================= TEMPORIZADORES: POMODORO =================
+  var POMO_KEY = 'dandy-pomo-v1';
+  var pomo = { focusMin:25, breakMin:5, sessionsToday:0, lastDate:'', phase:'focus', remaining:25*60, running:false, endAt:null };
+  function loadPomo(){
+    try{
+      var raw = localStorage.getItem(POMO_KEY);
+      if(raw){
+        var saved = JSON.parse(raw);
+        pomo.focusMin = saved.focusMin || 25;
+        pomo.breakMin = saved.breakMin || 5;
+        pomo.sessionsToday = saved.sessionsToday || 0;
+        pomo.lastDate = saved.lastDate || '';
+      }
+    }catch(e){}
+    var today = isoDay(new Date());
+    if(pomo.lastDate !== today){ pomo.sessionsToday = 0; pomo.lastDate = today; }
+    pomo.remaining = pomo.focusMin*60;
+  }
+  function savePomoSettings(){
+    try{ localStorage.setItem(POMO_KEY, JSON.stringify({
+      focusMin:pomo.focusMin, breakMin:pomo.breakMin, sessionsToday:pomo.sessionsToday, lastDate:pomo.lastDate
+    })); }catch(e){}
+  }
+  function fmtClock(sec){
+    sec = Math.max(0, Math.round(sec));
+    var m = Math.floor(sec/60), s = sec%60;
+    return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+  function renderPomo(){
+    document.getElementById('pomoDisplay').textContent = fmtClock(pomo.remaining);
+    document.getElementById('pomoPhaseLabel').textContent = pomo.phase === 'focus' ? 'Enfoque' : 'Descanso';
+    document.getElementById('pomoStartBtn').textContent = pomo.running ? 'Pausar' : (pomo.remaining < (pomo.phase==='focus'?pomo.focusMin:pomo.breakMin)*60 ? 'Reanudar' : 'Iniciar');
+    document.getElementById('pomoSessionsNote').textContent = 'Sesiones de enfoque completadas hoy: ' + pomo.sessionsToday;
+    document.getElementById('pomoFocusInput').value = pomo.focusMin;
+    document.getElementById('pomoBreakInput').value = pomo.breakMin;
+  }
+  function pomoTick(){
+    if(!pomo.running) return;
+    var left = (pomo.endAt - Date.now())/1000;
+    if(left <= 0){
+      pomo.remaining = 0;
+      renderPomo();
+      playBeep();
+      if(pomo.phase === 'focus'){
+        pomo.sessionsToday++;
+        pomo.phase = 'break';
+        pomo.remaining = pomo.breakMin*60;
+      } else {
+        pomo.phase = 'focus';
+        pomo.remaining = pomo.focusMin*60;
+      }
+      savePomoSettings();
+      pomo.endAt = Date.now() + pomo.remaining*1000;
+      renderResumen();
+      if(notifSupported && Notification.permission === 'granted' && document.hidden){
+        try{ new Notification('Dandy · Enfoque', { body: pomo.phase === 'break' ? '¡Tiempo de descanso!' : '¡De vuelta al enfoque!' }); }catch(e){}
+      }
+    } else {
+      pomo.remaining = left;
+    }
+    renderPomo();
+  }
+  document.getElementById('pomoStartBtn').addEventListener('click', function(){
+    if(pomo.running){
+      pomo.running = false;
+      pomo.remaining = Math.max(0,(pomo.endAt - Date.now())/1000);
+    } else {
+      pomo.running = true;
+      pomo.endAt = Date.now() + pomo.remaining*1000;
+    }
+    renderPomo();
+  });
+  document.getElementById('pomoResetBtn').addEventListener('click', function(){
+    pomo.running = false;
+    pomo.phase = 'focus';
+    pomo.remaining = pomo.focusMin*60;
+    renderPomo();
+  });
+  document.getElementById('pomoFocusInput').addEventListener('change', function(e){
+    var v = Math.max(1, Math.min(120, parseInt(e.target.value,10) || 25));
+    pomo.focusMin = v;
+    if(!pomo.running && pomo.phase === 'focus') pomo.remaining = v*60;
+    savePomoSettings(); renderPomo();
+  });
+  document.getElementById('pomoBreakInput').addEventListener('change', function(e){
+    var v = Math.max(1, Math.min(60, parseInt(e.target.value,10) || 5));
+    pomo.breakMin = v;
+    if(!pomo.running && pomo.phase === 'break') pomo.remaining = v*60;
+    savePomoSettings(); renderPomo();
+  });
+
+  // ================= TEMPORIZADOR DE EJERCICIO =================
+  var EX_KEY = 'dandy-exercise-v1';
+  var ex = { workSec:30, restSec:15, rounds:8, round:1, phase:'idle', remaining:30, running:false, endAt:null };
+  function loadEx(){
+    try{
+      var raw = localStorage.getItem(EX_KEY);
+      if(raw){
+        var saved = JSON.parse(raw);
+        ex.workSec = saved.workSec || 30;
+        ex.restSec = (saved.restSec === 0) ? 0 : (saved.restSec || 15);
+        ex.rounds = saved.rounds || 8;
+      }
+    }catch(e){}
+  }
+  function saveExSettings(){
+    try{ localStorage.setItem(EX_KEY, JSON.stringify({ workSec:ex.workSec, restSec:ex.restSec, rounds:ex.rounds })); }catch(e){}
+  }
+  function renderEx(){
+    document.getElementById('exWorkInput').value = ex.workSec;
+    document.getElementById('exRestInput').value = ex.restSec;
+    document.getElementById('exRoundsInput').value = ex.rounds;
+    document.getElementById('exDisplay').textContent = fmtClock(ex.remaining);
+    var label = 'Listo para empezar';
+    if(ex.phase === 'work') label = 'Trabajo';
+    else if(ex.phase === 'rest') label = 'Descanso';
+    else if(ex.phase === 'done') label = '¡Rutina completa!';
+    document.getElementById('exPhaseLabel').textContent = label;
+    document.getElementById('exRoundLabel').textContent = (ex.phase === 'idle' || ex.phase === 'done') ? '' : ('Ronda ' + ex.round + '/' + ex.rounds);
+    document.getElementById('exStartBtn').textContent = ex.running ? 'Pausar' : (ex.phase === 'idle' || ex.phase === 'done' ? 'Iniciar' : 'Reanudar');
+  }
+  function exResetState(){
+    ex.running = false;
+    ex.phase = 'idle';
+    ex.round = 1;
+    ex.remaining = ex.workSec;
+  }
+  function exTick(){
+    if(!ex.running) return;
+    var left = (ex.endAt - Date.now())/1000;
+    if(left <= 0){
+      playBeep();
+      if(ex.phase === 'work'){
+        if(ex.restSec > 0){
+          ex.phase = 'rest';
+          ex.remaining = ex.restSec;
+        } else {
+          advanceExRound();
+        }
+      } else if(ex.phase === 'rest'){
+        advanceExRound();
+      }
+      if(ex.phase !== 'done'){
+        ex.endAt = Date.now() + ex.remaining*1000;
+      } else {
+        ex.running = false;
+      }
+    } else {
+      ex.remaining = left;
+    }
+    renderEx();
+  }
+  function advanceExRound(){
+    if(ex.round >= ex.rounds){
+      ex.phase = 'done';
+      ex.remaining = 0;
+    } else {
+      ex.round++;
+      ex.phase = 'work';
+      ex.remaining = ex.workSec;
+    }
+  }
+  document.getElementById('exStartBtn').addEventListener('click', function(){
+    if(ex.running){
+      ex.running = false;
+      ex.remaining = Math.max(0,(ex.endAt - Date.now())/1000);
+    } else {
+      if(ex.phase === 'idle' || ex.phase === 'done'){
+        ex.phase = 'work'; ex.round = 1; ex.remaining = ex.workSec;
+      }
+      ex.running = true;
+      ex.endAt = Date.now() + ex.remaining*1000;
+    }
+    renderEx();
+  });
+  document.getElementById('exResetBtn').addEventListener('click', function(){
+    exResetState();
+    renderEx();
+  });
+  document.getElementById('exWorkInput').addEventListener('change', function(e){
+    ex.workSec = Math.max(5, Math.min(600, parseInt(e.target.value,10) || 30));
+    saveExSettings();
+    if(!ex.running && (ex.phase==='idle')) ex.remaining = ex.workSec;
+    renderEx();
+  });
+  document.getElementById('exRestInput').addEventListener('change', function(e){
+    ex.restSec = Math.max(0, Math.min(300, parseInt(e.target.value,10) || 0));
+    saveExSettings(); renderEx();
+  });
+  document.getElementById('exRoundsInput').addEventListener('change', function(e){
+    ex.rounds = Math.max(1, Math.min(30, parseInt(e.target.value,10) || 8));
+    saveExSettings(); renderEx();
+  });
+
+  document.getElementById('timerSegment').addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-mode]');
+    if(!btn) return;
+    document.querySelectorAll('#timerSegment button').forEach(function(b){ b.setAttribute('data-active', b===btn?'true':'false'); });
+    document.getElementById('pomoPanel').hidden = (btn.dataset.mode !== 'pomo');
+    document.getElementById('exercisePanel').hidden = (btn.dataset.mode !== 'exercise');
+  });
+
+  setInterval(pomoTick, 1000);
+  setInterval(exTick, 1000);
+
+  // ================= RESUMEN =================
+  function renderResumen(){
+    var next = computeNext();
+    var nextEl = document.getElementById('resumenNext');
+    if(next){
+      nextEl.innerHTML = '<p style="margin:0;font-size:15px;"><strong>' + next.reminder.time + '</strong> · ' + escapeHtml(next.reminder.text) + '</p>';
+    } else {
+      nextEl.innerHTML = '<p style="margin:0;font-size:14.5px;color:var(--ink-soft);">No tienes pendientes hoy.</p>';
+    }
+
+    var today = isoDay(new Date());
+
+    var doneCount = taskState.tasks.filter(function(t){ return t.done; }).length;
+    var total = taskState.tasks.length;
+    var pct = total ? doneCount/total : 0;
+    var circumference = 194.8;
+    var ring = document.getElementById('resumenTaskRing');
+    if(ring) ring.setAttribute('stroke-dashoffset', Math.round(circumference * (1-pct)));
+    document.getElementById('resumenTaskNum').textContent = doneCount + '/' + total;
+    document.getElementById('resumenTaskHint').textContent =
+      total === 0 ? 'Sin tareas pendientes.' :
+      (doneCount === total ? '¡Todas tus tareas están listas!' :
+      (total-doneCount) + ' tarea' + ((total-doneCount)===1?'':'s') + ' por terminar.');
+
+    var todayFin = finState.entries.filter(function(f){ return f.date === today; });
+    var finIn = todayFin.filter(function(f){ return f.type==='venta'; }).reduce(function(s,f){ return s+f.amount; },0);
+    var finOut = todayFin.filter(function(f){ return f.type==='gasto'; }).reduce(function(s,f){ return s+f.amount; },0);
+    document.getElementById('resumenFinBalance').textContent = fmtMoney(finIn-finOut);
+    document.getElementById('resumenFinDetail').textContent =
+      todayFin.length === 0 ? 'Sin movimientos hoy' : ('Ventas ' + fmtMoney(finIn) + ' · Gastos ' + fmtMoney(finOut));
+
+    var habitsEl = document.getElementById('resumenHabits');
+    if(habitState.habits.length === 0){
+      habitsEl.innerHTML = '<p style="margin:0;font-size:14px;color:var(--ink-soft);">Aún no tienes hábitos.</p>';
+    } else {
+      habitsEl.innerHTML = habitState.habits.map(function(h){
+        var done = h.doneDates.indexOf(today) !== -1;
+        return '<div class="mini-habit-row"><span class="name"><span class="mini-dot" data-done="' + done + '"></span>' + escapeHtml(h.name) + '</span></div>';
+      }).join('');
+    }
+
+    document.getElementById('resumenPomo').textContent = 'Sesiones completadas hoy: ' + pomo.sessionsToday;
+  }
+
+  // ================= CALCULADORA =================
+  var calcScrim = document.getElementById('calcScrim');
+  var calcDisplay = document.getElementById('calcDisplay');
+  var calcExpr = '';
+  document.getElementById('calcBtn').addEventListener('click', function(){
+    calcExpr = '';
+    calcDisplay.textContent = '0';
+    calcScrim.hidden = false;
+  });
+  document.getElementById('calcCloseBtn').addEventListener('click', function(){ calcScrim.hidden = true; });
+  calcScrim.addEventListener('click', function(e){ if(e.target === calcScrim) calcScrim.hidden = true; });
+  document.getElementById('calcGrid').addEventListener('click', function(e){
+    var btn = e.target.closest('.calc-btn');
+    if(!btn) return;
+    var k = btn.dataset.k;
+    if(k === 'C'){ calcExpr = ''; }
+    else if(k === '⌫'){ calcExpr = calcExpr.slice(0,-1); }
+    else if(k === '='){
+      try{
+        var safe = calcExpr.replace(/[^0-9+\-*/.()]/g,'');
+        if(safe){
+          var result = Function('"use strict";return (' + safe + ')')();
+          calcExpr = (Math.round(result*100000)/100000).toString();
+        }
+      }catch(err){ calcExpr = 'Error'; }
+    } else {
+      if(calcExpr === 'Error') calcExpr = '';
+      calcExpr += k;
+    }
+    calcDisplay.textContent = calcExpr || '0';
+  });
+
+  // ================= RESPALDO =================
+  var backupScrim = document.getElementById('backupScrim');
+  var backupStatus = document.getElementById('backupStatus');
+  var BACKUP_KEYS = {
+    reminders: STORAGE_KEY,
+    tasks: TASK_KEY,
+    notes: NOTE_KEY,
+    habits: HABIT_KEY,
+    calendar: CAL_KEY,
+    finance: FIN_KEY,
+    pomodoro: POMO_KEY,
+    exercise: EX_KEY
+  };
+  document.getElementById('backupBtn').addEventListener('click', function(){
+    backupStatus.textContent = '';
+    backupScrim.hidden = false;
+  });
+  document.getElementById('backupCloseBtn').addEventListener('click', function(){ backupScrim.hidden = true; });
+  backupScrim.addEventListener('click', function(e){ if(e.target === backupScrim) backupScrim.hidden = true; });
+
+  document.getElementById('backupExportBtn').addEventListener('click', function(){
+    var data = { exportedAt: new Date().toISOString() };
+    Object.keys(BACKUP_KEYS).forEach(function(k){
+      try{ data[k] = JSON.parse(localStorage.getItem(BACKUP_KEYS[k]) || 'null'); }catch(e){ data[k] = null; }
+    });
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'agenda-dandy-respaldo-' + isoDay(new Date()) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    backupStatus.textContent = 'Copia descargada. Guárdala en un lugar seguro.';
+  });
+
+  document.getElementById('backupImportBtn').addEventListener('click', function(){
+    document.getElementById('backupFileInput').click();
+  });
+  document.getElementById('backupFileInput').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var data = JSON.parse(reader.result);
+        Object.keys(BACKUP_KEYS).forEach(function(k){
+          if(data[k] !== undefined && data[k] !== null){
+            localStorage.setItem(BACKUP_KEYS[k], JSON.stringify(data[k]));
+          }
+        });
+        load(); loadTasks(); loadNotes(); loadHabits(); loadCal(); loadFin(); loadPomo(); loadEx(); exResetState();
+        renderAll(); renderTasks(); renderNotes(); renderHabits(); renderCalendar(); renderFinanzas(); renderPomo(); renderEx(); renderResumen();
+        backupStatus.textContent = 'Datos restaurados correctamente.';
+      }catch(err){
+        backupStatus.textContent = 'No se pudo leer ese archivo. Verifica que sea una copia válida.';
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // ---- init ----
+  function startApp(){
+    load();
+    renderDailyQuote();
+    loadTasks();
+    loadNotes();
+    loadHabits();
+    loadCal();
+    loadFin();
+    loadPomo();
+    loadEx();
+    exResetState();
+    refreshNotifBtn();
+    renderClock();
+    renderAll();
+    renderTasks();
+    renderNotes();
+    renderHabits();
+    renderCalendar();
+    renderFinanzas();
+    renderPomo();
+    renderEx();
+    renderResumen();
+    goToView('resumen');
+    setInterval(renderClock, 1000);
+    setInterval(function(){ renderHero(); renderResumen(); }, 15000);
+    setInterval(checkDue, 15000);
+  }
+
+  // ---- inicio directo ----
+  startApp();
+})();
+</script>
+</body>
+</html>
