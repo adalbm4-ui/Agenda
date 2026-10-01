@@ -1285,6 +1285,158 @@
     display:flex; align-items:center; justify-content:center; gap:10px;
   }
   .google-btn svg{ flex-shrink:0; }
+
+  /* ==========================================================
+     ASISTENTE IA LOCAL — estilos
+     ========================================================== */
+  .ia-lead{
+    margin:-6px 0 16px; font-size:13.5px; line-height:1.55; color:var(--ink-soft);
+  }
+  .ia-privacy{
+    display:inline-flex; align-items:center; gap:6px; margin-top:2px;
+    font-size:11.5px; color:var(--ink-soft); opacity:.9;
+  }
+  .ia-privacy svg{ width:13px; height:13px; flex-shrink:0; }
+
+  .ia-input-row{ display:flex; gap:8px; align-items:stretch; }
+  .ia-text-input{
+    flex:1; min-width:0; padding:12px 14px; border-radius:12px;
+    border:1.5px solid var(--line); background:var(--surface-2); color:var(--ink);
+    font-family:'Work Sans', sans-serif; font-size:15px;
+  }
+  .ia-text-input:focus{ outline:none; border-color:var(--accent); }
+  .ia-text-input::placeholder{ color:var(--ink-soft); opacity:.65; }
+  .ia-send{
+    flex-shrink:0; padding:0 15px; border-radius:12px; border:none; cursor:pointer;
+    background:linear-gradient(140deg, var(--accent), var(--accent-deep));
+    color:var(--on-accent); font-weight:600; font-size:13.5px;
+    font-family:'Work Sans', sans-serif;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .ia-send:disabled{ opacity:.4; cursor:default; }
+
+  .ia-chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .ia-chip{
+    padding:7px 11px; border-radius:999px; cursor:pointer; text-align:left;
+    border:1px solid var(--accent-border); background:rgba(244,196,48,0.07);
+    color:var(--ink); font-size:12.5px; font-family:'Work Sans', sans-serif;
+  }
+  .ia-chip:active{ transform:scale(.97); }
+
+  .ia-preview{
+    margin-top:14px; padding:14px; border-radius:14px;
+    background:var(--surface-2); border:1.5px dashed var(--accent-border);
+  }
+  .ia-preview-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:11px; flex-wrap:wrap; }
+  .ia-preview-title{ font-size:12.5px; color:var(--ink-soft); }
+  .ia-conf{ display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--ink-soft); }
+  .ia-conf-track{ width:58px; height:5px; border-radius:999px; background:rgba(255,255,255,.09); overflow:hidden; }
+  .ia-conf-fill{ height:100%; background:linear-gradient(90deg, var(--wine-bright), var(--accent)); border-radius:999px; }
+  .ia-pred-grid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; }
+  .ia-pred{
+    padding:9px 10px; border-radius:10px; background:rgba(255,255,255,.03);
+    border:1px solid var(--line); min-width:0;
+  }
+  .ia-pred.wide{ grid-column:1 / -1; }
+  .ia-pred-label{ font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); }
+  .ia-pred-value{ font-size:14px; margin-top:2px; overflow-wrap:anywhere; }
+  .ia-why{ margin-top:11px; font-size:11.5px; color:var(--ink-soft); line-height:1.6; }
+  .ia-why b{ color:var(--accent-deep); font-weight:600; }
+  .ia-types{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .ia-type{
+    padding:6px 10px; border-radius:9px; font-size:12px; cursor:pointer;
+    border:1.5px solid var(--line); background:transparent; color:var(--ink-soft);
+    font-family:'Work Sans', sans-serif;
+  }
+  .ia-type[data-active="true"]{ border-color:var(--accent); color:var(--on-accent); background:var(--accent); }
+  .ia-actions{ display:flex; gap:8px; margin-top:13px; }
+  .ia-btn-ghost{
+    flex:1; padding:11px; border-radius:11px; border:1.5px solid var(--line);
+    background:transparent; color:var(--ink-soft);
+    font-family:'Work Sans', sans-serif; font-size:13.5px; cursor:pointer;
+  }
+  .ia-btn-main{
+    flex:1; padding:11px; border-radius:11px; border:none;
+    background:linear-gradient(140deg, var(--accent), var(--accent-deep));
+    color:var(--on-accent); font-weight:600;
+    font-family:'Work Sans', sans-serif; font-size:13.5px; cursor:pointer;
+  }
+
+  .ia-plan-row{ display:flex; gap:12px; padding:11px 0; border-top:1px solid var(--line); }
+  .ia-plan-row:first-child{ border-top:none; }
+  .ia-plan-time{ flex-shrink:0; width:50px; font-size:13px; color:var(--accent-deep); font-weight:600; padding-top:1px; }
+  .ia-plan-body{ flex:1; min-width:0; }
+  .ia-plan-title{ font-size:14.5px; overflow-wrap:anywhere; }
+  .ia-plan-meta{ margin-top:3px; font-size:11.5px; color:var(--ink-soft); }
+  .ia-plan-row.now .ia-plan-title{ color:var(--accent-bright); font-weight:600; }
+  .ia-tag{ display:inline-block; padding:2px 7px; border-radius:6px; font-size:10.5px; margin-right:5px; }
+  .ia-tag.alta{ background:rgba(225,55,80,.16); color:var(--danger); }
+  .ia-tag.media{ background:rgba(244,196,48,.14); color:var(--accent-deep); }
+  .ia-tag.baja{ background:rgba(255,255,255,.07); color:var(--ink-soft); }
+  .ia-tag.info{ background:rgba(46,158,112,.16); color:var(--done); }
+
+  .ia-insight{ display:flex; gap:11px; padding:12px 0; border-top:1px solid var(--line); }
+  .ia-insight:first-child{ border-top:none; }
+  .ia-insight-icon{
+    flex-shrink:0; width:28px; height:28px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center; font-size:14px; line-height:1;
+  }
+  .ia-insight-icon.bad{ background:rgba(225,55,80,.16); color:var(--danger); }
+  .ia-insight-icon.warn{ background:rgba(244,196,48,.16); color:var(--accent-deep); }
+  .ia-insight-icon.good{ background:rgba(46,158,112,.16); color:var(--done); }
+  .ia-insight-icon.info{ background:rgba(255,255,255,.07); color:var(--ink-soft); }
+  .ia-insight-body{ flex:1; min-width:0; }
+  .ia-insight-title{ font-size:14px; font-weight:600; }
+  .ia-insight-text{ margin-top:3px; font-size:12.5px; color:var(--ink-soft); line-height:1.5; overflow-wrap:anywhere; }
+  .ia-insight-x{
+    flex-shrink:0; background:transparent; border:none; color:var(--ink-soft);
+    cursor:pointer; font-size:15px; opacity:.5; padding:0 2px; align-self:flex-start; line-height:1;
+  }
+  .ia-insight-act{
+    margin-top:7px; padding:6px 10px; border-radius:9px; cursor:pointer;
+    border:1px solid var(--accent-border); background:rgba(244,196,48,.07);
+    color:var(--ink); font-size:12px; font-family:'Work Sans', sans-serif;
+  }
+
+  .ia-chat{ max-height:440px; overflow-y:auto; display:flex; flex-direction:column; gap:9px; padding-right:2px; }
+  .ia-msg{
+    max-width:88%; padding:10px 13px; border-radius:14px;
+    font-size:13.5px; line-height:1.55; overflow-wrap:anywhere;
+  }
+  .ia-msg.user{
+    align-self:flex-end; border-bottom-right-radius:5px;
+    background:linear-gradient(140deg, var(--accent), var(--accent-deep)); color:var(--on-accent);
+  }
+  .ia-msg.ia{
+    align-self:flex-start; border-bottom-left-radius:5px;
+    background:var(--surface-2); border:1px solid var(--line);
+  }
+  .ia-msg.ia b{ color:var(--accent-bright); }
+  .ia-msg.typing{ color:var(--ink-soft); font-style:italic; opacity:.8; }
+  .ia-msg-actions{ display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+  .ia-msg-action{
+    padding:6px 10px; border-radius:9px; cursor:pointer;
+    border:1px solid var(--accent-border); background:rgba(244,196,48,.08);
+    color:var(--ink); font-size:12px; font-family:'Work Sans', sans-serif;
+  }
+  .ia-empty{ font-size:13px; color:var(--ink-soft); line-height:1.55; }
+
+  .ia-stats{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; margin-bottom:4px; }
+  .ia-stat{ padding:10px 6px; border-radius:11px; background:var(--surface-2); border:1px solid var(--line); text-align:center; }
+  .ia-stat-num{ font-family:'Fraunces', Georgia, serif; font-size:18px; font-weight:700; color:var(--accent-bright); }
+  .ia-stat-label{ font-size:10.5px; color:var(--ink-soft); margin-top:2px; line-height:1.3; }
+
+  .ia-sparkle{ animation:iaSparkle 2.6s ease-in-out infinite; }
+  @keyframes iaSparkle{
+    0%,100%{ opacity:.75; transform:scale(1); }
+    50%{ opacity:1; transform:scale(1.12); }
+  }
+
+  @media (max-width:430px){
+    .ia-pred-grid{ grid-template-columns:1fr; }
+    .ia-stats{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .ia-msg{ max-width:94%; }
+  }
 </style>
 </head>
 <body>
@@ -1305,6 +1457,9 @@
       <p class="clock" id="clockLabel"></p>
     </div>
     <div class="header-actions">
+      <button class="icon-btn" id="aiBtn" aria-label="Asistente IA" title="Asistente IA">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.2L18 8.8l-4.4 1.6L12 14.6l-1.6-4.2L6 8.8l4.4-1.6L12 3Z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2Z"/></svg>
+      </button>
       <button class="icon-btn" id="backupBtn" aria-label="Respaldo" title="Respaldo">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
       </button>
@@ -1321,6 +1476,10 @@
     <button class="tab-btn" data-view="resumen" data-active="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
       <span>Resumen</span>
+    </button>
+    <button class="tab-btn" data-view="ia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.2L18 8.8l-4.4 1.6L12 14.6l-1.6-4.2L6 8.8l4.4-1.6L12 3Z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2Z"/></svg>
+      <span>IA</span>
     </button>
     <button class="tab-btn" data-view="agenda">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
@@ -1362,6 +1521,14 @@
 
   <section class="view" id="view-resumen">
     <h1 class="section-heading">Tu día</h1>
+    <div class="card card-featured">
+      <p class="card-title plain">
+        <span class="icon-chip-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.2L18 8.8l-4.4 1.6L12 14.6l-1.6-4.2L6 8.8l4.4-1.6L12 3Z"/></svg></span>
+        Tu asistente sugiere
+      </p>
+      <p style="margin:0; font-size:14.5px; line-height:1.55;" id="resumenIaHint">Analizando tu día…</p>
+      <button class="card-link" data-goto="ia">Abrir asistente →</button>
+    </div>
 
     <div class="card card-featured">
       <p class="card-title plain">
@@ -1819,6 +1986,62 @@
     <p class="signature">by @DANDY2777</p>
   </footer>
 </div>
+
+  <section class="view" id="view-ia" hidden>
+    <h1 class="section-heading">Asistente IA</h1>
+    <p class="ia-lead">
+      Escribe como hablas y yo lo acomodo: creo la tarea, el gasto o el recordatorio en su lugar, priorizo tu día y
+      detecto patrones en tus datos.
+      <span class="ia-privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+        Inteligencia local: nada sale de tu dispositivo y no necesita internet.
+      </span>
+    </p>
+
+    <div class="ia-stats" id="iaStats"></div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.2L18 8.8l-4.4 1.6L12 14.6l-1.6-4.2L6 8.8l4.4-1.6L12 3Z"/></svg></span>
+        Captura rápida
+      </p>
+      <div class="ia-input-row">
+        <input type="text" class="ia-text-input" id="iaCaptureInput" maxlength="180" placeholder="Ej. Pagar la luz $800 el viernes 18:00">
+        <button class="ia-send" id="iaInterpretBtn">Interpretar</button>
+      </div>
+      <div class="ia-chips" id="iaExamples"></div>
+      <div id="iaPreview" class="ia-preview" hidden></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span>
+        Plan del día sugerido
+      </p>
+      <div id="iaPlan"></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 3-4 6 8"/><circle cx="12" cy="12" r="9"/></svg></span>
+        Lo que detecté en tus datos
+      </p>
+      <div id="iaInsights"></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title plain">
+        <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-4.2-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8Z"/></svg></span>
+        Pregúntale a tu asistente
+      </p>
+      <div class="ia-chat" id="iaChat"></div>
+      <div class="ia-chips" id="iaQuick"></div>
+      <div class="ia-input-row">
+        <input type="text" class="ia-text-input" id="iaChatInput" maxlength="220" placeholder="Ej. ¿Cuánto gasté hoy?">
+        <button class="ia-send" id="iaChatSend">Enviar</button>
+      </div>
+    </div>
+  </section>
 
 <button class="fab" id="fabBtn" aria-label="Agregar">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -2785,7 +3008,8 @@
         id: 't' + Date.now() + Math.random().toString(16).slice(2),
         text: document.getElementById('taskTextInput').value.trim(),
         priority: taskPriorityChoice,
-        done: false
+        done: false,
+        createdAt: Date.now()
       });
       saveTasks();
       renderTasks();
@@ -3018,6 +3242,7 @@
     if(view === 'calendar') renderCalendar();
     if(view === 'finanzas') renderFinanzas();
     if(view === 'streaming') renderStreaming();
+    if(view === 'ia') renderIA();
   }
   document.getElementById('tabNav').addEventListener('click', function(e){
     var btn = e.target.closest('.tab-btn');
@@ -4467,7 +4692,8 @@
     pomodoro: POMO_KEY,
     exercise: EX_KEY,
     fx: FX_KEY,
-    read: READ_KEY
+    read: READ_KEY,
+    ai: 'dandy-ia-v1'
   };
 
   function buildBackupData(){
@@ -4484,8 +4710,8 @@
         localStorage.setItem(BACKUP_KEYS[k], JSON.stringify(data[k]));
       }
     });
-    load(); loadTasks(); loadNotes(); loadHabits(); loadCal(); loadFin(); loadStream(); loadPomo(); loadEx(); loadFx(); loadRead(); exResetState();
-    renderAll(); renderTasks(); renderNotesTagFilters(); renderNotes(); renderHabits(); renderCalendar(); renderFinanzas(); renderStreaming(); renderRead(); renderPomo(); renderEx(); renderResumen(); refreshFxUI();
+    load(); loadTasks(); loadNotes(); loadHabits(); loadCal(); loadFin(); loadStream(); loadPomo(); loadEx(); loadFx(); loadRead(); exResetState(); loadAI();
+    renderAll(); renderTasks(); renderNotesTagFilters(); renderNotes(); renderHabits(); renderCalendar(); renderFinanzas(); renderStreaming(); renderRead(); renderPomo(); renderEx(); renderResumen(); refreshFxUI(); renderIA();
   }
 
   document.getElementById('backupBtn').addEventListener('click', function(){
@@ -4688,6 +4914,1551 @@
 
   refreshGoogleSetupUI();
 
+  // ==================================================================
+  // ================ ASISTENTE IA LOCAL (sin internet) ================
+  // Todo el "cerebro" vive aquí: interpreta lenguaje natural en
+  // español, prioriza el día, detecta patrones y conversa.
+  // No hace ninguna petición de red: solo lee lo que ya tienes.
+  // ==================================================================
+  var IA_KEY = 'dandy-ia-v1';
+  var aiState = { chat: [], lexicon: {}, dismissed: {}, profile: {}, lastBrief: '' };
+
+  function loadAI(){
+    try{
+      var raw = localStorage.getItem(IA_KEY);
+      if(raw){ var p = JSON.parse(raw); if(p && typeof p === 'object') aiState = p; }
+    }catch(e){}
+    if(!aiState.chat) aiState.chat = [];
+    if(!aiState.lexicon) aiState.lexicon = {};
+    if(!aiState.dismissed) aiState.dismissed = {};
+    if(!aiState.profile) aiState.profile = {};
+    if(!aiState.lastBrief) aiState.lastBrief = '';
+  }
+  function saveAI(){ try{ localStorage.setItem(IA_KEY, JSON.stringify(aiState)); }catch(e){} }
+
+  /* ------------------------- utilidades ------------------------- */
+  function iaNorm(s){
+    var t = (s || '').toString().toLowerCase();
+    try{ t = t.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }catch(e){}
+    return t.replace(/[¿?¡!"'`]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function iaP2(n){ return String(n).padStart(2, '0'); }
+  function iaIso(d){ return d.getFullYear() + '-' + iaP2(d.getMonth() + 1) + '-' + iaP2(d.getDate()); }
+  function iaAddDays(d, n){ var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+  function iaNextWeekday(base, target){
+    var d = new Date(base.getTime());
+    var diff = (target - d.getDay() + 7) % 7;
+    if(diff === 0) diff = 7;
+    d.setDate(d.getDate() + diff);
+    return d;
+  }
+  function iaPlural(n, sing, plur){ return n + ' ' + (n === 1 ? sing : plur); }
+  function iaCap(s){ s = (s || '').trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  /* Aplana el texto para comparar sin acentos, pero recuerda qué carácter
+     del original produjo cada carácter del texto plano. Así podemos recortar
+     fragmentos sin destruir los acentos del texto que sí se guarda. */
+  function iaFlatten(s){
+    s = (s || '').toString();
+    var flat = '', map = [], i, j, f;
+    for(i = 0; i < s.length; i++){
+      f = s[i].toLowerCase();
+      try{ f = f.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }catch(e){}
+      if(/[¿?¡!"'`]/.test(s[i])) f = ' ';
+      if(f === ' ' && flat.length && flat[flat.length - 1] === ' ') continue;
+      for(j = 0; j < f.length; j++){ flat += f[j]; map.push(i); }
+    }
+    while(flat.length && flat[0] === ' '){ flat = flat.slice(1); map.shift(); }
+    while(flat.length && flat[flat.length - 1] === ' '){ flat = flat.slice(0, -1); map.pop(); }
+    return { flat: flat, map: map };
+  }
+  /* Recorta del texto original los fragmentos indicados (comparando sin acentos) */
+  function iaCut(orig, frags){
+    orig = (orig || '').toString();
+    var F = iaFlatten(orig);
+    var cut = [];
+    for(var i = 0; i < orig.length; i++) cut.push(false);
+    (frags || []).forEach(function(fr){
+      var ff = iaNorm(fr);
+      if(!ff) return;
+      var idx = F.flat.indexOf(ff), k;
+      while(idx !== -1){
+        for(k = idx; k < idx + ff.length; k++){
+          if(F.map[k] !== undefined) cut[F.map[k]] = true;
+        }
+        idx = F.flat.indexOf(ff, idx + ff.length);
+      }
+    });
+    var out = '';
+    for(var m = 0; m < orig.length; m++) if(!cut[m]) out += orig[m];
+    return out.replace(/\s+/g, ' ').trim();
+  }
+  function iaSum(list, field){
+    var s = 0;
+    (list || []).forEach(function(x){ s += (parseFloat(x[field]) || 0); });
+    return s;
+  }
+  function iaMoney(n){ return fmtMoney(n || 0); }
+  function iaMinOf(t){
+    var p = (t || '00:00').split(':').map(Number);
+    return (p[0] || 0) * 60 + (p[1] || 0);
+  }
+  function iaHm(m){
+    var v = Math.max(0, Math.round(m || 0));
+    return iaP2(Math.floor(v / 60) % 24) + ':' + iaP2(v % 60);
+  }
+  function iaDur(min){
+    min = Math.max(0, Math.round(min || 0));
+    if(min >= 90){ var h = Math.floor(min / 60), m = min % 60; return h + ' h' + (m ? ' ' + m + ' min' : ''); }
+    return min + ' min';
+  }
+  function iaDateLabel(iso){
+    if(!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    var today = iaIso(new Date());
+    if(iso === today) return 'hoy';
+    if(iso === iaIso(iaAddDays(new Date(), 1))) return 'mañana';
+    return d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+
+  /* ------------------- extracción fecha y hora ------------------- */
+  var IA_WEEKDAYS = { domingo:0, lunes:1, martes:2, miercoles:3, jueves:4, viernes:5, sabado:6 };
+  var IA_MONTHS = { enero:0, febrero:1, marzo:2, abril:3, mayo:4, junio:5, julio:6, agosto:7,
+    septiembre:8, setiembre:8, octubre:9, noviembre:10, diciembre:11 };
+
+  function iaParseDateTime(text){
+    var w = ' ' + iaNorm(text) + ' ';
+    var now = new Date();
+    var base = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var out = { date: null, time: null, consumed: [] };
+
+    function take(re, cb){
+      var m = w.match(re);
+      if(!m) return false;
+      w = w.replace(m[0], ' ');
+      if(m[0]) out.consumed.push(m[0].trim());
+      cb(m);
+      return true;
+    }
+    function hhmm(h, mi){
+      h = Math.max(0, Math.min(23, h)); mi = Math.max(0, Math.min(59, mi));
+      return iaP2(h) + ':' + iaP2(mi);
+    }
+
+    // --- horas explícitas ---
+    take(/\b([01]?\d|2[0-3])\s*[:.]\s*(\d{2})\s*(am|pm)?\b/, function(m){
+      var h = parseInt(m[1], 10), mi = parseInt(m[2], 10);
+      if(m[3] === 'pm' && h < 12) h += 12;
+      if(m[3] === 'am' && h === 12) h = 0;
+      out.time = hhmm(h, mi);
+    });
+    if(!out.time) take(/\ba\s+l?a?s?\s+(\d{1,2})(?:\s*[:.]\s*(\d{2}))?\s*(am|pm)?\b/, function(m){
+      var h = parseInt(m[1], 10), mi = m[2] ? parseInt(m[2], 10) : 0;
+      if(m[3] === 'pm' && h < 12) h += 12;
+      if(m[3] === 'am' && h === 12) h = 0;
+      if(!m[3] && !m[2] && h >= 1 && h <= 6) h += 12; // "a las 6" = tarde
+      out.time = hhmm(h, mi);
+    });
+    if(!out.time) take(/\b(\d{1,2})\s*(am|pm)\b/, function(m){
+      var h = parseInt(m[1], 10);
+      if(m[2] === 'pm' && h < 12) h += 12;
+      if(m[2] === 'am' && h === 12) h = 0;
+      out.time = hhmm(h, 0);
+    });
+
+    // --- franjas del día: fijan la hora o ajustan la que ya detectamos ---
+    function franja(re, kind){
+      if(out.franja) return false;
+      return take(re, function(){
+        out.franja = kind;
+        if(!out.time) out.time = (kind === 'manana' ? '08:00' : kind === 'tarde' ? '16:00' : kind === 'noche' ? '20:00' : '05:00');
+      });
+    }
+    franja(/\b(?:por la|en la|de la|de|esta|al|muy)\s+manana\b|\bmuy temprano\b|\bal despertar\b/, 'manana');
+    franja(/\b(?:por la|en la|de la|de|esta|al)\s+tarde\b/, 'tarde');
+    franja(/\b(?:por la|en la|de la|de|esta|al)\s+noche\b|\bantes de dormir\b|\bantes de acostarme\b|\bmas tarde\b/, 'noche');
+    franja(/\b(?:de la|en la|por la)\s+madrugada\b/, 'madrugada');
+    if(!out.time) take(/\bal mediodia\b|\ba medio dia\b/, function(){ out.time = '12:00'; });
+    if(!out.time) take(/\bmedia noche\b|\bmedianoche\b/, function(){ out.time = '23:30'; });
+    if(out.franja && out.time){
+      var hp = parseInt(out.time.split(':')[0], 10), mp = parseInt(out.time.split(':')[1], 10);
+      if((out.franja === 'noche' || out.franja === 'tarde') && hp < 12) out.time = hhmm(hp + 12, mp);
+      if((out.franja === 'manana' || out.franja === 'madrugada') && hp >= 12) out.time = hhmm(hp - 12, mp);
+    }
+
+    // --- fechas ---
+    take(/\bpasado\s*manana\b/, function(){ out.date = iaAddDays(base, 2); });
+    take(/\b(?:manana|el dia siguiente)\b/, function(){ out.date = iaAddDays(base, 1); });
+    take(/\bhoy\b|\bel dia de hoy\b|\besta noche\b/, function(){ out.date = new Date(base.getTime()); });
+    take(/\bayer\b/, function(){ out.date = iaAddDays(base, -1); });
+    take(/\ben\s+(\d{1,2})\s+dias?\b/, function(m){ out.date = iaAddDays(base, parseInt(m[1], 10)); });
+    take(/\ben\s+(?:una|1|2|3)\s+semana\b|\bla\s+(?:proxima|siguiente)\s+semana\b/, function(){ out.date = iaAddDays(base, 7); });
+    take(/\b(?:el\s+)?fin\s+de\s+semana\b/, function(){ out.date = iaNextWeekday(base, 6); });
+    take(/\b(?:el\s+|este\s+|proximo\s+|proxima\s+)?(domingo|lunes|martes|miercoles|jueves|viernes|sabado)\b/, function(m){
+      out.date = iaNextWeekday(base, IA_WEEKDAYS[m[1]]);
+    });
+    take(/\b(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\b/, function(m){
+      var d = new Date(now.getFullYear(), IA_MONTHS[m[2]], parseInt(m[1], 10));
+      if(d < base) d = new Date(now.getFullYear() + 1, IA_MONTHS[m[2]], parseInt(m[1], 10));
+      out.date = d;
+    });
+    take(/\b(\d{1,2})\s*\/\s*(\d{1,2})(?:\s*\/\s*(\d{2,4}))?\b/, function(m){
+      var y = m[3] ? (parseInt(m[3], 10) < 100 ? 2000 + parseInt(m[3], 10) : parseInt(m[3], 10)) : now.getFullYear();
+      var d = new Date(y, parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+      if(!m[3] && d < base) d = new Date(y + 1, parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+      out.date = d;
+    });
+    take(/\bel\s+dia\s+(\d{1,2})\b|\bel\s+(\d{1,2})\s*(?:de este mes)?\b/, function(m){
+      var day = parseInt(m[1] || m[2], 10);
+      var d = new Date(now.getFullYear(), now.getMonth(), day);
+      if(d < base) d = new Date(now.getFullYear(), now.getMonth() + 1, day);
+      out.date = d;
+    });
+
+    return { date: out.date ? iaIso(out.date) : null, time: out.time, consumed: out.consumed, rest: w.trim() };
+  }
+
+  /* --------------------------- montos --------------------------- */
+  var IA_NUM = '\\d{1,3}(?:,\\d{3})+(?:[.,]\\d{1,2})?|\\d+(?:[.,]\\d{1,2})?';
+  var IA_UNITS = 'litros?|l|kilos?|kg|gramos?|mililitros?|ml|metros?|cm|centimetros?|piezas?|unidades?|cajas?|bolsas?|paquetes?|botellas?|personas?|minutos?|min|horas?|hrs?|dias?|semanas?|meses?|paginas?|veces?|porciones?|tazas?|cucharadas?';
+  function iaParseAmount(text, allowLoose, rest){
+    var w = iaNorm(text), m;
+    m = w.match(new RegExp('\\$\\s*(' + IA_NUM + ')'));
+    if(m) return { amount: parseFloat(m[1].replace(/,/g, '')), raw: m[0], sure: true };
+    m = w.match(new RegExp('(' + IA_NUM + ')\\s*(?:pesos|mxn|mn|varos|lana)\\b'));
+    if(m) return { amount: parseFloat(m[1].replace(/,/g, '')), raw: m[0], sure: true };
+    m = w.match(new RegExp('\\b(?:de|por|como|un|una)\\s+(' + IA_NUM + ')\\b'));
+    if(m) return { amount: parseFloat(String(m[1]).replace(/,/g, '')), raw: m[0], sure: true };
+    if(allowLoose && rest){
+      m = rest.match(new RegExp('(?:^|\\s)(' + IA_NUM + ')(?:\\s|$)'));
+      if(m){
+        var pos = rest.indexOf(m[1]) + m[1].length;
+        var after = rest.slice(pos).trim();
+        if(!new RegExp('^(?:' + IA_UNITS + ')\\b').test(after)){
+          return { amount: parseFloat(String(m[1]).replace(/,/g, '')), raw: m[1], sure: false };
+        }
+      }
+    }
+    return null;
+  }
+
+  /* ------------------------ prioridad --------------------------- */
+  function iaParsePriority(text){
+    var n = iaNorm(text);
+    if(/urgente|\bya mismo\b|cuanto antes|lo antes posible|prioridad alta|importante|critico|no puede fallar/.test(n)) return 'alta';
+    if(/cuando pueda|sin prisa|algun dia|baja prioridad|poco importante|si sobra tiempo|sin urgencia/.test(n)) return 'baja';
+    return 'media';
+  }
+
+  /* -------------------------- personas -------------------------- */
+  function iaParsePerson(text){
+    var n = ' ' + iaNorm(text) + ' ', m;
+    m = n.match(/([a-z]{3,})\s+me\s+debe/) || n.match(/me\s+debe\s+([a-z]{3,})/) ||
+        n.match(/(?:preste|presto|prestamos)\s+a\s+([a-z]{3,})/) ||
+        n.match(/(?:le\s+debo|debo)\s+a\s+([a-z]{3,})/) ||
+        n.match(/(?:cliente|acreedor)\s+(?:de\s+)?([a-z]{3,})\b/);
+    return m ? iaCap(m[1]) : '';
+  }
+
+  /* ------------------------- categorías ------------------------- */
+  var IA_CATS = [
+    { k:'Transporte', w:['uber','taxi','gasolina','gasolinera','diesel','transporte','metro','camion','peaje','estacionamiento','pasaje','didi','avion','vuelo','autobus'] },
+    { k:'Comida', w:['comida','cafe','restaurante','super','supermercado','despensa','almuerzo','desayuno','cena','tacos','pizza','pan','lonche','bebida','cerveza','comida rapida','antojito'] },
+    { k:'Hogar', w:['renta','luz','agua','gas','internet','telefono','celular','netflix','spotify','limpieza','mueble','hogar','casa','recibo','predial'] },
+    { k:'Salud', w:['farmacia','medico','doctor','dentista','medicina','hospital','clinica','gimnasio','gym','terapia','nutriologo','seguro'] },
+    { k:'Trabajo', w:['oficina','papeleria','herramienta','material','proveedor','inventario','mercancia','producto','insumo','publicidad','marketing','envio','paqueteria','etiquetas','empaque'] },
+    { k:'Ocio', w:['cine','concierto','juego','salida','viaje','hotel','regalo','fiesta','bar','streaming','suscripcion','festival'] },
+    { k:'Educación', w:['libro','curso','taller','escuela','colegiatura','universidad','clase','certificacion','diplomado'] }
+  ];
+  function iaParseCategory(text){
+    var padded = ' ' + iaNorm(text) + ' ', best = null, bestHits = 0;
+    IA_CATS.forEach(function(c){
+      var hits = 0;
+      c.w.forEach(function(w){
+        if(w.indexOf(' ') !== -1){
+          if(padded.indexOf(' ' + w + ' ') !== -1) hits++;
+        } else if(padded.indexOf(' ' + w + ' ') !== -1 ||
+                  padded.indexOf(' ' + w + 's ') !== -1 ||
+                  padded.indexOf(' ' + w + 'es ') !== -1){
+          hits++;
+        }
+      });
+      if(hits > bestHits){ bestHits = hits; best = c.k; }
+    });
+    return best;
+  }
+  function iaParseTag(text){
+    var n = iaNorm(text);
+    if(/trabajo|cliente|oficina|negocio|proveedor|reunion|cotiz|factur/.test(n)) return 'Trabajo';
+    if(/idea|crear|inventar|proyecto|podria|podria|innovar|brainstorm/.test(n)) return 'Ideas';
+    if(/personal|familia|casa|amor|salud|sentim|hijo|mama|papa/.test(n)) return 'Personal';
+    return 'General';
+  }
+
+  /* -------------------------- lexicón --------------------------- */
+  var IA_LEX = {
+    gasto: ['gaste','gasto','gastado','pague','pago','pagado','compre','comprar','compra','costo','cuesta','cuestan','salio','salieron','egreso','propina','gasolina','uber','taxi','super','supermercado','despensa','desayuno','comida','almuerzo','cena','cafe','restaurante','farmacia','luz','renta','internet','netflix','spotify','peaje','estacionamiento','pasaje','reparacion','mantenimiento','recibo','suscripcion','mercancia','inventario','insumo'],
+    venta: ['vendi','vender','venta','ventas','cobre','cobrar','cobro','ingreso','ingrese','ingresaron','gane','ganancia','facture','facturacion','me pagaron','me depositaron','deposito','anticipo','pedido de','servicio de','trabajo de','vendido'],
+    recordatorio: ['recuerdame','recuerda','recordarme','recordatorio','avisame','avisa','no olvide','no olvidar','no se me olvide','alerta','alarma','despiertame','tomar','medicina','pastilla','pasar por','recoger','sacar a','regar','alimentar','revisar el','sonar'],
+    tarea: ['tarea','pendiente','tengo que','hay que','debo','falta','terminar','entregar','enviar','preparar','organizar','limpiar','arreglar','resolver','contestar','responder','actualizar','imprimir','archivar','cotizar','cotizacion','presupuesto','seguimiento','urgente','importante','prioridad','necesito','toca'],
+    evento: ['cita','reunion','junta','evento','cumpleanos','aniversario','boda','entrevista','medico','doctor','dentista','vuelo','viaje','concierto','examen','clase','curso','taller','conferencia','capacitacion','instalacion','visita','comida con','cafe con'],
+    nota: ['nota','anota','anotar','apunta','apuntar','idea','guarda','guardar','recordar que','apunte','escribe','escribir','dato','informacion','pensamiento','se me ocurrio'],
+    habito: ['habito','todos los dias','cada dia','todas las mananas','todas las noches','diario','diariamente','rutina','quiero empezar a','voy a empezar a','empezare a','dejar de','hacer ejercicio','meditar','correr','entrenar','estirar','leer antes de dormir'],
+    lectura: ['libro','leer','lectura','leido','novela','autor','paginas','capitulo'],
+    cobrar: ['me debe','me deben','preste','prestamos a','por cobrar','adeudo a favor','deben','favor de cobrar','falta de cobrar'],
+    pagar: ['le debo','debo a','deuda con','tarjeta de credito','mensualidad','hipoteca','prestamo bancario','deuda','deudas','pago pendiente','credito']
+  };
+  var IA_META = {
+    gasto:{ label:'Gasto', icon:'💸', where:'Finanzas' },
+    venta:{ label:'Venta', icon:'💰', where:'Finanzas' },
+    recordatorio:{ label:'Recordatorio', icon:'⏰', where:'Agenda' },
+    tarea:{ label:'Tarea', icon:'✅', where:'Tareas' },
+    evento:{ label:'Evento', icon:'📅', where:'Calendario' },
+    nota:{ label:'Nota', icon:'📝', where:'Notas' },
+    habito:{ label:'Hábito', icon:'🔥', where:'Hábitos' },
+    lectura:{ label:'Lectura', icon:'📚', where:'Lectura' },
+    cobrar:{ label:'Por cobrar', icon:'🤝', where:'Finanzas' },
+    pagar:{ label:'Por pagar', icon:'🧾', where:'Finanzas' }
+  };
+  var IA_THRESH = { habito:6, lectura:4, cobrar:5, pagar:5, evento:4, nota:2, lecturaMin:4 };
+  var IA_ROUTINE = /cada dia|todos los dias|diario|diariamente|cada manana|cada noche|todas las noches|todas las mananas|todas las semanas|semanal|habito|rutina|dejar de/;
+
+  function iaClassify(text, ctx){
+    ctx = ctx || {};
+    var n = iaNorm(text);
+    var padded = ' ' + n + ' ';
+    var tokens = n.split(/[\s,.:;()\/]+/).filter(Boolean);
+    var scores = {}, hits = {}, k;
+
+    Object.keys(IA_LEX).forEach(function(intent){
+      var s = 0, list = [];
+      IA_LEX[intent].forEach(function(word){
+        if(word.indexOf(' ') !== -1){
+          if(padded.indexOf(' ' + word + ' ') !== -1){ s += 3; list.push(word); }
+        } else if(tokens.indexOf(word) !== -1){ s += 2; list.push(word); }
+      });
+      scores[intent] = s; hits[intent] = list;
+    });
+
+    // memoria aprendida de tus correcciones
+    tokens.forEach(function(tk){
+      if(tk.length < 4) return;
+      var mem = aiState.lexicon[tk];
+      if(!mem) return;
+      Object.keys(mem).forEach(function(intent){
+        scores[intent] = (scores[intent] || 0) + mem[intent] * 2;
+        if(hits[intent].indexOf(tk) === -1) hits[intent].push(tk);
+      });
+    });
+
+    // reglas de contexto
+    if(ctx.amount){ scores.gasto = (scores.gasto || 0) + 3; scores.venta = (scores.venta || 0) + 3; }
+    if(ctx.time){ scores.recordatorio = (scores.recordatorio || 0) + 3; scores.evento = (scores.evento || 0) + 2; }
+    if(ctx.date && ctx.date !== iaIso(new Date())){ scores.evento = (scores.evento || 0) + 3; scores.tarea = (scores.tarea || 0) + 1; }
+    if(IA_ROUTINE.test(n)){ scores.habito = (scores.habito || 0) + 5; }
+    if(/urgente|ya mismo|cuanto antes|lo antes posible|prioridad alta|importante/.test(n)){ scores.tarea = (scores.tarea || 0) + 4; }
+    if(/me debe|me deben|preste/.test(n)){ scores.cobrar = (scores.cobrar || 0) + 5; }
+    if(/^(anota|apunta|guarda|escribe|nota|idea|recordar que)/.test(n) || /\bidea\b|\bse me ocurrio\b|\bapunte\b/.test(n)){ scores.nota = (scores.nota || 0) + 5; }
+    if(/le debo|deuda|deudas|mensualidad/.test(n)){ scores.pagar = (scores.pagar || 0) + 4; }
+    if(/libro|leer|lectura/.test(n) && !ctx.amount){ scores.lectura = (scores.lectura || 0) + 3; }
+
+    var ranked = Object.keys(scores).map(function(intent){ return { intent: intent, score: scores[intent] }; })
+      .sort(function(a, b){ return b.score - a.score; });
+    var top = ranked[0], second = ranked[1] ? ranked[1].score : 0;
+    if(!top || top.score < (IA_THRESH[top.intent] || 2)) top = { intent: 'tarea', score: 0 };
+
+    var conf = 0.34 + Math.min(top.score, 16) * 0.038 + Math.max(0, top.score - second) * 0.025;
+    if((top.intent === 'gasto' || top.intent === 'venta' || top.intent === 'cobrar' || top.intent === 'pagar') && ctx.amount && (hits[top.intent] || []).length) conf += 0.12;
+    conf = Math.max(0.2, Math.min(0.96, conf));
+
+    var reasons = [];
+    if(hits[top.intent] && hits[top.intent].length){
+      reasons.push('porque leí <b>“' + escapeHtml(hits[top.intent].slice(0, 2).join('”, “')) + '”</b>');
+    }
+    if(ctx.amount) reasons.push('encontré el monto <b>' + iaMoney(ctx.amount) + '</b>');
+    if(ctx.time) reasons.push('la hora <b>' + ctx.time + '</b>');
+    if(ctx.date) reasons.push('la fecha <b>' + iaDateLabel(ctx.date) + '</b>');
+    if(IA_ROUTINE.test(n)) reasons.push('suena a algo que se repite');
+
+    return { intent: top.intent, score: top.score, conf: conf, reasons: reasons, ranked: ranked };
+  }
+
+  /* ------------------------- título limpio ---------------------- */
+  var IA_PREFIX = /^(?:recuerdame|recuerda|recordarme|recordatorio|avisame|avisa|anota|anotar|apunta|apuntar|guarda|guardar|escribe|escribir|agrega|agregar|agendame|crea|crear|registra|registrar|programa|programar|ponme|poner|pon|suma|sume|anote|nueva|nuevo|tarea|nota|gasto|venta|evento|habito|lectura|libro|gaste|gasto|gastado|pague|pagar|pago|compre|comprar|compra|vendi|vender|venta|cobre|cobrar|cobro|ingrese|ingreso|debo|tengo que|hay que|quiero|voy a|necesito|me urge|urge|para|de|del|en|por|con|que|a|al|el|la|los|las|un|una|mi|me|se|su|y|o|lo|urgente|importante)(?:\s*[:.,;!-]\s*|\s+)/;
+  var IA_SUFFIX = /(?:^|\s)(?:de|del|en|por|para|con|que|a|el|la|los|las|un|una|mi|me|se|su|y|o|lo|dia|hoy)$/;
+
+  function iaCleanTitle(original, parsed, intent){
+    // 1) quitar monto, fecha y hora conservando los acentos del resto
+    var frags = (parsed && parsed.consumed ? parsed.consumed : []).slice();
+    if(parsed && parsed.amountRaw) frags.push(parsed.amountRaw);
+    var t = iaCut(original, frags);
+
+    // 2) quitar verbos y comodines del inicio
+    var guard = 0;
+    while(guard < 14){
+      var F = iaFlatten(t);
+      var m = F.flat.match(IA_PREFIX);
+      if(!m) break;
+      var endOrig = F.map[m[0].length - 1] !== undefined ? F.map[m[0].length - 1] + 1 : 0;
+      t = t.slice(endOrig);
+      guard++;
+    }
+
+    // 3) quitar comodines del final
+    var guard2 = 0;
+    while(guard2 < 6){
+      var F2 = iaFlatten(t);
+      var m2 = F2.flat.match(IA_SUFFIX);
+      if(!m2) break;
+      var startOrig = F2.map[m2.index] !== undefined ? F2.map[m2.index] : t.length;
+      t = t.slice(0, startOrig);
+      guard2++;
+    }
+
+    t = t.replace(/^[-\s,.:;]+|[-\s,.:;]+$/g, ' ').replace(/\s+/g, ' ').trim();
+    if(!t){
+      var f = { gasto:'Gasto', venta:'Venta', recordatorio:'Recordatorio', tarea:'Tarea', evento:'Evento',
+        nota:'Nota', habito:'Hábito', lectura:'Lectura', cobrar:'Adeudo', pagar:'Deuda' };
+      t = f[intent] || 'Sin descripción';
+    }
+    return iaCap(t);
+  }
+
+  /* ------------------------- parseo maestro --------------------- */
+  function iaParse(raw){
+    var text = (raw || '').trim();
+    if(!text) return null;
+    var dt = iaParseDateTime(text);
+    var am = iaParseAmount(text, false);
+    var cls = iaClassify(text, { amount: am ? am.amount : 0, time: dt.time, date: dt.date });
+    // si es movimiento de dinero y no traía "$", buscamos el número suelto
+    // y volvemos a clasificar ya con ese dato (mejora la confianza)
+    if(!am && /^(gasto|venta|cobrar|pagar)$/.test(cls.intent)){
+      var loose = iaParseAmount(text, true, dt.rest);
+      if(loose){ am = loose; cls = iaClassify(text, { amount: am.amount, time: dt.time, date: dt.date }); }
+    }
+    var person = iaParsePerson(text);
+    // en adeudos/deudas el nombre y el verbo no deben quedarse en el concepto
+    var extraCuts = [];
+    if(/^(cobrar|pagar)$/.test(cls.intent)){
+      if(person) extraCuts.push(person);
+      extraCuts.push('me debe', 'me deben', 'le debo', 'le debemos', 'debo a', 'preste a', 'me prestaron', 'por cobrar', 'por pagar');
+    }
+    var title = iaCleanTitle(text, {
+      amountRaw: am ? am.raw : null,
+      consumed: (dt.consumed || []).concat(extraCuts)
+    }, cls.intent);
+    var p = {
+      raw: text,
+      intent: cls.intent,
+      conf: cls.conf,
+      reasons: cls.reasons,
+      title: title,
+      date: dt.date,
+      time: dt.time,
+      amount: am ? am.amount : null,
+      amountRaw: am ? am.raw : null,
+      amountSure: am ? am.sure : false,
+      priority: iaParsePriority(text),
+      person: person,
+      category: iaParseCategory(text),
+      tag: iaParseTag(text),
+      consumed: dt.consumed
+    };
+    p.kind = iaResolveKind(p);
+    return p;
+  }
+
+  function iaResolveKind(p){
+    var today = iaIso(new Date());
+    if(p.intent === 'recordatorio' && p.date && p.date !== today) return 'evento';
+    // sin monto no tiene sentido registrar un movimiento: mejor como tarea
+    if(/^(gasto|venta|cobrar|pagar)$/.test(p.intent) && !(p.amount > 0)) return 'tarea';
+    // las tareas con fecha futura viven mejor en el calendario (allí sí hay fecha)
+    if(p.intent === 'tarea' && p.date && p.date !== today) return 'evento';
+    if(p.intent === 'lectura' && !/\ble(?:er|ido)\b|libro|lectura|novela|paginas/.test(iaNorm(p.raw))) return 'tarea';
+    if(p.intent === 'habito' && !IA_ROUTINE.test(iaNorm(p.raw))) return 'tarea';
+    return p.intent;
+  }
+
+  /* --------------------------- crear ---------------------------- */
+  function iaUid(pre){ return pre + Date.now() + Math.random().toString(16).slice(2); }
+
+  function iaCreate(p, kindOverride){
+    var kind = kindOverride || p.kind || p.intent;
+    var title = p.title || 'Sin descripción';
+    var today = iaIso(new Date());
+    var res = { kind: kind, id: null, label: '', where: (IA_META[kind] || {}).where || '' };
+
+    if(kind === 'gasto' || kind === 'venta'){
+      var id = iaUid('f');
+      finState.entries.push({
+        id: id,
+        date: p.date || today,
+        type: kind === 'venta' ? 'venta' : 'gasto',
+        amount: p.amount || 0,
+        note: title,
+        category: p.category || null
+      });
+      saveFin(); renderFinanzas(); renderResumen();
+      res.id = id;
+      res.label = (kind === 'venta' ? 'Venta' : 'Gasto') + ' de ' + iaMoney(p.amount || 0) + ' · ' + title;
+
+    } else if(kind === 'recordatorio'){
+      var t = p.time;
+      if(!t){
+        var d = new Date();
+        d.setMinutes(d.getMinutes() + 30 - (d.getMinutes() % 30), 0, 0);
+        t = iaP2(d.getHours()) + ':' + iaP2(d.getMinutes());
+      }
+      var rid = iaUid('r');
+      state.reminders.push({
+        id: rid, time: t, text: title, done: false, firedDate: null,
+        recurring: !p.date || p.date === today
+      });
+      save(); renderAll(); renderResumen();
+      res.id = rid;
+      res.label = 'Recordatorio ' + t + ' · ' + title;
+
+    } else if(kind === 'evento'){
+      var eid = iaUid('e');
+      calState.events.push({ id: eid, date: p.date || today, text: title });
+      saveCal(); renderCalendar();
+      res.id = eid;
+      res.label = 'Evento ' + iaDateLabel(p.date || today) + ' · ' + title;
+
+    } else if(kind === 'tarea'){
+      var tid = iaUid('t');
+      taskState.tasks.push({ id: tid, text: title, priority: p.priority || 'media', done: false, createdAt: Date.now() });
+      saveTasks(); renderTasks(); renderResumen();
+      res.id = tid;
+      res.label = 'Tarea (' + (p.priority || 'media') + ') · ' + title;
+
+    } else if(kind === 'nota'){
+      var nid = iaUid('n');
+      noteState.notes.unshift({ id: nid, text: title, tag: p.tag || 'General', pinned: false, updatedAt: Date.now() });
+      saveNotes(); renderNotesTagFilters(); renderNotes();
+      res.id = nid;
+      res.label = 'Nota · ' + title;
+
+    } else if(kind === 'habito'){
+      var hid = iaUid('h');
+      habitState.habits.push({ id: hid, name: title, doneDates: [] });
+      saveHabits(); renderHabits(); renderResumen();
+      res.id = hid;
+      res.label = 'Hábito · ' + title;
+
+    } else if(kind === 'lectura'){
+      var bid = iaUid('bk');
+      readState.books.unshift({
+        id: bid, title: title, author: '', status: 'pendiente',
+        progress: 0, notes: '', hasPdf: false, pdfName: null, updatedAt: Date.now()
+      });
+      saveRead(); renderRead();
+      res.id = bid;
+      res.label = 'Lectura · ' + title;
+
+    } else if(kind === 'cobrar' || kind === 'pagar'){
+      var did = iaUid(kind === 'cobrar' ? 'ad' : 'de');
+      var item = {
+        id: did,
+        cliente: kind === 'cobrar' ? (p.person || 'Sin nombre') : undefined,
+        acreedor: kind === 'pagar' ? (p.person || 'Sin nombre') : undefined,
+        concepto: title,
+        amount: p.amount || 0,
+        fijo: false
+      };
+      if(kind === 'cobrar') finState.adeudos.push(item); else finState.deudas.push(item);
+      saveFin(); renderFinanzas(); renderResumen();
+      res.id = did;
+      res.label = (kind === 'cobrar' ? 'Por cobrar' : 'Por pagar') + ' ' + iaMoney(p.amount || 0) + ' · ' + title;
+    }
+
+    return res;
+  }
+
+  function iaUndo(kind, id){
+    if(!id) return;
+    if(kind === 'tarea'){ taskState.tasks = taskState.tasks.filter(function(x){ return x.id !== id; }); saveTasks(); renderTasks(); }
+    else if(kind === 'nota'){ noteState.notes = noteState.notes.filter(function(x){ return x.id !== id; }); saveNotes(); renderNotesTagFilters(); renderNotes(); }
+    else if(kind === 'habito'){ habitState.habits = habitState.habits.filter(function(x){ return x.id !== id; }); saveHabits(); renderHabits(); }
+    else if(kind === 'gasto' || kind === 'venta'){ finState.entries = finState.entries.filter(function(x){ return x.id !== id; }); saveFin(); renderFinanzas(); }
+    else if(kind === 'evento'){ calState.events = calState.events.filter(function(x){ return x.id !== id; }); saveCal(); renderCalendar(); }
+    else if(kind === 'recordatorio'){ state.reminders = state.reminders.filter(function(x){ return x.id !== id; }); save(); renderAll(); }
+    else if(kind === 'lectura'){ readState.books = readState.books.filter(function(x){ return x.id !== id; }); saveRead(); renderRead(); }
+    else if(kind === 'cobrar'){ finState.adeudos = finState.adeudos.filter(function(x){ return x.id !== id; }); saveFin(); renderFinanzas(); }
+    else if(kind === 'pagar'){ finState.deudas = finState.deudas.filter(function(x){ return x.id !== id; }); saveFin(); renderFinanzas(); }
+    renderResumen();
+    if(typeof renderIA === 'function') renderIA();
+  }
+
+  /* ----------------------- aprendizaje -------------------------- */
+  function iaLearn(text, intent){
+    var toks = iaNorm(text).split(/[\s,.:;()\/]+/).filter(function(w){ return w.length > 3; });
+    var learned = 0;
+    toks.forEach(function(tk){
+      if(!aiState.lexicon[tk]) aiState.lexicon[tk] = {};
+      aiState.lexicon[tk][intent] = (aiState.lexicon[tk][intent] || 0) + 1;
+      learned++;
+    });
+    // poda: si el vocabulario crece demasiado, fuera lo que menos se usa
+    var keys = Object.keys(aiState.lexicon);
+    if(keys.length > 800){
+      keys.sort(function(a, b){
+        function tot(k){ var s = 0, o = aiState.lexicon[k]; Object.keys(o).forEach(function(i){ s += o[i]; }); return s; }
+        return tot(a) - tot(b);
+      });
+      keys.slice(0, keys.length - 600).forEach(function(k){ delete aiState.lexicon[k]; });
+    }
+    saveAI();
+    return learned;
+  }
+
+  /* =================== INSTANTÁNEA FINANCIERA =================== */
+  function iaFinSnapshot(){
+    var now = new Date(), y = now.getFullYear(), m = now.getMonth();
+    var mk = y + '-' + iaP2(m + 1);
+    var month = finState.entries.filter(function(f){ return (f.date || '').slice(0, 7) === mk; });
+    var ventas = 0, gastos = 0, nVentas = 0, nGastos = 0;
+    month.forEach(function(f){
+      if(f.type === 'venta'){ ventas += (parseFloat(f.amount) || 0); nVentas++; }
+      else { gastos += (parseFloat(f.amount) || 0); nGastos++; }
+    });
+    var pd = new Date(y, m - 1, 1);
+    var pk = pd.getFullYear() + '-' + iaP2(pd.getMonth() + 1);
+    var prev = finState.entries.filter(function(f){ return (f.date || '').slice(0, 7) === pk; });
+    var pVentas = 0, pGastos = 0;
+    prev.forEach(function(f){
+      if(f.type === 'venta') pVentas += (parseFloat(f.amount) || 0); else pGastos += (parseFloat(f.amount) || 0);
+    });
+    var today = iaIso(now);
+    var tGastos = 0, tVentas = 0;
+    finState.entries.filter(function(f){ return f.date === today; }).forEach(function(f){
+      if(f.type === 'venta') tVentas += (parseFloat(f.amount) || 0); else tGastos += (parseFloat(f.amount) || 0);
+    });
+    var allIn = 0, allOut = 0;
+    finState.entries.forEach(function(f){
+      if(f.type === 'venta') allIn += (parseFloat(f.amount) || 0); else allOut += (parseFloat(f.amount) || 0);
+    });
+    return {
+      month: month, ventas: ventas, gastos: gastos, nVentas: nVentas, nGastos: nGastos,
+      neto: ventas - gastos,
+      prevVentas: pVentas, prevGastos: pGastos, hasPrev: prev.length > 0,
+      todayGastos: tGastos, todayVentas: tVentas,
+      allIn: allIn, allOut: allOut,
+      deudas: iaSum(finState.deudas, 'amount'), adeudos: iaSum(finState.adeudos, 'amount'),
+      deudasCount: finState.deudas.length, adeudosCount: finState.adeudos.length,
+      meta: finState.metaVentas || 0,
+      daysInMonth: new Date(y, m + 1, 0).getDate(), dayNum: now.getDate()
+    };
+  }
+
+  function iaHabitStats(h){
+    var days = (h.doneDates || []);
+    var set = {}; days.forEach(function(d){ set[d] = true; });
+    var done30 = 0, missedByDow = [0,0,0,0,0,0,0];
+    for(var i = 0; i < 30; i++){
+      var d = iaAddDays(new Date(), -i);
+      var key = iaIso(d);
+      if(set[key]) done30++;
+      else missedByDow[d.getDay()]++;
+    }
+    var best = 0, cur = 0, prev = null;
+    days.slice().sort().forEach(function(d){
+      if(prev){
+        var diff = Math.round((new Date(d + 'T00:00:00') - new Date(prev + 'T00:00:00')) / 86400000);
+        cur = (diff === 1) ? cur + 1 : 1;
+      } else cur = 1;
+      if(cur > best) best = cur;
+      prev = d;
+    });
+    return { doneDates: days, done30: done30, pct30: Math.round(done30 / 30 * 100), streak: calcStreak(h), best: best, missedByDow: missedByDow };
+  }
+
+  /* ====================== GENERADOR DE AVISOS ==================== */
+  var IA_DOW = ['domingos','lunes','martes','miércoles','jueves','viernes','sábados'];
+  var IA_TONE_ORDER = { bad:0, warn:1, good:2, info:3 };
+
+  function iaBuildInsights(){
+    var out = [];
+    var today = iaIso(new Date());
+    var f = iaFinSnapshot();
+    var nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+
+    function add(o){ if(o && o.title) out.push(o); }
+
+    /* ---------- dinero ---------- */
+    var avgDay = f.dayNum > 0 ? f.gastos / f.dayNum : 0;
+    if(f.nGastos >= 3 && avgDay > 0 && f.todayGastos > 0){
+      if(f.todayGastos > avgDay * 1.5){
+        add({ key:'gasto-alto', tone:'warn', icon:'📈', title:'Vas por encima de tu ritmo',
+          text:'Hoy llevas ' + iaMoney(f.todayGastos) + ' en gastos, frente a tu promedio diario de ' + iaMoney(avgDay) + ' este mes.',
+          action:{ label:'Ver finanzas', view:'finanzas' } });
+      } else if(f.dayNum > 5 && f.todayGastos < avgDay * 0.4){
+        add({ key:'gasto-bajo', tone:'good', icon:'🛡️', title:'Vas muy por debajo de tu ritmo',
+          text:'Hoy solo llevas ' + iaMoney(f.todayGastos) + '; tu promedio diario va en ' + iaMoney(avgDay) + '.',
+          action:{ label:'Ver finanzas', view:'finanzas' } });
+      }
+    }
+    if(f.dayNum >= 4 && f.gastos > 0){
+      var proj = f.gastos / f.dayNum * f.daysInMonth;
+      var txt = 'Si sigues a este ritmo cerrarás el mes con ' + iaMoney(proj) + ' en gastos (llevas ' + iaMoney(f.gastos) + ' en ' + iaPlural(f.dayNum, 'día', 'días') + ').';
+      if(f.hasPrev && f.prevGastos > 0){
+        var diff = Math.round((proj - f.prevGastos) / f.prevGastos * 100);
+        txt += ' El mes pasado cerraste en ' + iaMoney(f.prevGastos) + (diff >= 0 ? ' (' + diff + '% más).' : ' (' + Math.abs(diff) + '% menos).');
+      }
+      add({ key:'proyeccion', tone: (f.hasPrev && proj > f.prevGastos * 1.15) ? 'warn' : 'info', icon:'🔮',
+        title:'Proyección de cierre', text: txt, action:{ label:'Ver finanzas', view:'finanzas' } });
+    }
+    if(f.meta > 0){
+      var remaining = f.daysInMonth - f.dayNum + 1;
+      var pct = Math.round(f.ventas / f.meta * 100);
+      var need = Math.max(0, (f.meta - f.ventas) / Math.max(1, remaining));
+      var onTrack = f.ventas >= f.meta * (f.dayNum / f.daysInMonth);
+      add({ key:'meta', tone: onTrack ? 'good' : (pct < 40 ? 'bad' : 'warn'), icon:'🎯',
+        title:'Meta de ventas al ' + Math.min(999, pct) + '%',
+        text: 'Llevas ' + iaMoney(f.ventas) + ' de ' + iaMoney(f.meta) + '. Te faltan ' + iaMoney(Math.max(0, f.meta - f.ventas)) +
+              ' en ' + remaining + ' día(s), es decir ' + iaMoney(need) + ' por día.',
+        action:{ label:'Ver finanzas', view:'finanzas' } });
+    }
+    if(f.nGastos >= 2 || f.nVentas >= 2){
+      add({ key:'flujo', tone: f.neto > 0 ? 'good' : 'bad', icon: f.neto > 0 ? '💚' : '🔻',
+        title:'Flujo del mes: ' + iaMoney(f.neto),
+        text: 'Ventas ' + iaMoney(f.ventas) + ' contra gastos ' + iaMoney(f.gastos) + ' en lo que va del mes.',
+        action:{ label:'Ver finanzas', view:'finanzas' } });
+    }
+    // gastos hormiga
+    var small = f.month.filter(function(x){ return x.type === 'gasto' && (parseFloat(x.amount) || 0) > 0 && (parseFloat(x.amount) || 0) <= 120; });
+    if(small.length >= 3){
+      add({ key:'hormiga', tone:'info', icon:'🐜', title: small.length + ' gastos pequeños suman ' + iaMoney(iaSum(small, 'amount')),
+        text: 'Son movimientos de menos de $120 que, juntos, pesan como uno grande. El más frecuente: ' +
+              (small.length ? escapeHtmlTiny(small[small.length - 1].note || 'sin concepto') : ''),
+        action:{ label:'Ver finanzas', view:'finanzas' } });
+    }
+    // categoría top
+    var byCat = {};
+    f.month.filter(function(x){ return x.type === 'gasto'; }).forEach(function(x){
+      var c = x.category || iaParseCategory(x.note || '') || 'Otros';
+      byCat[c] = (byCat[c] || 0) + (parseFloat(x.amount) || 0);
+    });
+    var topCat = null;
+    Object.keys(byCat).forEach(function(k){ if(!topCat || byCat[k] > byCat[topCat]) topCat = k; });
+    if(topCat && byCat[topCat] > 0){
+      add({ key:'categoria', tone:'info', icon:'🧭', title:'Tu mayor salida es ' + topCat,
+        text: 'Este mes llevas ' + iaMoney(byCat[topCat]) + ' en gastos de ' + topCat + '.',
+        action:{ label:'Ver finanzas', view:'finanzas' } });
+    }
+    if(f.adeudos > 0){
+      var biggest = finState.adeudos.slice().sort(function(a, b){ return b.amount - a.amount; })[0];
+      add({ key:'adeudos', tone:'warn', icon:'🤝', title:'Te deben ' + iaMoney(f.adeudos),
+        text: iaPlural(f.adeudosCount, 'adeudo pendiente', 'adeudos pendientes') + '. El más grande: ' + escapeHtmlTiny((biggest && (biggest.cliente || biggest.concepto)) || 'sin nombre') +
+              ' por ' + iaMoney(biggest ? biggest.amount : 0) + '.',
+        action:{ label:'Ir a finanzas', view:'finanzas' } });
+    }
+    var caja = (f.allIn - f.allOut) - f.deudas;
+    if(f.deudas > 0){
+      add({ key:'deudas', tone: caja < 0 ? 'bad' : 'info', icon:'🧾', title:'Debes ' + iaMoney(f.deudas),
+        text: 'Si pagaras todo hoy, tu caja real quedaría en ' + iaMoney(caja) + '.',
+        action:{ label:'Ir a finanzas', view:'finanzas' } });
+    }
+    if(avgDay > 0){
+      var cashDays = caja / avgDay;
+      if(isFinite(cashDays) && cashDays < 20){
+        add({ key:'caja', tone: cashDays < 7 ? 'bad' : 'warn', icon:'⏳',
+          title:'Te alcanza para ' + (cashDays < 1 ? 'menos de un día' : iaPlural(Math.floor(cashDays), 'día', 'días')),
+          text:'Con tu gasto diario de ' + iaMoney(avgDay) + ' y tu caja de ' + iaMoney(caja) + ', tienes ese margen sin vender.',
+          action:{ label:'Ver finanzas', view:'finanzas' } });
+      }
+    }
+
+    /* ---------- hábitos ---------- */
+    if(habitState.habits.length > 0){
+      var pendingToday = habitState.habits.filter(function(h){ return (h.doneDates || []).indexOf(today) === -1; });
+      if(pendingToday.length === 0){
+        add({ key:'habitos-ok', tone:'good', icon:'🔥', title:'¡Hábitos completados!',
+          text:'Ya marcaste los ' + habitState.habits.length + ' hábitos de hoy. Así se construye la racha.' });
+      } else {
+        add({ key:'habitos-faltan', tone: pendingToday.length > habitState.habits.length / 2 ? 'warn' : 'info', icon:'⏳',
+          title:(pendingToday.length === 1 ? 'Te falta 1 hábito hoy' : 'Te faltan ' + pendingToday.length + ' hábitos hoy'),
+          text: pendingToday.map(function(h){ return h.name; }).slice(0, 4).join(', ') + '.',
+          action:{ label:'Ir a hábitos', view:'habits' } });
+      }
+      var bestH = habitState.habits.map(function(h){ return { h: h, s: iaHabitStats(h) }; })
+        .sort(function(a, b){ return b.s.streak - a.s.streak; })[0];
+      if(bestH && bestH.s.streak >= 3){
+        add({ key:'racha', tone:'good', icon:'🏆', title:'Racha activa de ' + iaPlural(bestH.s.streak, 'día', 'días'),
+          text:'“' + escapeHtmlTiny(bestH.h.name) + '” es tu hábito más firme ahora mismo (mejor racha: ' + bestH.s.best + ').' });
+      }
+      var worst = habitState.habits.map(function(h){ return { h: h, s: iaHabitStats(h) }; })
+        .filter(function(x){ return (x.h.doneDates || []).length >= 5; })
+        .sort(function(a, b){ return a.s.pct30 - b.s.pct30; })[0];
+      if(worst && worst.s.pct30 < 60){
+        var worstDow = worst.s.missedByDow.indexOf(Math.max.apply(null, worst.s.missedByDow));
+        add({ key:'habito-debil', tone:'warn', icon:'📉', title:'Tu hábito más irregular: ' + escapeHtmlTiny(worst.h.name),
+          text:'Lo cumpliste el ' + worst.s.pct30 + '% de los últimos 30 días y fallas sobre todo los ' + IA_DOW[worstDow] + '.',
+          action:{ label:'Ir a hábitos', view:'habits' } });
+      }
+    }
+
+    /* ---------- tareas ---------- */
+    var pend = taskState.tasks.filter(function(t){ return !t.done; });
+    if(pend.length > 0){
+      var stale = pend.filter(function(t){
+        if(!t.createdAt) return false;
+        var age = (Date.now() - t.createdAt) / 86400000;
+        return age >= (t.priority === 'baja' ? 10 : 4);
+      });
+      if(stale.length > 0){
+        add({ key:'estancadas', tone:'warn', icon:'🕸️', title: (stale.length === 1 ? 'Una tarea se está envejeciendo' : stale.length + ' tareas se están envejeciendo'),
+          text:'“' + escapeHtmlTiny(stale[0].text) + '” lleva días pendiente' + (stale.length === 1 ? '.' : ', igual que otra(s).') +
+               ' Si ya no importan, bórralas; si importan, divídelas en pasos más pequeños.',
+          action:{ label:'Ver tareas', view:'tasks' } });
+      }
+      if(pend.length >= 7){
+        add({ key:'carga', tone:'warn', icon:'🗂️', title:'Tienes ' + pend.length + ' tareas abiertas',
+          text:'Cuando la lista pasa de 7, se vuelve ruido. Cierra las de prioridad alta y deja el resto para mañana.',
+          action:{ label:'Ver tareas', view:'tasks' } });
+      }
+    }
+
+    /* ---------- agenda ---------- */
+    var remToday = state.reminders;
+    var overdue = remToday.filter(function(r){ return !r.done && iaMinOf(r.time) < nowMin; });
+    if(overdue.length > 0){
+      add({ key:'vencidos', tone:'bad', icon:'⏰', title: overdue.length + ' recordatorio(s) ya pasaron de hora',
+        text:'Aún aparecen sin marcar: ' + overdue.slice(0, 3).map(function(r){ return r.time + ' ' + r.text; }).join(', ') + '.',
+        action:{ label:'Ver agenda', view:'agenda' } });
+    }
+    var blocks = iaFreeBlocks();
+    if(blocks.length > 0){
+      var big = blocks.slice().sort(function(a, b){ return (b.e - b.s) - (a.e - a.s); })[0];
+      if(big.e - big.s >= 60){
+        add({ key:'hueco', tone:'info', icon:'🕳️', title:'Hueco libre de ' + iaDur(big.e - big.s),
+          text:'De ' + iaHm(big.s) + ' a ' + iaHm(big.e) + ' no tienes nada agendado. Es el mejor momento para tus tareas sin hora.',
+          action:{ label:'Ver el plan', view:'ia' } });
+      }
+    }
+    if(remToday.length >= 8){
+      add({ key:'agenda-cargada', tone:'warn', icon:'📆', title:'Tu día tiene ' + remToday.length + ' recordatorios',
+        text:'Más de 8 avisos suelen traducirse en estrés. Considera mover dos o tres al calendario de mañana.',
+        action:{ label:'Ver agenda', view:'agenda' } });
+    }
+
+    /* ---------- lectura ---------- */
+    var reading = readState.books.filter(function(b){ return b.status === 'leyendo'; })[0];
+    if(reading){
+      var daysIdle = reading.updatedAt ? Math.floor((Date.now() - reading.updatedAt) / 86400000) : null;
+      if(daysIdle !== null && daysIdle >= 7){
+        add({ key:'lectura-quieta', tone:'warn', icon:'📚', title:'“' + escapeHtmlTiny(reading.title) + '” lleva ' + daysIdle + ' días quieto',
+          text:'Vas ' + (reading.progress || 0) + '%. Diez minutos al día lo terminan antes de lo que crees.',
+          action:{ label:'Ver lectura', view:'lectura' } });
+      } else {
+        add({ key:'lectura-ok', tone:'info', icon:'📖', title:'Leyendo: ' + escapeHtmlTiny(reading.title),
+          text:'Vas al ' + (reading.progress || 0) + '%' + (reading.author ? ' de ' + escapeHtmlTiny(reading.author) : '') + '.',
+          action:{ label:'Ver lectura', view:'lectura' } });
+      }
+    }
+
+    /* ---------- enfoque ---------- */
+    if(pend.length >= 3 && (!pomo.sessionsToday || pomo.sessionsToday === 0)){
+      add({ key:'enfoque', tone:'info', icon:'🍅', title:'Aún no haces sesiones de enfoque',
+        text:'Tienes ' + pend.length + ' tareas abiertas. Un bloque de ' + (pomo.focusMin || 25) + ' minutos destraba la lista.',
+        action:{ label:'Ir a enfoque', view:'timers' } });
+    } else if(pomo.sessionsToday >= 2){
+      add({ key:'enfoque-ok', tone:'good', icon:'🍅', title:pomo.sessionsToday + ' sesiones de enfoque hoy',
+        text:'Eso son ' + Math.round(pomo.sessionsToday * (pomo.focusMin || 25)) + ' minutos de trabajo profundo.' });
+    }
+
+    // filtrar descartados recientemente
+    var todayIso = iaIso(new Date());
+    out = out.filter(function(i){
+      var d = aiState.dismissed[i.key];
+      if(!d) return true;
+      return Math.abs((new Date(todayIso + 'T00:00:00') - new Date(d + 'T00:00:00')) / 86400000) > 3;
+    });
+    out.sort(function(a, b){ return (IA_TONE_ORDER[a.tone] || 9) - (IA_TONE_ORDER[b.tone] || 9); });
+    return out;
+  }
+
+  function escapeHtmlTiny(s){
+    return escapeHtml((s || '').toString().slice(0, 60));
+  }
+
+  /* ======================== PLAN DEL DÍA ======================== */
+  function iaFreeBlocks(){
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    var busy = state.reminders.filter(function(r){ return !r.done; }).map(function(r){
+      var s = iaMinOf(r.time);
+      return { s: s, e: s + 15 };
+    }).sort(function(a, b){ return a.s - b.s; });
+    var limit = 22 * 60;
+    var cursor = Math.max(nowMin, 6 * 60);
+    var blocks = [];
+    busy.forEach(function(b){
+      if(b.e <= cursor) return;
+      if(b.s > cursor) blocks.push({ s: cursor, e: Math.min(b.s, limit) });
+      cursor = Math.max(cursor, b.e);
+    });
+    if(cursor < limit) blocks.push({ s: cursor, e: limit });
+    return blocks.filter(function(b){ return b.e - b.s >= 15; });
+  }
+
+  function iaBuildPlan(){
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes();
+    var todayIso = iaIso(now);
+    var fixed = [];
+    state.reminders.filter(function(r){ return !r.done; }).forEach(function(r){
+      fixed.push({ kind:'recordatorio', title:r.text, min: iaMinOf(r.time), dur:15, tag:'info', meta:'Recordatorio agendado' });
+    });
+    fixed.sort(function(a, b){ return a.min - b.min; });
+
+    var tasks = taskState.tasks.filter(function(t){ return !t.done; }).map(function(t){
+      var n = iaNorm(t.text);
+      var age = t.createdAt ? Math.floor((Date.now() - t.createdAt) / 86400000) : 0;
+      var score = (t.priority === 'alta' ? 100 : t.priority === 'media' ? 60 : 30) + Math.min(age, 12) * 5;
+      var dur = t.priority === 'alta' ? 45 : t.priority === 'media' ? 30 : 20;
+      if(/rapido|rapida|5 min|10 min|minuto|llamada|mensaje|correo|whats/.test(n)) dur = 15;
+      if(/urgente|ya mismo|cuanto antes|hoy|importante/.test(n)) score += 40;
+      var meta = 'Prioridad ' + (t.priority || 'media');
+      if(age >= 3) meta += ' · ' + age + ' días pendiente';
+      return { kind:'tarea', title:t.text, min:-1, dur:dur, tag:(t.priority || 'media'), meta:meta, score:score, ref:t };
+    });
+    tasks.sort(function(a, b){ return b.score - a.score; });
+
+    var blocks = iaFreeBlocks();
+    var bi = 0, cursor = blocks.length ? blocks[bi].s : null;
+    tasks.forEach(function(t){
+      var placed = false;
+      while(bi < blocks.length){
+        if(cursor + t.dur <= blocks[bi].e){ t.min = cursor; cursor += t.dur + 5; placed = true; break; }
+        bi++;
+        if(bi < blocks.length) cursor = blocks[bi].s;
+      }
+      if(!placed) t.min = -2;
+    });
+
+    var scheduled = fixed.concat(tasks.filter(function(t){ return t.min >= 0; }))
+      .sort(function(a, b){ return a.min - b.min; });
+    var leftover = tasks.filter(function(t){ return t.min === -2; });
+    var events = calState.events.filter(function(e){ return e.date === todayIso; });
+
+    var nowIdx = -1;
+    scheduled.forEach(function(r, i){
+      if(nowIdx === -1 && r.min >= nowMin) nowIdx = i;
+      if(r.min < nowMin){
+        var diff = nowMin - r.min;
+        r.meta = 'Se venció hace ' + (diff >= 60 ? Math.floor(diff / 60) + ' h ' + (diff % 60) + ' min' : diff + ' min');
+      }
+    });
+    if(nowIdx !== -1) scheduled[nowIdx].now = true;
+
+    return { rows: scheduled, leftover: leftover, events: events, freeBlocks: blocks };
+  }
+
+  /* =========================== CHAT ============================= */
+  var iaLastActions = [];
+  var IA_TIPS = [
+    'Empieza por la tarea que más estás evitando: dos minutos de trabajo la vuelven pequeña.',
+    'Si tu lista pasa de 7 pendientes, elige 3 para hoy y mueve el resto. La agenda es un filtro, no un almacén.',
+    'Bloquea tu primer hueco libre de mañana para lo importante; lo urgente ya vendrá solo.',
+    'Registra tus gastos en el momento. Los números del día son los únicos que recuerdas bien.',
+    'Un hábito pequeño todos los días gana a uno grande de vez en cuando.',
+    'Cierra el día escribiendo la primera tarea de mañana: tu yo de mañana te lo agradece.',
+    'Si algo toma menos de dos minutos, hazlo ahora en lugar de anotarlo.',
+    'Revisa tus adeudos cada viernes: cobrar a tiempo vale más que vender más.'
+  ];
+
+  function iaTip(){
+    var d = new Date();
+    return IA_TIPS[(d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) % IA_TIPS.length];
+  }
+
+  function iaFindTask(text){
+    var q = iaNorm(text);
+    var words = q.split(/\s+/).filter(function(w){ return w.length > 2; });
+    var best = null, bestScore = 0;
+    taskState.tasks.filter(function(t){ return !t.done; }).forEach(function(t){
+      var tw = iaNorm(t.text);
+      var score = 0;
+      words.forEach(function(w){ if(tw.indexOf(w) !== -1) score += 1; });
+      if(q.length > 4 && tw.indexOf(q) !== -1) score += 3;
+      if(score > bestScore){ bestScore = score; best = t; }
+    });
+    return bestScore >= 1 ? best : null;
+  }
+
+  function iaRespond(raw){
+    var n = iaNorm(raw);
+    var f = iaFinSnapshot();
+    var today = iaIso(new Date());
+    var pend = taskState.tasks.filter(function(t){ return !t.done; });
+    var name = aiState.profile.name ? (', ' + escapeHtml(aiState.profile.name)) : '';
+    var hour = new Date().getHours();
+    var saludo = hour < 12 ? 'Buen día' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
+
+    /* --- perfil --- */
+    var m;
+    if((m = n.match(/(?:me llamo|mi nombre es|soy)\s+([a-z]{2,20})/))){
+      aiState.profile.name = iaCap(m[1]); saveAI();
+      return { html: 'Perfecto, ' + '<b>' + escapeHtml(aiState.profile.name) + '</b>' + '. Ya sé cómo llamarte y lo recordaré en este dispositivo.' };
+    }
+    if((m = n.match(/(?:vendo|mi negocio es|me dedico a|trabajo en|mi trabajo es)\s+(.{3,60})/))){
+      aiState.profile.business = iaCap(m[1].trim()); saveAI();
+      return { html: 'Anotado: te dedicas a <b>' + escapeHtml(aiState.profile.business) + '</b>. Lo tomaré en cuenta cuando hable de tus ventas.' };
+    }
+
+    /* --- intents de consulta --- */
+    if(/^(hola|buenas|buenos dias|buenas tardes|buenas noches|hey|que tal|que onda|holi)\b/.test(n)){
+      var pendCount = pend.length;
+      var html = saludo + name + '. ' +
+        (pendCount ? 'Tienes <b>' + pendCount + '</b> tarea(s) abierta(s) y ' : 'No tienes tareas abiertas y ') +
+        'el gasto de hoy va en <b>' + iaMoney(f.todayGastos) + '</b>.';
+      return { html: html, actions: [
+        { label:'Dame el plan del día', run:function(){ iaSend('planea mi día'); } },
+        { label:'Ver resumen', view:'resumen' }
+      ] };
+    }
+    if(/ayuda|que puedes hacer|que sabes hacer|comandos|opciones|como funciona/.test(n)){
+      return { html: 'Puedo: <b>1)</b> anotar cosas en lenguaje natural (“gasté 320 en gasolina”, “recuérdame llamar a Ana a las 6”), ' +
+        '<b>2)</b> armar tu plan del día con prioridades, <b>3)</b> analizar tus finanzas, hábitos, tareas y lectura, ' +
+        '<b>4)</b> responder preguntas como “¿cuánto gasté hoy?”, “¿cómo voy con la meta?” o “¿qué sigue?”.' };
+    }
+    if(/gracias|genial|perfecto|excelente|mil gracias|thank/.test(n) && n.length < 24){
+      return { html: 'A la orden' + name + '. Aquí estoy cuando me necesites.' };
+    }
+    if(/consejo|motivame|motiva|animo|un tip|dame un tip|inspira|frase/.test(n)){
+      return { html: '💡 ' + escapeHtml(iaTip()) };
+    }
+    if(/planea|planifica|organiza mi dia|ordena mi dia|prioriza|que deberia hacer|deberia hacer|plan del dia|armame el dia/.test(n)){
+      var plan = iaBuildPlan();
+      if(!plan.rows.length && !plan.leftover.length){
+        return { html: 'No tienes nada pendiente ni agendado. Escribe algo en <b>Captura rápida</b> y lo acomodo por ti.' };
+      }
+      var lines = [];
+      plan.rows.slice(0, 5).forEach(function(r){
+        lines.push((r.now ? '<b>Ahora (' + iaHm(r.min) + ')</b>' : iaHm(r.min)) + ' · ' + escapeHtml(r.title));
+      });
+      if(plan.leftover.length) lines.push('Sin espacio hoy: ' + plan.leftover.slice(0, 3).map(function(t){ return escapeHtml(t.title); }).join(', '));
+      return { html: 'Este es tu orden sugerido:<br>' + lines.join('<br>'),
+        actions:[ { label:'Abrir el plan completo', view:'ia' } ] };
+    }
+    if(/(?:cuanto|cu[áa]nto).*(?:gasto|gaste|gastado)/.test(n) && /hoy/.test(n)){
+      return { html: 'Hoy llevas <b>' + iaMoney(f.todayGastos) + '</b> en gastos' +
+        (f.todayVentas ? ' y <b>' + iaMoney(f.todayVentas) + '</b> en ventas' : '') + '.' +
+        (f.gastos > 0 ? ' Tu promedio diario del mes es ' + iaMoney(f.gastos / f.dayNum) + '.' : ''),
+        actions:[ { label:'Ver finanzas', view:'finanzas' } ] };
+    }
+    if(/(?:cuanto|cu[áa]nto).*(?:gasto|gaste|gastado)/.test(n) || /gasto del mes|gastos del mes|gasto mensual/.test(n)){
+      return { html: 'Este mes llevas <b>' + iaMoney(f.gastos) + '</b> en gastos (' + f.nGastos + ' movimientos) y <b>' +
+        iaMoney(f.ventas) + '</b> en ventas. Flujo neto: <b>' + iaMoney(f.neto) + '</b>.',
+        actions:[ { label:'Ver finanzas', view:'finanzas' } ] };
+    }
+    if(/venta|ventas|vendido|vendi|ingreso|ingresos/.test(n)){
+      return { html: 'Ventas del mes: <b>' + iaMoney(f.ventas) + '</b> en ' + f.nVentas + ' movimiento(s)' +
+        (f.meta > 0 ? '. Tu meta es ' + iaMoney(f.meta) + ', vas al <b>' + Math.round(f.ventas / f.meta * 100) + '%</b>' : '') + '.',
+        actions:[ { label:'Ver finanzas', view:'finanzas' } ] };
+    }
+    if(/meta/.test(n)){
+      if(!f.meta) return { html: 'Aún no fijas una meta de ventas. Puedes escribirla en la vista de Finanzas y te ayudo a seguirla.' };
+      var rem2 = f.daysInMonth - f.dayNum + 1;
+      return { html: 'Vas <b>' + iaMoney(f.ventas) + '</b> de <b>' + iaMoney(f.meta) + '</b> (' +
+        Math.round(f.ventas / f.meta * 100) + '%). Para llegar necesitas <b>' +
+        iaMoney(Math.max(0, (f.meta - f.ventas) / Math.max(1, rem2))) + '</b> por día durante ' + rem2 + ' día(s).',
+        actions:[ { label:'Ver finanzas', view:'finanzas' } ] };
+    }
+    if(/habito|habitos|racha|streak/.test(n)){
+      if(!habitState.habits.length) return { html: 'Todavía no tienes hábitos. Puedo crear uno si me dices “quiero empezar a leer todas las noches”.' };
+      var faltan = habitState.habits.filter(function(h){ return (h.doneDates || []).indexOf(today) === -1; });
+      var topS = habitState.habits.map(function(h){ return { h: h, s: iaHabitStats(h) }; }).sort(function(a, b){ return b.s.streak - a.s.streak; })[0];
+      return { html: 'Hoy ' + (faltan.length ? (faltan.length === 1 ? 'te falta <b>1</b>: ' : 'te faltan <b>' + faltan.length + '</b>: ') + escapeHtml(faltan.map(function(h){ return h.name; }).slice(0, 3).join(', '))
+        : 'completaste <b>todos</b> tus hábitos') + '. Tu mejor racha activa es <b>' + iaPlural(topS ? topS.s.streak : 0, 'día', 'días') + '</b>' +
+        (topS ? ' en ' + escapeHtml(topS.h.name) : '') + '.',
+        actions:[ { label:'Ir a hábitos', view:'habits' } ] };
+    }
+    /* --- acciones sobre datos --- */
+    if(/termin[eé]|terminado|listo|hecho|complet[eé]|completada|marca|marcar|ya la hice|ya lo hice/.test(n)){
+      var t = iaFindTask(n.replace(/termin[eé]|terminado|listo|hecho|complet[eé]|completada|marca|marcar|ya la hice|ya lo hice|la tarea|tarea|de|,|\./g, ' '));
+      if(t){
+        t.done = true; saveTasks(); renderTasks(); renderResumen();
+        return { html: 'Marcada: <b>' + escapeHtml(t.text) + '</b>. ' + (pend.length - 1 > 0 ? 'Te quedan ' + (pend.length - 1) + '.' : '¡Lista completa!'),
+          actions:[ { label:'Deshacer', run:function(){ t.done = false; saveTasks(); renderTasks(); renderResumen(); iaPush('ia', 'Deshecho, ' + escapeHtml(t.text) + ' sigue pendiente.'); } } ] };
+      }
+      return { html: 'No encontré esa tarea en tus pendientes. Dime el nombre tal como la escribiste.' };
+    }
+
+    if(/tarea|pendiente|por hacer|que tengo que hacer/.test(n)){
+      if(!pend.length) return { html: 'No tienes tareas pendientes. ¿Quieres que anote una?' };
+      var alta = pend.filter(function(t){ return t.priority === 'alta'; });
+      return { html: 'Tienes <b>' + pend.length + '</b> tarea(s) pendiente(s)' + (alta.length ? ', de las cuales <b>' + alta.length + '</b> son de prioridad alta' : '') +
+        '. La primera que te sugiero: <b>' + escapeHtml(pend.slice().sort(function(a, b){
+          return (a.priority === 'alta' ? 0 : a.priority === 'media' ? 1 : 2) - (b.priority === 'alta' ? 0 : b.priority === 'media' ? 1 : 2);
+        })[0].text) + '</b>.',
+        actions:[ { label:'Ver tareas', view:'tasks' } ] };
+    }
+    if(/libro|lectura|leyendo|leer/.test(n)){
+      var reading = readState.books.filter(function(b){ return b.status === 'leyendo'; })[0];
+      if(!reading) return { html: 'No tienes ningún libro en curso. Si me dices “quiero leer X” lo agrego a tu lista.' };
+      return { html: 'Estás leyendo <b>' + escapeHtml(reading.title) + '</b>' +
+        (reading.author ? ' de ' + escapeHtml(reading.author) : '') + ' al <b>' + (reading.progress || 0) + '%</b>.',
+        actions:[ { label:'Ver lectura', view:'lectura' } ] };
+    }
+    if(/que sigue|que toca|que me toca|que hago ahora|siguiente|que tengo ahora/.test(n)){
+      var nx = computeNext();
+      var topTask = pend.slice().sort(function(a, b){
+        return (a.priority === 'alta' ? 0 : a.priority === 'media' ? 1 : 2) - (b.priority === 'alta' ? 0 : b.priority === 'media' ? 1 : 2);
+      })[0];
+      var txt = '';
+      if(nx) txt += 'Lo próximo en tu agenda es <b>' + nx.reminder.time + ' · ' + escapeHtml(nx.reminder.text) + '</b> (' + formatCountdown(nx.diff) + '). ';
+      if(topTask) txt += 'Y tu tarea pendiente más importante es <b>' + escapeHtml(topTask.text) + '</b>.';
+      if(!txt) txt = 'No tienes nada agendado ni pendiente. Buen momento para planear mañana.';
+      return { html: txt, actions:[ { label:'Ver agenda', view:'agenda' }, { label:'Ver tareas', view:'tasks' } ] };
+    }
+    if(/resumen|c[óo]mo va mi dia|como voy|dame un repaso|cuentame mi dia/.test(n)){
+      var habitsDone = habitState.habits.filter(function(h){ return (h.doneDates || []).indexOf(today) !== -1; }).length;
+      var remDone = state.reminders.filter(function(r){ return r.done; }).length;
+      return { html: 'Resumen de hoy: tareas <b>' + (taskState.tasks.length - pend.length) + '/' + taskState.tasks.length + '</b>, ' +
+        'recordatorios <b>' + remDone + '/' + state.reminders.length + '</b>, hábitos <b>' + habitsDone + '/' + habitState.habits.length + '</b>, ' +
+        'gasto <b>' + iaMoney(f.todayGastos) + '</b>, ventas <b>' + iaMoney(f.todayVentas) + '</b>' +
+        (pomo.sessionsToday ? ' y <b>' + pomo.sessionsToday + '</b> sesión(es) de enfoque' : '') + '.',
+        actions:[ { label:'Ver resumen', view:'resumen' } ] };
+    }
+
+    /* --- crear desde el chat --- */
+    var p = iaParse(raw);
+    if(p){
+      var strongVerb = /gast[eé]|pagu[eé]|compr[eé]|vend[ií]|cobr[eé]|ingres[oó]|anota|apunta|recu[eé]rdame|recuerda|av[ií]same|tarea|debo|hay que|tengo que|necesito|agrega|agendar|quiero|voy a|me debe|le debo/.test(n);
+      if(p.conf >= 0.45 || strongVerb){
+        var created = iaCreate(p);
+        return { html: 'Listo. Guardé <b>' + escapeHtml(IA_META[created.kind].label) + '</b>: ' + escapeHtml(created.label) +
+          (p.conf < 0.6 ? '<br><span style="opacity:.75">No estaba del todo seguro (' + Math.round(p.conf * 100) + '%). Si me equivoqué, dime “deshacer”.</span>' : ''),
+          actions:[
+            { label:'Deshacer', run:function(){ iaUndo(created.kind, created.id); iaPush('ia', 'Deshecho. Ya no está en ' + (IA_META[created.kind].where || 'tu agenda') + '.'); } },
+            { label:'Ver ' + IA_META[created.kind].where, view: (created.kind === 'gasto' || created.kind === 'venta' || created.kind === 'cobrar' || created.kind === 'pagar') ? 'finanzas' :
+              (created.kind === 'recordatorio' ? 'agenda' : created.kind === 'tarea' ? 'tasks' : created.kind === 'evento' ? 'calendar' :
+               created.kind === 'nota' ? 'notes' : created.kind === 'habito' ? 'habits' : created.kind === 'lectura' ? 'lectura' : 'resumen') }
+          ] };
+      }
+    }
+
+    /* --- fallback --- */
+    return { html: 'No capté bien eso. Puedo entender frases como “gasté 320 en gasolina”, “recuérdame llamar a Ana a las 6” o preguntas como “¿cuánto gasté hoy?”. ' +
+      'También puedo guardar esto como nota o tarea.',
+      actions:[
+        { label:'Guardar como nota', run:function(){
+            noteState.notes.unshift({ id: iaUid('n'), text: raw.slice(0, 300), tag: iaParseTag(raw), pinned: false, updatedAt: Date.now() });
+            saveNotes(); renderNotesTagFilters(); renderNotes();
+            iaPush('ia', 'Guardado como nota en ' + iaParseTag(raw) + '.', [ { label:'Ver notas', view:'notes' } ]);
+          } },
+        { label:'Guardar como tarea', run:function(){
+            taskState.tasks.push({ id: iaUid('t'), text: raw.slice(0, 120), priority: iaParsePriority(raw), done: false, createdAt: Date.now() });
+            saveTasks(); renderTasks(); renderResumen();
+            iaPush('ia', 'Guardado como tarea con prioridad ' + iaParsePriority(raw) + '.', [ { label:'Ver tareas', view:'tasks' } ]);
+          } },
+        { label:'¿Qué puedes hacer?', run:function(){ iaSend('ayuda'); } }
+      ] };
+  }
+
+  function iaPush(role, html, actions){
+    aiState.chat.push({ role: role, html: html });
+    if(aiState.chat.length > 40) aiState.chat = aiState.chat.slice(-40);
+    if(role === 'ia') iaLastActions = actions || [];
+    saveAI();
+    renderIaChat();
+  }
+
+  function iaSend(text){
+    text = (text || '').trim();
+    if(!text) return;
+    iaPush('user', escapeHtml(text));
+    var input = document.getElementById('iaChatInput');
+    if(input) input.value = '';
+    iaTyping(true);
+    setTimeout(function(){
+      iaTyping(false);
+      var r;
+      try{ r = iaRespond(text); }
+      catch(e){
+        try{
+          var parsed = iaParse(text);
+          if(parsed){ var c = iaCreate(parsed); r = { html: 'Lo guardé como <b>' + escapeHtml(IA_META[c.kind].label) + '</b>: ' + escapeHtml(c.label) }; }
+        }catch(e2){}
+        if(!r) r = { html: 'No pude procesar eso. Intenta con algo más corto, por ejemplo: “tarea: enviar cotización”.' };
+      }
+      iaPush('ia', r.html, r.actions);
+      if(typeof renderIA === 'function' && currentView === 'ia') renderIA();
+    }, 420);
+  }
+
+  function iaTyping(on){
+    var box = document.getElementById('iaChat');
+    if(!box) return;
+    var t = box.querySelector('.ia-msg.typing');
+    if(on && !t){
+      var d = document.createElement('div');
+      d.className = 'ia-msg ia typing';
+      d.textContent = 'pensando…';
+      box.appendChild(d);
+      box.scrollTop = box.scrollHeight;
+    } else if(!on && t){ t.remove(); }
+  }
+
+  function iaRunAction(a){
+    iaLastActions = [];
+    if(a.run){ try{ a.run(); return; }catch(e){} }
+    if(a.view){ goToView(a.view); }
+  }
+
+  /* ========================== RENDER ============================= */
+  var IA_EXAMPLES = [
+    'Pagar la luz $800 el viernes 18:00',
+    'Recuérdame tomar agua a las 9',
+    'Vendí $1500 de fragancias',
+    'Tarea urgente: enviar cotización',
+    'Leer 20 páginas todas las noches',
+    'Juan me debe $500 del pedido'
+  ];
+  var IA_QUICK = ['¿Cuánto gasté hoy?', '¿Cómo voy con la meta?', 'Planea mi día', 'Dame un resumen', 'Consejo'];
+  var iaCurrent = null;   // último parseo mostrado
+  var iaKindChoice = null;
+
+  function renderIaStats(){
+    var el = document.getElementById('iaStats');
+    if(!el) return;
+    var f = iaFinSnapshot();
+    var today = iaIso(new Date());
+    var pend = taskState.tasks.filter(function(t){ return !t.done; }).length;
+    var hDone = habitState.habits.filter(function(h){ return (h.doneDates || []).indexOf(today) !== -1; }).length;
+    el.innerHTML =
+      '<div class="ia-stat"><div class="ia-stat-num">' + pend + '</div><div class="ia-stat-label">tareas abiertas</div></div>' +
+      '<div class="ia-stat"><div class="ia-stat-num">' + iaMoney(f.todayGastos) + '</div><div class="ia-stat-label">gasto de hoy</div></div>' +
+      '<div class="ia-stat"><div class="ia-stat-num">' + hDone + '/' + habitState.habits.length + '</div><div class="ia-stat-label">hábitos hoy</div></div>';
+  }
+
+  function renderIaExamples(){
+    var el = document.getElementById('iaExamples');
+    if(!el || el.dataset.ready === 'true') return;
+    el.innerHTML = '';
+    IA_EXAMPLES.forEach(function(ex){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ia-chip';
+      b.textContent = ex;
+      b.addEventListener('click', function(){
+        var i = document.getElementById('iaCaptureInput');
+        if(i){ i.value = ex; i.focus(); }
+        iaUpdatePreview();
+      });
+      el.appendChild(b);
+    });
+    el.dataset.ready = 'true';
+  }
+
+  function renderIaQuick(){
+    var el = document.getElementById('iaQuick');
+    if(!el || el.dataset.ready === 'true') return;
+    el.innerHTML = '';
+    IA_QUICK.forEach(function(q){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ia-chip';
+      b.textContent = q;
+      b.addEventListener('click', function(){ iaSend(q); });
+      el.appendChild(b);
+    });
+    el.dataset.ready = 'true';
+  }
+
+  function iaUpdatePreview(){
+    var input = document.getElementById('iaCaptureInput');
+    var box = document.getElementById('iaPreview');
+    if(!input || !box) return;
+    var text = input.value.trim();
+    if(!text){ box.hidden = true; iaCurrent = null; return; }
+    var p = iaParse(text);
+    if(!p){ box.hidden = true; iaCurrent = null; return; }
+    iaCurrent = p;
+    iaKindChoice = p.kind;
+    iaRenderPreview(p);
+  }
+
+  function iaPredRow(label, value, wide){
+    return '<div class="ia-pred' + (wide ? ' wide' : '') + '"><div class="ia-pred-label">' + label + '</div>' +
+      '<div class="ia-pred-value">' + value + '</div></div>';
+  }
+
+  function iaRenderPreview(p){
+    var box = document.getElementById('iaPreview');
+    if(!box || !p) return;
+    var kind = iaKindChoice || p.kind;
+    var meta = IA_META[kind] || IA_META.tarea;
+    var confPct = Math.round((kind === p.kind ? p.conf : 1) * 100);
+
+    var rows = [];
+    rows.push(iaPredRow('Se guarda como', meta.icon + ' ' + escapeHtml(meta.label) + ' · ' + escapeHtml(meta.where)));
+    rows.push(iaPredRow('Texto', escapeHtml(p.title)));
+    if(p.date) rows.push(iaPredRow('Fecha', escapeHtml(iaDateLabel(p.date))));
+    if(p.time) rows.push(iaPredRow('Hora', escapeHtml(p.time)));
+    if(p.amount !== null && p.amount !== undefined) rows.push(iaPredRow('Monto', iaMoney(p.amount) + (p.amountSure ? '' : ' (deducido)')));
+    if(kind === 'tarea') rows.push(iaPredRow('Prioridad', '<span class="ia-tag ' + p.priority + '">' + p.priority + '</span>'));
+    if(kind === 'nota') rows.push(iaPredRow('Categoría', escapeHtml(p.tag)));
+    if(kind === 'gasto'){
+      rows.push(iaPredRow('Rubro', p.category ? escapeHtml(p.category) : 'Sin clasificar'));
+    }
+    if((kind === 'cobrar' || kind === 'pagar') && p.person){
+      rows.push(iaPredRow(kind === 'cobrar' ? 'Cliente' : 'Acreedor', escapeHtml(p.person)));
+    }
+
+    var types = ['gasto','venta','recordatorio','tarea','evento','nota','habito','lectura','cobrar','pagar'];
+
+    box.innerHTML =
+      '<div class="ia-preview-head">' +
+        '<span class="ia-preview-title">Así lo entendí</span>' +
+        '<span class="ia-conf"><span class="ia-conf-track"><span class="ia-conf-fill" style="width:' + confPct + '%"></span></span>' + confPct + '%</span>' +
+      '</div>' +
+      '<div class="ia-pred-grid">' + rows.join('') + '</div>' +
+      (p.reasons.length ? '<p class="ia-why">Lo clasifiqué así ' + p.reasons.join(', ') + '.' +
+        (p.conf < 0.6 ? ' Si me equivoco, elige el tipo correcto y lo recordaré la próxima vez.' : '') + '</p>' : '') +
+      '<div class="ia-types">' + types.map(function(k){
+        return '<button type="button" class="ia-type" data-k="' + k + '" data-active="' + (k === kind ? 'true' : 'false') + '">' +
+          IA_META[k].icon + ' ' + IA_META[k].label + '</button>';
+      }).join('') + '</div>' +
+      '<div class="ia-actions">' +
+        '<button class="ia-btn-ghost" id="iaPreviewCancel">Descartar</button>' +
+        '<button class="ia-btn-main" id="iaPreviewSave">Guardar en ' + escapeHtml(meta.where) + '</button>' +
+      '</div>';
+    box.hidden = false;
+
+    box.querySelectorAll('.ia-type').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        iaKindChoice = btn.dataset.k;
+        iaRenderPreview(p);
+      });
+    });
+    document.getElementById('iaPreviewCancel').addEventListener('click', function(){
+      var i = document.getElementById('iaCaptureInput');
+      if(i) i.value = '';
+      box.hidden = true; iaCurrent = null;
+    });
+    document.getElementById('iaPreviewSave').addEventListener('click', iaCommitPreview);
+  }
+
+  function iaCommitPreview(){
+    var p = iaCurrent;
+    if(!p) return;
+    var kind = iaKindChoice || p.kind;
+    var learned = 0;
+    if(kind !== p.intent) learned = iaLearn(p.raw, kind);
+    var created = iaCreate(p, kind);
+    var input = document.getElementById('iaCaptureInput');
+    if(input) input.value = '';
+    var box = document.getElementById('iaPreview');
+    if(box){
+      box.hidden = false;
+      box.innerHTML = '<p class="ia-why" style="margin:0; font-size:13px; color:var(--ink);">' +
+        '✅ Guardado como <b>' + escapeHtml(IA_META[kind].label) + '</b>: ' + escapeHtml(created.label) +
+        (learned ? '<br><span style="opacity:.7">Gracias, ya aprendí cómo sueles escribir eso.</span>' : '') +
+        '</p><div class="ia-actions">' +
+        '<button class="ia-btn-ghost" id="iaUndoLast">Deshacer</button>' +
+        '<button class="ia-btn-main" id="iaAnother">Anotar otra</button></div>';
+      document.getElementById('iaUndoLast').addEventListener('click', function(){
+        iaUndo(kind, created.id);
+        box.hidden = true;
+        renderIA();
+        showSnackbar('Deshecho.');
+      });
+      document.getElementById('iaAnother').addEventListener('click', function(){
+        box.hidden = true;
+        if(input) input.focus();
+      });
+    }
+    iaCurrent = null;
+    showSnackbar('Guardado en ' + IA_META[kind].where + '.');
+    renderIA();
+  }
+
+  function renderIaPlan(){
+    var box = document.getElementById('iaPlan');
+    if(!box) return;
+    var plan = iaBuildPlan();
+    var html = '';
+    if(!plan.rows.length && !plan.leftover.length && !plan.events.length){
+      box.innerHTML = '<p class="ia-empty">Tu día está vacío. Arriba puedes escribir “recuérdame…”, “tarea urgente…” o “gasté…” y lo acomodo solo.</p>';
+      return;
+    }
+    plan.rows.slice(0, 9).forEach(function(r){
+      html += '<div class="ia-plan-row' + (r.now ? ' now' : '') + '">' +
+        '<div class="ia-plan-time">' + (r.now ? 'AHORA' : iaHm(r.min)) + '</div>' +
+        '<div class="ia-plan-body">' +
+          '<div class="ia-plan-title">' + (r.kind === 'recordatorio' ? '⏰ ' : r.kind === 'tarea' ? '✅ ' : '') + escapeHtml(r.title) + '</div>' +
+          '<div class="ia-plan-meta">' + (r.kind === 'tarea' ? '<span class="ia-tag ' + r.tag + '">' + r.tag + '</span>' : '') +
+            escapeHtml(r.meta) + (r.kind === 'tarea' ? ' · ' + r.dur + ' min' : '') + '</div>' +
+        '</div></div>';
+    });
+    if(plan.rows.length > 9){
+      html += '<p class="ia-empty" style="margin-top:8px">Y ' + (plan.rows.length - 9) + ' cosa(s) más agendadas.</p>';
+    }
+    if(plan.events.length){
+      html += '<p class="ia-empty" style="margin-top:10px">📅 Hoy también tienes: ' +
+        plan.events.map(function(e){ return escapeHtml(e.text); }).join(', ') + '.</p>';
+    }
+    if(plan.leftover.length){
+      html += '<p class="ia-empty" style="margin-top:10px">⚠️ Sin espacio en tus huecos libres: ' +
+        plan.leftover.slice(0, 4).map(function(t){ return escapeHtml(t.title); }).join(', ') +
+        '. Considera moverlas a mañana o recortar tus recordatorios.</p>';
+    }
+    box.innerHTML = html;
+  }
+
+  function renderIaInsights(){
+    var box = document.getElementById('iaInsights');
+    if(!box) return;
+    var list = iaBuildInsights();
+    if(!list.length){
+      box.innerHTML = '<p class="ia-empty">Aún no tengo suficiente información. Registra algunos gastos, tareas o hábitos y empezaré a encontrar patrones.</p>';
+      return;
+    }
+    box.innerHTML = '';
+    list.slice(0, 8).forEach(function(ins){
+      var row = document.createElement('div');
+      row.className = 'ia-insight';
+      var icon = document.createElement('div');
+      icon.className = 'ia-insight-icon ' + ins.tone;
+      icon.textContent = ins.icon || '•';
+      var body = document.createElement('div');
+      body.className = 'ia-insight-body';
+      body.innerHTML = '<div class="ia-insight-title">' + escapeHtml(ins.title) + '</div>' +
+        '<div class="ia-insight-text">' + ins.text + '</div>';
+      if(ins.action){
+        var b = document.createElement('button');
+        b.className = 'ia-insight-act';
+        b.textContent = ins.action.label;
+        b.addEventListener('click', function(){ goToView(ins.action.view); });
+        body.appendChild(b);
+      }
+      var x = document.createElement('button');
+      x.className = 'ia-insight-x';
+      x.setAttribute('aria-label', 'Ocultar');
+      x.textContent = '✕';
+      x.addEventListener('click', function(){
+        aiState.dismissed[ins.key] = iaIso(new Date());
+        saveAI();
+        renderIaInsights();
+      });
+      row.appendChild(icon); row.appendChild(body); row.appendChild(x);
+      box.appendChild(row);
+    });
+    if(list.length > 8){
+      var more = document.createElement('p');
+      more.className = 'ia-empty';
+      more.style.marginTop = '10px';
+      more.textContent = 'Y ' + (list.length - 8) + ' observación(es) más que aparecerán cuando resuelvas estas.';
+      box.appendChild(more);
+    }
+  }
+
+  function renderIaChat(){
+    var box = document.getElementById('iaChat');
+    if(!box) return;
+    if(!aiState.chat.length){
+      box.innerHTML = '<div class="ia-msg ia">Hola, soy el asistente de tu agenda. ' +
+        'Pregúntame <b>“¿cuánto gasté hoy?”</b>, pídeme <b>“planea mi día”</b> o escribe directo <b>“gasté 200 en café”</b> y lo anoto.</div>';
+      return;
+    }
+    box.innerHTML = aiState.chat.map(function(m){
+      return '<div class="ia-msg ' + m.role + '">' + m.html + '</div>';
+    }).join('');
+    var last = aiState.chat.length - 1;
+    if(iaLastActions.length && aiState.chat[last] && aiState.chat[last].role === 'ia'){
+      var node = box.children[last];
+      if(node){
+        var wrap = document.createElement('div');
+        wrap.className = 'ia-msg-actions';
+        iaLastActions.forEach(function(a){
+          var b = document.createElement('button');
+          b.className = 'ia-msg-action';
+          b.textContent = a.label;
+          b.addEventListener('click', function(){ iaRunAction(a); });
+          wrap.appendChild(b);
+        });
+        node.appendChild(wrap);
+      }
+    }
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function iaBriefHtml(){
+    var plan = iaBuildPlan();
+    var ins = iaBuildInsights();
+    var parts = [];
+    if(plan.rows.length){
+      var r = plan.rows.filter(function(x){ return x.now; })[0] || plan.rows[0];
+      parts.push((r.now ? 'Ahora toca ' : 'Lo próximo es ') + '<b>' + escapeHtml(r.title) + '</b>' +
+        (r.min >= 0 && !r.now ? ' (' + iaHm(r.min) + ')' : '') + '.');
+    }
+    var top = ins.filter(function(i){ return i.tone === 'bad'; })[0] || ins.filter(function(i){ return i.tone === 'warn'; })[0] || ins[0];
+    if(top) parts.push(top.text);
+    if(!parts.length) return 'Tu día está despejado. Escribe algo en <b>Captura rápida</b> y lo acomodo por ti.';
+    return parts.join(' ');
+  }
+
+  function renderResumenIa(){
+    var el = document.getElementById('resumenIaHint');
+    if(!el) return;
+    try{ el.innerHTML = iaBriefHtml(); }catch(e){}
+  }
+
+  function renderIA(){
+    if(!document.getElementById('view-ia')) return;
+    try{
+      renderIaStats();
+      renderIaExamples();
+      renderIaQuick();
+      renderIaPlan();
+      renderIaInsights();
+      renderIaChat();
+      renderResumenIa();
+    }catch(e){ /* nunca rompas la app por la IA */ }
+  }
+
+  /* ------------------------- eventos IA ------------------------- */
+  (function initIA(){
+    loadAI();
+    var aiBtn = document.getElementById('aiBtn');
+    if(aiBtn) aiBtn.addEventListener('click', function(){ goToView('ia'); });
+
+    var cap = document.getElementById('iaCaptureInput');
+    if(cap){
+      var t = null;
+      cap.addEventListener('input', function(){
+        clearTimeout(t);
+        t = setTimeout(iaUpdatePreview, 260);
+      });
+      cap.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){ e.preventDefault(); iaUpdatePreview(); if(iaCurrent) iaCommitPreview(); }
+      });
+    }
+    var interp = document.getElementById('iaInterpretBtn');
+    if(interp) interp.addEventListener('click', function(){
+      iaUpdatePreview();
+      if(iaCurrent){
+        var box = document.getElementById('iaPreview');
+        if(box) box.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      }
+    });
+    var chatIn = document.getElementById('iaChatInput');
+    if(chatIn){
+      chatIn.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){ e.preventDefault(); iaSend(chatIn.value); }
+      });
+    }
+    var chatBtn = document.getElementById('iaChatSend');
+    if(chatBtn) chatBtn.addEventListener('click', function(){
+      var i = document.getElementById('iaChatInput');
+      iaSend(i ? i.value : '');
+    });
+  })();
+
   // ---- init ----
   function startApp(){
     load();
@@ -4716,9 +6487,10 @@
     renderPomo();
     renderEx();
     renderResumen();
+    renderIA();
     goToView('resumen');
     setInterval(renderClock, 1000);
-    setInterval(function(){ renderHero(); renderResumen(); }, 15000);
+    setInterval(function(){ renderHero(); renderResumen(); if(currentView === 'ia') renderIA(); }, 15000);
     setInterval(checkDue, 15000);
     scheduleMidnightReset();
     document.addEventListener('visibilitychange', function(){
